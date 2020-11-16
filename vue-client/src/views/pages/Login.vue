@@ -21,7 +21,7 @@
                   <CInput
                     placeholder="Username or email"
                     autocomplete="username email"
-                    v-model="user"
+                    v-model="input.username"
                   >
                     <template #prepend-content
                       ><CIcon name="cil-user"
@@ -31,7 +31,7 @@
                     placeholder="Password"
                     type="password"
                     autocomplete="curent-password"
-                    v-model="pass"
+                    v-model="input.pass"
                   >
                     <template #prepend-content
                       ><CIcon name="cil-lock-locked"
@@ -95,15 +95,20 @@
 export default {
   name: "Login",
   data() {
-    return {
-      user: "",
-      pass: "",
+    return { 
+      input: {
+        username: "",
+        pass: "",
+    }
     };
   },
   methods: {
     doLogin() {
       // Goi api de xac thuc username vs pass
-
+      if(this.input.username!= '' && this.input.pass != '')
+      {
+        
+      }
       // sau khi xac thuc thanh cong
       localStorage.setItem("isAuthen", "success");
       this.$router.push("/dashboard");

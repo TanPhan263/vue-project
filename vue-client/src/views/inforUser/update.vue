@@ -50,7 +50,7 @@
             </CForm>
           </CCardBody>
           <CCardFooter>
-            <CButton v-on:click="mounted()"  class="btn_submit" type="submit" size="sm" color="primary"><CIcon name="cil-check-circle"/> Submit</CButton>
+            <CButton  class="btn_submit" type="submit" size="sm" color="primary"><CIcon name="cil-check-circle"/> Submit</CButton>
             <CButton  class="btn_back" type="reset" size="sm" color="danger"><CIcon name="cil-ban"/> Back</CButton>
           </CCardFooter>
         </CCard>

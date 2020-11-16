@@ -1,51 +1,101 @@
 <template>
-  <CRow>
-    <CCol col="12" lg="6">
-      <CCard>
-        <CCardHeader>
-          User id:  {{ $route.params.id }}
-        </CCardHeader>
-        <CCardBody>
-          <CDataTable
-           hover
-            border
-            striped
-            small
-            fixed
-            :items="visibleData"
-            :fields="fields"
-          />
-           <CSelect
-            label="User role"
-            horizontal
-            :options="options"
-            placeholder="Please select"
-          />
-            <CRow form class="form-group">
+<CRow>
+       <CCol md="6">
+        <CCard>
+          <CCardHeader>
+            <strong>Thông tin người dùng</strong>
+          </CCardHeader>
+          <CCardBody>
+            <CForm>
+              <CInput
+                label="Id user"
+                horizontal
+                :value="userData[0].userID"
+                disabled
+              />
+              <CInput
+                label="Họ tên"
+                 disabled
+                horizontal
+                autocomplete="name"
+                :value="userData[0].userName"
+              />
+              <CInput
+                label="Địa chỉ"
+                 disabled
+                horizontal
+                :value="userData[0].address"
+              ></CInput>
+              <CInput
+              disabled
+                label="Số điện thoại"
+                horizontal
+                value="12313"
+              />
+              <CInput
+              disabled
+                label="Ngày sinh"
+                
+                horizontal
+              :value="userData[0].birthday"
+              />
+               <CInput
+                disabled
+                label="Quyền"
+                horizontal
+                :value="userData[0].userTypeID"
+              />
+              <CInput
+              disabled
+                label="Email "
+                placeholder="Enter your email"
+                type="email"
+                horizontal
+                autocomplete="email"
+                required
+                was-validated
+               :value="userData[0].email"
+              />
+            
+            </CForm>
+          </CCardBody>
+          <CCardFooter>
+          </CCardFooter>
+        </CCard>
+      </CCol>
+      <CCol md="6">
+        <CCard>
+          <CCardBody>
+            <CForm>
+                <div class="center_div">
+                <img
+                    :src="userData[0].picture"
+                    class="c-avatar-img "
+                />
+                </div>
+                <CRow form class="form-group">
             <CCol tag="label" sm="10" class="col-form-label">
               Ban acount: 
             </CCol>
            <CSwitch 
               class="mr-1"
               color="danger"
-              :checked="true"
+              :checked="false"
               shape="pill"
-            />
-            </CRow>
-        </CCardBody>
-        <CCardFooter>
-          <CRow form class="form-group">
-          <CButton class="btn_left" color="danger" @click="goBack">Back</CButton>
-          <CButton class="btn_right" color="primary" @click="goBack">Update</CButton>
-           </CRow>
-        </CCardFooter>
-      </CCard>
-    </CCol>
-  </CRow>
+            /></CRow>
+            </CForm>
+          </CCardBody>
+          <CCardFooter>
+            <CButton  class="btn_left" type="submit" size="sm" color="primary"><CIcon name="cil-check-circle"/> Submit</CButton>
+            <CButton  class="btn_right" type="reset" size="sm" color="danger"><CIcon name="cil-ban"/> Back</CButton>
+          </CCardFooter>
+        </CCard>
+      </CCol>
+    </CRow>
 </template>
-
+            
 <script>
-import usersData from './UsersData'
+const url = 'https://localhost:44340/api/User/GetbyId/'
 export default {
   name: 'User',
   beforeRouteEnter(to, from, next) {
@@ -55,43 +105,49 @@ export default {
   },
   data () {
     return {
-      usersOpened: null,
-      options: ['User', 'Store owner', 'Administrator'],
-    }
+      userData:[],
+      options: [ 'User', '', 'Admin'],
+    };
   },
   computed: {
-    fields () {
-      return [
-        { key: 'key', label: this.username, _style: 'width:150px'},
-        { key: 'value', label: '', _style: 'width:150px;' }
-      ]
-    },
-    userData () {
-      const id = this.$route.params.id
-      const user = usersData.find((user, index) => index + 1 == id)
-      const userDetails = user ? Object.entries(user) : [['id', 'Not found']]
-      return userDetails.map(([key, value]) => { return { key, value } })
-    },
-    visibleData () {
-      return this.userData.filter(param => param.key !== 'username')
-    },
-    username () {
-      return this.userData.filter(param => param.key === 'username')[0].value
-    }
   },
   methods: {
     goBack() {
       this.usersOpened ? this.$router.go(-1) : this.$router.push({path: '/users'})
+      },
+    userAuthor(){
+      switch(index)
+      {
+        case 1: this.author = 'User';
+        break;
+        case 2: this.author ='Store Owner'
+        break;
+        case 3: this.author ='Admin'
+        break;
+      }
+      return author
     }
+  },
+   mounted(){
+      const id = this.$route.params.id
+      this.$http.get('https://localhost:44398/api/User/GetByID/'+id).then(response => {
+            this.userData =response.data
+            this.userData = JSON.parse(this.userData)
+    })
   }
+  
 }
 </script>
 <style>
 .btn_left{
-  margin-right: 260px;
+  margin-right: 250px;
   width:100px;
 }
 .btn_right{
   width: 100px;
+}
+.center_div{
+    margin: 0 auto; 
+    width: 30%;
 }
 </style>

@@ -36,12 +36,12 @@
 </template>
 
 <script>
-import storeData from './StoreData'
+const url = 'https://localhost:44398/api/User/GetAll'
 export default {
   name: 'Users',
   data () {
     return {
-      items: storeData,
+      items: null,
       fields: [
         { key: 'storename', label: 'Name', _classes: 'font-weight-bold' },
         { key: 'registered' },
@@ -77,7 +77,12 @@ export default {
     pageChange (val) {
       this.$router.push({ query: { page: val }})
     }
-  }
+  },
+  mounted() {
+    this.$http.get(url).then(response => {
+            this.items = response.data
+          })
+  },
 }
 </script>
 <style>

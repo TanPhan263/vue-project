@@ -2,7 +2,6 @@
   <CRow>
     <CCol>
       <CCard class="center_div">
-        {{items}}
         <CCardHeader>
           Users
         </CCardHeader>
@@ -38,7 +37,7 @@
 
 <script>
 import usersData from './UsersData'
-const url = 'https://localhost:44340/api/User/GetAll'
+const url = 'https://localhost:44398/api/User/GetAll'
 export default {
   name: 'Users',
   data () {
@@ -74,8 +73,8 @@ export default {
         default: 'primary'
       }
     },
-    rowClicked (item, index) {
-      this.$router.push({path: `users/${index + 1}`})
+    rowClicked (item) {
+      this.$router.push({path: `users/${item.userID}`})
     },
     pageChange (val) {
       this.$router.push({ query: { page: val }})

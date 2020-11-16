@@ -92,21 +92,23 @@ export default {
   computed: {
     fields () {
       return [
-        { key: 'key', label: this.storename, _style: 'width:150px'},
+        { key: 'key', label: this.username, _style: 'width:150px'},
         { key: 'value', label: '', _style: 'width:150px;' }
       ]
     },
     userData () {
       const id = this.$route.params.id
-      const user = storeData.find((user, index) => index + 1 == id)
-      const userDetails = user ? Object.entries(user) : [['id', 'Not found']]
-      return userDetails.map(([key, value]) => { return { key, value } })
+      const user=null
+      this.$http.get('https://localhost:44340/api/User/GetbyId/'+id).then(response => {
+            user = response.data
+      })
+      return this.user
     },
     visibleData () {
-      return this.userData.filter(param => param.key !== 'storename')
+      return this.userData.filter(param => param.key !== 'username')
     },
     username () {
-      return this.userData.filter(param => param.key === 'storename')[0].value
+      return this.userData.filter(param => param.key === 'username').value
     }
   },
   methods: {
