@@ -26,7 +26,7 @@
                   </CInput>
                   <CRow>
                     <CCol col="6" class="text-left">
-                      <CButton v-on:click="getUsser()" color="primary" class="px-4">Login</CButton>
+                      <CButton v-on:click="doLogin()" color="primary" class="px-4">Login</CButton>
                     </CCol>
                     <CCol col="6" class="text-right">
                       <CButton color="link" class="px-0">Forgot password?</CButton>
@@ -66,6 +66,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'Login',
   data() {
@@ -75,9 +76,12 @@ export default {
     }
   },
   methods: {
-    getUsser(){
-      console.log(this.user);
-      console.log(this.pass);
+    doLogin(){
+      // Goi api de xac thuc username vs pass
+
+      // sau khi xac thuc thanh cong
+      localStorage.setItem("isAuthen","success");
+      this.$router.push("/dashboard");
     }
 
   }

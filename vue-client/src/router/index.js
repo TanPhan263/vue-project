@@ -24,10 +24,21 @@ const Stores = () => import('@/views/stores/Stores')
 const inforUser = () => import('@/views/inforUser/update')
 //change pass
 const Changepass = () => import('@/views/change-pass/changepass')
+
 Vue.use(Router)
 
+const isAuthen = (to, from, next) => {  
+  var isAuthen = localStorage.getItem("isAuthen");
+
+  if (isAuthen){
+    next();
+    return;
+  }
+  next("/login");
+};
+
 export default new Router({
-  mode: 'hash', // https://router.vuejs.org/api/#mode
+  mode: 'history', // https://router.vuejs.org/api/#mode
   linkActiveClass: 'active',
   scrollBehavior: () => ({ y: 0 }),
   routes: configRoutes()
@@ -36,15 +47,16 @@ export default new Router({
 function configRoutes () {
   return [
     {
-      path: '/',
-      redirect: '/dashboard',
+      path: '/',      
       name: 'Home',
       component: TheContainer,
+      beforeEnter: isAuthen,
       children: [
         {
           path: 'dashboard',
           name: 'Dashboard',
-          component: Dashboard
+          component: Dashboard,
+          beforeEnter: isAuthen    
         },       
         {
           path: 'charts',
@@ -168,7 +180,19 @@ function configRoutes () {
           component: Register
         }
       ]
+    },
+    {
+      path: '/login',      
+      name: 'Login',
+      component: Login     
+    },
+    {
+      path: '/register',      
+      name: 'Register',
+      component: Register     
     }
   ]
 }
+
+
 
