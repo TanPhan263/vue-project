@@ -6,7 +6,7 @@ module.exports = {
     resolve: {
        symlinks: false
     },
-    devtool: 'source-map'
+    devtool: 'source-map',
   },
   transpileDependencies: [
     '@coreui/utils'

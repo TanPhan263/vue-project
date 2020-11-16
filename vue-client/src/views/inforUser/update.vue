@@ -12,8 +12,8 @@
                 placeholder="Disabled"
                 horizontal
                 value=''
-                disabled
-              />
+                v-model="id"
+              />{{ id }}
               <CInput
                 label="Họ tên"
                 value=''
@@ -50,7 +50,7 @@
             </CForm>
           </CCardBody>
           <CCardFooter>
-            <CButton  class="btn_submit" type="submit" size="sm" color="primary"><CIcon name="cil-check-circle"/> Submit</CButton>
+            <CButton v-on:click="mounted()"  class="btn_submit" type="submit" size="sm" color="primary"><CIcon name="cil-check-circle"/> Submit</CButton>
             <CButton  class="btn_back" type="reset" size="sm" color="danger"><CIcon name="cil-ban"/> Back</CButton>
           </CCardFooter>
         </CCard>
@@ -86,11 +86,13 @@
 </template>
 
 <script>
+const url = "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH&tsyms=USD,EUR";
 export default {
     name: 'update',
     data(){
         return{
             changeAvt: false,
+            id: 'Hello',
             Userinfo: [{
                 id : '',
                 name: '',
@@ -105,8 +107,14 @@ export default {
     methods: {
         uploadfile(){
             changeAvt = !changeAvt
+        },
+         mounted() {
+          this.$http.get(url).then(response => {
+            this.id = response.data
+          })
         }
-    }
+    },
+   
 }
 </script>
 

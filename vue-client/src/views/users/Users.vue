@@ -2,6 +2,7 @@
   <CRow>
     <CCol>
       <CCard class="center_div">
+        {{items}}
         <CCardHeader>
           Users
         </CCardHeader>
@@ -37,16 +38,18 @@
 
 <script>
 import usersData from './UsersData'
+const url = 'https://localhost:44340/api/User/GetAll'
 export default {
   name: 'Users',
   data () {
     return {
-      items: usersData,
+      items: null ,
       fields: [
-        { key: 'username', label: 'Name', _classes: 'font-weight-bold' },
-        { key: 'registered' },
-        { key: 'role' },
-        { key: 'status' }
+        { key: 'userID', label: 'Name', _classes: 'font-weight-bold' },
+        { key: 'userName' },
+        { key: 'phone' },
+        { key: 'address' },
+        { key: 'email' },
       ],
       activePage: 1
     }
@@ -77,7 +80,13 @@ export default {
     pageChange (val) {
       this.$router.push({ query: { page: val }})
     }
-  }
+
+  },
+  mounted() {
+    this.$http.get(url).then(response => {
+            this.items = response.data
+          })
+  },
 }
 </script>
 <style>
