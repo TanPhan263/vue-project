@@ -25,12 +25,15 @@ const inforUser = () => import('@/views/inforUser/update')
 //change pass
 const Changepass = () => import('@/views/change-pass/changepass')
 
+//Homepage
+const Homepage = () => import('@/client/views/HomePage') 
+
 Vue.use(Router)
 
 const isAuthen = (to, from, next) => {  
   var isAuthen = localStorage.getItem("isAuthen");
 
-  if (isAuthen){
+  if (!isAuthen){
     next();
     return;
   }
@@ -190,6 +193,11 @@ function configRoutes () {
       path: '/register',      
       name: 'Register',
       component: Register     
+    },
+    {
+      path: '/Homepage',      
+      name: 'Homepage',
+      component: Homepage     
     }
   ]
 }

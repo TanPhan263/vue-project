@@ -7,7 +7,12 @@ import CoreuiVue from '@coreui/vue'
 import { iconsSet as icons } from './assets/icons/icons.js'
 import store from './store'
 import axios from 'axios'
+import babelPolyfill from 'babel-polyfill'
+import './assets/css/style.css'
+import './assets/css/bootstrap.min.css'
 
+Vue.use(babelPolyfill)
+axios.defaults.headers.common['Authorization'] = `Bearer ${store.state.token}`;
 Vue.prototype.$http = axios
 Vue.use(CoreuiVue)
 Vue.prototype.$log = console.log.bind(console)

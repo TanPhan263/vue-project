@@ -55,7 +55,7 @@
           </CCardFooter>
         </CCard>
       </CCol>
-         <CCol md="6">
+      <CCol md="6">
         <CCard>
           <CCardBody>
             <CForm>

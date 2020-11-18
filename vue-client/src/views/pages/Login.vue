@@ -21,7 +21,7 @@
                   <CInput
                     placeholder="Username or email"
                     autocomplete="username email"
-                    v-model="input.username"
+                    v-model="username"
                   >
                     <template #prepend-content
                       ><CIcon name="cil-user"
@@ -31,7 +31,7 @@
                     placeholder="Password"
                     type="password"
                     autocomplete="curent-password"
-                    v-model="input.pass"
+                    v-model="password"
                   >
                     <template #prepend-content
                       ><CIcon name="cil-lock-locked"
@@ -40,7 +40,7 @@
                   <CRow>
                     <CCol col="6" class="text-left">
                       <CButton
-                        v-on:click="doLogin()"
+                        v-on:click="login()"
                         color="primary"
                         class="px-4"
                         >Login</CButton
@@ -92,28 +92,34 @@
 </template>
 
 <script>
+import AuthService from '@/services/AuthService.js';
 export default {
   name: "Login",
   data() {
     return { 
-      input: {
         username: "",
-        pass: "",
+        password: "",
+        mgs:''
     }
-    };
   },
   methods: {
-    doLogin() {
-      // Goi api de xac thuc username vs pass
-      if(this.input.username!= '' && this.input.pass != '')
-      {
-        
+    async login() {
+      try {
+        const credentials = {
+          userName: this.username,
+          password: this.password
+        };
+        const response = await AuthService.login(credentials);
+        this.msg = response.msg;
+        const token = response.token;
+        const user = response.user;
+        this.$store.dispatch('login', { token, user });
+        this.$router.push('/');
+      } catch (error) {
+        this.$router.push('/pages/404');
       }
-      // sau khi xac thuc thanh cong
-      localStorage.setItem("isAuthen", "success");
-      this.$router.push("/dashboard");
-    },
-  },
+    }
+  }
 };
 </script>
 <style>

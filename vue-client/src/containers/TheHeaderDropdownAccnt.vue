@@ -42,24 +42,34 @@
     <CDropdownItem>
       <CIcon name="cil-shield-alt" /> Lock Account
     </CDropdownItem>
-    <CDropdownItem v-on:click="doLogout">
+    <CDropdownItem v-on:click="logout">
       <CIcon name="cil-lock-locked" /> Logout
     </CDropdownItem>
   </CDropdown>
 </template>
 
 <script>
+import AuthService from '@/services/AuthService.js';
 export default {
   name: 'TheHeaderDropdownAccnt',
-  data () {
-    return { 
-      itemsCount: 42
-    }
+  data() {
+    return {
+      itemsCount: 30,
+      secretMessage: '',
+      username: ''
+    };
   },
-  methods:{
-    doLogout(){
-      localStorage.removeItem('isAuthen');
-      this.$router.push("/login");
+  async created() {
+    if (!this.$store.getters.isLoggedIn) {
+      this.$router.push('/login');
+    }
+    this.username = this.$store.getters.getUser.username;
+    this.secretMessage = await AuthService.getSecretContent();
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout');
+      this.$router.push('/login');
     }
   }
 }

@@ -106,7 +106,7 @@ export default {
   data () {
     return {
       userData:[],
-      options: [ 'User', '', 'Admin'],
+      options: [ 'User', 'Store Owner', 'Admin'],
     };
   },
   computed: {
@@ -130,7 +130,7 @@ export default {
   },
    mounted(){
       const id = this.$route.params.id
-      this.$http.get('https://localhost:44398/api/User/GetByID/'+id).then(response => {
+      this.$axios.get('https://localhost:44398/api/User/GetByID/'+id).then(response => {
             this.userData =response.data
             this.userData = JSON.parse(this.userData)
     })
