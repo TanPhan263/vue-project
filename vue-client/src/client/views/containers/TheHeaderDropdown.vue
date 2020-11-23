@@ -33,7 +33,7 @@
     >
       <strong>Settings</strong>
     </CDropdownHeader>
-    <CDropdownItem to="/update">
+    <CDropdownItem to="/users">
       <CIcon name="cil-user" /> Profile
     </CDropdownItem>
     <CDropdownItem>
@@ -49,9 +49,9 @@
 </template>
 
 <script>
-import AuthService from '@/services/AuthService.js';
+//import AuthService from '@/services/AuthService.js';
 export default {
-  name: 'TheHeaderDropdownAccnt',
+  name: 'TheHeaderDropdown',
   data() {
     return {
       itemsCount: 30,
@@ -59,18 +59,18 @@ export default {
       username: ''
     };
   },
+  // async created() {
+  //   if (!this.$store.getters.isLoggedIn) {
+  //     this.$router.push('/login');
+  //   }
+  //   this.username = this.$store.getters.getUser.username;
+  //   this.secretMessage = await AuthService.getSecretContent();
+  // },
   methods: {
     logout() {
       this.$store.dispatch('logout');
       this.$router.push('/login');
-    },
-    async created() {
-    if (!this.$store.getters.isLoggedIn) {
-      this.$router.push('/login');
     }
-    this.username = this.$store.getters.getUser.username;
-    this.secretMessage = await AuthService.getSecretContent();
-  },
   }
 }
 </script>

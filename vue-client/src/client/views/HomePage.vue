@@ -1,21 +1,13 @@
 <template>
-  <div>
-  <div class="slide">
-    <div class="drop-slide">
-      <div v-for="slide in listLiders" v-bind:key="slide.id" class="myslide">
-        <a href="" class="picture"
-          ><img src="image/foody-kens-restaurant.jpg"/></a>
-      </div>
-      <button id="next">&raquo;</button>
-      <button id="prev">&laquo;</button>
-    </div>
-  </div>
+<div class="wraper">
+  <Header/>
+  <Navbar v-bind:province="provinces"/>
+  <Search v-bind:listStore="listStores" ref="form"/>
   <div class="main">
     <div class="ship">
       <div class="menu-ship">
         <div class="hero">
-          <img src="image/F.png" width="40" height="40" />
-          <h2>Giao tận nơi</h2>
+          <h2>Quán mới nổi</h2>
         </div>
         <div class="grid">
           <ul>
@@ -26,18 +18,18 @@
             <li><a href="">Thức uống</a></li>
             <li><a href="">Tráng miệng</a></li>
             <li><a href="">Homemade</a></li>
-            <li><a href="">Vỉa hè</a></li>
+            <li><a href="">{{provinces}}</a></li>
           </ul>
         </div>
       </div>
       <div id="Giaotannoi" class="sub-menu-ship">
         <ul>
           <li v-for="store in stores" v-bind:key="store.storeID">
-            <a href="">
-              <img :src="stores.storePicture" width="205" height="150" />
+            <a v-on:click="storeClicked(store.storeID)">
+              <img :src="store.storePicture" width="205" height="150" />
               <div class="name-food">{{ store.storeName  }}</div>
-              <div class="address-store">{{ store.storeAddress }}</div>
-              <div class="intro">{{ store.businessTypeID }}</div>
+              <div class="address-store">{{ store.storeAddress.substr(0,30) }}...</div>
+              <div class="intro">{{ getType(store.businessTypeID) }}</div>
             </a>
           </li>
         </ul>
@@ -46,7 +38,6 @@
     <div class="promotion">
       <div class="menu-promotion">
         <div class="block">
-          <img src="image/F.png" width="40" height="40" />
           <h2>Ưu đãi từ nhà hàng</h2>
         </div>
         <div class="options">
@@ -65,13 +56,13 @@
       <div id="Uudai" class="sub-menu-promotion">
         <ul>
           <li v-for="store in stores" v-bind:key="store.storeID">
-            <a href="">
-              <img :src="store.storePicture" width="205" height="150" />
-              <div class="name-food">{{ store.storeName }}</div>
-              <div class="address-store">{{ store.storeAddress }}</div>
+            <a>
+              <img v-on:click="storeClicked(store.storeID)" :src="store.storePicture" width="205" height="150" />
+              <div class="name-food">{{ store.storeName.substr(0,30) }}</div>
+              <div class="address-store">{{ store.storeAddress.substr(0,30) }}...</div>
               <div class="intro">
-                <img :src="store.storePicture" height="20" width="20" />
-                <h5>{{ store.type }}</h5>
+                <img :src="store.storePicture" height="20" width="20"  style="margin-bottom: 5px;"/>
+                <h5 value="Hello"></h5>
               </div>
             </a>
           </li>
@@ -83,7 +74,7 @@
       <div class="section">
         <ul>
           <li>
-            <img src="image/F.png" width="25" height="25" />
+            <img src="../../assets/imgs/F.png" width="25" height="25" style="margin-top: 10px; margin-left:5px;"/>
             <h1 style="font-size: 1.5em">Khám phá</h1>
           </li>
           <li>
@@ -210,7 +201,7 @@
               <a href=""
                 ><img :src="store.storePicture" width="205" height="150" />
                 <div class="name-food">{{ store.storeName }}</div>
-                <div class="address-store">{{ store.storeAddress }}</div>
+                <div class="address-store">{{ store.storeAddress.substr(0,30) }}...</div>
                 <div class="comment"></div>
               </a>
             </li>
@@ -219,50 +210,60 @@
       </div>
     </div>
   </div>
-  </div>
+</div>
 </template>
 
 <script>
 import Header from './containers/Header'
+import Navbar from './containers/Navbar'
+import Search from './containers/Search'
 export default {
   name:'Home',
+  components:{
+        Header,
+        Search,
+        Navbar
+      },
   data() {
     return {
+      searchs:{
+        searchKey: '',
+        searchItems: []
+      },
       stores: [],
-      listLiders: [
-        {
-          id: 1,
-          src: 'image/foody-kens-restaurant.jpg'
-        },
-        {
-          id: 2,
-          src: 'image/foody-kens-restaurant.jpg'
-        },
-        {
-          id: 3,
-          src: 'image/foody-kens-restaurant.jpg'
-        },
-        {
-          id: 4,
-          src: 'image/foody-kens-restaurant.jpg'
-        },
-        {
-          id: 5,
-          src: 'image/foody-kens-restaurant.jpg'
-        }
-      ]
+      provinces:[],
+      listStores:[]
     }
   },
   mounted(){
       const id = this.$route.params.id
       this.$http.get('https://localhost:44398/api/Store/GetAll/').then(response => {
-            this.stores =response.data
-            this.userData = JSON.parse(this.userData)
-    })
+            this.stores=response.data
+      }),
+     this.$http.get('https://localhost:44398/api/Province/GetAll').then(response => {
+            this.provinces=response.data
+      })
+  },
+  methods:{
+    storeClicked (item) {
+      this.$store.commit("SET_INFORID", item)
+      this.$router.push({path: `/storeDetail`})
+    },
+    getType (index) {
+      const type =[]
+      this.$http.get('https://localhost:44398/api/BusinessType/GetById/' + index).then(response => {
+            this.type = response.data;
+      })
+      return this.type[0].businessTypeName;
+    },
+    searchs(){
+      this.$refs.form.searchs();
+    }
   }
 }
 </script>
 
 <style>
-
+@import url('../../assets/css/style.css');
+@import url('../../assets/css/bootstrap.min.css');
 </style>

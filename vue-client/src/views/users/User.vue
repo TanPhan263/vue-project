@@ -43,7 +43,7 @@
                 disabled
                 label="Quyền"
                 horizontal
-                :value="userData[0].userTypeID"
+                :value="userAuthor(userData[0].userTypeID)"
               />
               <CInput
               disabled
@@ -105,6 +105,7 @@ export default {
   },
   data () {
     return {
+      author: 'Admin',
       userData:[],
       options: [ 'User', 'Store Owner', 'Admin'],
     };
@@ -115,7 +116,7 @@ export default {
     goBack() {
       this.usersOpened ? this.$router.go(-1) : this.$router.push({path: '/users'})
       },
-    userAuthor(){
+    userAuthor(index){
       switch(index)
       {
         case 1: this.author = 'User';
@@ -125,12 +126,12 @@ export default {
         case 3: this.author ='Admin'
         break;
       }
-      return author
+      return this.author
     }
   },
    mounted(){
       const id = this.$route.params.id
-      this.$axios.get('https://localhost:44398/api/User/GetByID/'+id).then(response => {
+      this.$http.get('https://localhost:44398/api/User/GetByID/'+id).then(response => {
             this.userData =response.data
             this.userData = JSON.parse(this.userData)
     })

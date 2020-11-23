@@ -1,14 +1,14 @@
 import axios from 'axios';
-const url = 'http://localhost:44398/api/';
+const url = 'https://localhost:44398/api/User/';
 export default {
   login(credentials) {
     return axios
-      .post(url + 'Login/', credentials)
+      .post(url + 'Login', credentials)
       .then(response => response.data);
   },
   signUp(credentials) {
     return axios
-      .post(url + 'Register/', credentials)
+      .post(url + 'RegisterUser', credentials)
       .then(response => response.data);
   },
   getSecretContent() {

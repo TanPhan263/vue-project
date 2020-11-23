@@ -82,9 +82,9 @@ export default {
 
   },
   mounted() {
-    this.$axios.get(url).then(response => {
+    this.$http.get(url).then(response => {
             this.items = response.data
-          })
+    })
   },
 }
 </script>

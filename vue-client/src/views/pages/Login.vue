@@ -40,7 +40,7 @@
                   <CRow>
                     <CCol col="6" class="text-left">
                       <CButton
-                        v-on:click="login()"
+                        @click="login"
                         color="primary"
                         class="px-4"
                         >Login</CButton
@@ -93,6 +93,7 @@
 
 <script>
 import AuthService from '@/services/AuthService.js';
+import UsersVue from '../users/Users.vue';
 export default {
   name: "Login",
   data() {
@@ -111,14 +112,14 @@ export default {
         };
         const response = await AuthService.login(credentials);
         this.msg = response.msg;
-        const token = response.token;
+        const token = 'User';
         const user = response.user;
         this.$store.dispatch('login', { token, user });
-        this.$router.push('/');
+        this.$router.push('/Homepage');
       } catch (error) {
         this.$router.push('/pages/404');
       }
-    }
+    },
   }
 };
 </script>

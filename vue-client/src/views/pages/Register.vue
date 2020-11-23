@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import AuthService from '@/services/AuthService.js';
+// import AuthService from '@/services/AuthService.js';
 export default {
   name: "Register",
   data() {
@@ -71,21 +71,21 @@ export default {
       msg: ''
     };
   },
-  methods: {
-    async signUp() {
-      try {
-        const credentials = {
-          username: this.username,
-          password: this.password,
-          password_repeat: this.password_repeat
-        };
-        const response = await AuthService.signUp(credentials);
-        this.msg = response.msg;
-        this.$router.push('/');
-      } catch (error) {
-        this.msg = error.response.data.msg;
-      }
-    }
-  }
+  // methods: {
+  //   async signUp() {
+  //     try {
+  //       const credentials = {
+  //         username: this.username,
+  //         password: this.password,
+  //         password_repeat: this.password_repeat
+  //       };
+  //       const response = await AuthService.signUp(credentials);
+  //       this.msg = response.msg;
+  //       this.$router.push('/');
+  //     } catch (error) {
+  //       this.msg = error.response.data.msg;
+  //     }
+  //   }
+  // }
 };
 </script>

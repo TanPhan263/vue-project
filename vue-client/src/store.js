@@ -8,16 +8,21 @@ Vue.use(Vuex)
 const state = {
   sidebarShow: 'responsive',
   sidebarMinimize: false
+  
 }
 
 const getDefaultState = () => {
   return {
     token: '',
-    user: {}
+    user: {},
+    inforID:''
   };
 };
 
 const mutations = {
+  SET_INFORID: (state,inforID) => {
+    state.inforID = inforID;
+  },
   SET_TOKEN: (state, token) => {
       state.token = token;
     },
@@ -52,6 +57,9 @@ export default new Vuex.Store({
     },
     getUser: state => {
       return state.user;
+    },
+    inforID: state => {
+      return state.inforID;
     }
   },
   actions: {

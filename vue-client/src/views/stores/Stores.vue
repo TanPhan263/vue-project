@@ -36,17 +36,22 @@
 </template>
 
 <script>
-const url = 'https://localhost:44398/api/User/GetAll'
+const url = 'https://localhost:44398/api/Store/GetAll'
 export default {
   name: 'Users',
   data () {
     return {
       items: null,
       fields: [
-        { key: 'storename', label: 'Name', _classes: 'font-weight-bold' },
-        { key: 'registered' },
-        { key: 'owner' },
-        { key: 'status' }
+        { key: 'storeID', label: 'Name', _classes: 'font-weight-bold' },
+        { key: 'storeAddress' },
+        { key: 'storeName' },
+        { key: 'openTime' },
+        { key: 'closeTime' },
+        { key: 'ratePoint' },
+        { key: 'provinceID' }
+
+
       ],
       activePage: 1
     }
@@ -71,8 +76,8 @@ export default {
         default: 'primary'
       }
     },
-    rowClicked (item, index) {
-      this.$router.push({path: `store/${index + 1}`})
+    rowClicked (item) {
+      this.$router.push({path: `store/${item.storeID}`})
     },
     pageChange (val) {
       this.$router.push({ query: { page: val }})

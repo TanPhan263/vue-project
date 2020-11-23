@@ -64,7 +64,7 @@
       <CWidgetDropdown
         color="warning"
         header="9.823"
-        text="Số quán đang chờ xác nhận"
+        text="Số quán chờ xác nhận"
       >
         <template #default>
           <CDropdown

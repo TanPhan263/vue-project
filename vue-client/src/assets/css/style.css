@@ -493,7 +493,7 @@
     background-color:#eee;  
 }
 .main .ship .menu-ship{
-	width:98%;
+	width:100%;
 	padding:0 10px 0 10px;
 	margin:0 auto;
 	overflow:hidden;
@@ -503,7 +503,7 @@
     text-align:center;
 }
 .main .ship .menu-ship .hero{
-	width:25%;
+	width:30%;
 	float:left;
 }
 .main .ship .menu-ship .hero img{
@@ -513,10 +513,9 @@
 	border-radius:4px; 
 }
 .main .ship .menu-ship .hero h2{
-    line-height:20px;
+    line-height:40px;
     font-weight:bold;
     overflow:hidden; 
-    margin-left:10px;  
     float:left;  
 }
 .main .ship .menu-ship .grid{
@@ -582,6 +581,12 @@
 	white-space:nowrap;  
 	color:#000;
 }
+.main .ship .sub-menu-ship ul li router-link{
+	text-decoration:none; 
+	display:block; 
+	white-space:nowrap;  
+	color:#000;
+}
 .main .ship .sub-menu-ship ul li a div.name-food{
 	font-size:14px;
 	font-weight:bold;
@@ -612,7 +617,7 @@
     margin-top:20px;
 }
 .main .promotion .menu-promotion{
-	width:98%;
+	width:100%;
 	padding:0 10px 0 10px;
 	margin:0 auto;
 	overflow:hidden;
@@ -632,7 +637,7 @@
 	border-radius:4px; 
 }
 .main .promotion .menu-promotion .block h2{
-    line-height:24px;
+    line-height:40px;
     font-weight:bold;
     margin-left:10px;  
     float:left;  

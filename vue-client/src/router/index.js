@@ -27,6 +27,8 @@ const Changepass = () => import('@/views/change-pass/changepass')
 
 //Homepage
 const Homepage = () => import('@/client/views/HomePage') 
+const Search = () => import('@/client/views/SearchPage')
+const storeDetail= () => import('@/client/views/storeDetail') 
 
 Vue.use(Router)
 
@@ -53,13 +55,13 @@ function configRoutes () {
       path: '/',      
       name: 'Home',
       component: TheContainer,
-      beforeEnter: isAuthen,
+      //beforeEnter: isAuthen,
       children: [
         {
           path: 'dashboard',
           name: 'Dashboard',
           component: Dashboard,
-          beforeEnter: isAuthen    
+          //beforeEnter: isAuthen    
         },       
         {
           path: 'charts',
@@ -197,8 +199,19 @@ function configRoutes () {
     {
       path: '/Homepage',      
       name: 'Homepage',
-      component: Homepage     
+      component: Homepage,
+    },
+    {
+      path: '/storeDetail',      
+      name: 'storeDetail',
+      component: storeDetail
+    },
+    {
+      path: '/search',      
+      name: 'search',
+      component: Search
     }
+
   ]
 }
 
