@@ -18,7 +18,7 @@
             <li><a href="">Thức uống</a></li>
             <li><a href="">Tráng miệng</a></li>
             <li><a href="">Homemade</a></li>
-            <li><a href="">{{provinces}}</a></li>
+            <li><a href="">Vỉa hè</a></li>
           </ul>
         </div>
       </div>
