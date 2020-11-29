@@ -545,7 +545,11 @@
 	float:left;
 	 
 }
-.main .ship .menu-ship .grid ul li.active a{
+.main .ship .menu-ship .grid ul li a:hover {
+    color:#960014;
+    border-bottom:2px solid #960014; 
+}
+.main .ship .menu-ship .grid ul li a:active {
     color:#960014;
     border-bottom:2px solid #960014; 
 }
@@ -783,6 +787,10 @@
 	float:left;
 	padding:16px;
 	white-space:nowrap;   
+}
+.artical .menu-artical .menu-left a:hover{
+	border-bottom:2px solid #960014;
+	color:#960014;
 }
 .artical .menu-artical .menu-right{
 	width:60%;

@@ -8,6 +8,14 @@ import { iconsSet as icons } from './assets/icons/icons.js'
 import store from './store'
 import axios from 'axios'
 import babelPolyfill from 'babel-polyfill'
+import * as VueGoogleMaps from "vue2-google-maps";
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyBWpwCzPne3JzfEIxHqDb1I2uZp_0dfkas",
+    libraries: "places" // necessary for places input
+  }
+});
 
 Vue.use(babelPolyfill)
 axios.defaults.headers.common['Authorization'] = `Bearer ${store.state.token}`;

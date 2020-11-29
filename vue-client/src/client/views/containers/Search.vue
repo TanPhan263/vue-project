@@ -10,14 +10,14 @@
 						<input type="text" name="searchKey" placeholder="Tìm món trực tuyến tại 10973 địa điểm ở TP. HCM">
 						<a class="icon-search"></a>
 					</div>
-					<div>
+					<!-- <div>
 						<ul>
 							<li> Hello babe</li>
 						</ul>
 						<ul v-for="store in listStore" :key="store.storeID">
 							<li>{{ store.storeName }}</li>
 						</ul>
-					</div>
+					</div> -->
 				</form>
 			</div>
 		</div>

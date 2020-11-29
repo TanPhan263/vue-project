@@ -11,14 +11,12 @@
         </div>
         <div class="grid">
           <ul>
-            <li class="active"><a href="">Mới nhất</a></li>
-            <li><a href="">Tất cả</a></li>
-            <li><a href="">Cơm trưa</a></li>
-            <li><a href="">Đồ ăn</a></li>
-            <li><a href="">Thức uống</a></li>
-            <li><a href="">Tráng miệng</a></li>
-            <li><a href="">Homemade</a></li>
-            <li><a href="">Vỉa hè</a></li>
+            <li><a >Mới nhất</a></li>
+            <li><a >Tất cả</a></li>
+            <li><a >Đồ ăn</a></li>
+            <li><a>Thức uống</a></li>
+            <li><a >Nhà hàng</a></li>
+            <li><a >Vỉa hè</a></li>
           </ul>
         </div>
       </div>
@@ -38,7 +36,7 @@
     <div class="promotion">
       <div class="menu-promotion">
         <div class="block">
-          <h2>Ưu đãi từ nhà hàng</h2>
+          <h2>Ưu đãi hôm nay </h2>
         </div>
         <div class="options">
           <div class="all">
@@ -91,7 +89,7 @@
             >
           </li>
           <li>
-            <a href=""
+            <a
               >Ăn gì<span
                 style="
                   float: right;
@@ -104,7 +102,7 @@
             >
           </li>
           <li>
-            <a href=""
+            <a 
               >Sưu tập<span
                 style="
                   float: right;
@@ -117,7 +115,7 @@
             >
           </li>
           <li>
-            <a href=""
+            <a 
               >Bình luận<span
                 style="
                   float: right;
@@ -130,7 +128,7 @@
             >
           </li>
           <li>
-            <a href=""
+            <a 
               >Giao hàng<span
                 style="
                   float: right;
@@ -147,8 +145,8 @@
       <div class="artical">
         <div class="menu-artical">
           <div class="menu-left">
-            <a href="" class="action">Mới nhất</a>
-            <a href="">Gần tôi</a>
+            <a>Mới nhất</a>
+            <a>Gần tôi</a>
           </div>
           <div class="menu-right">
             <select>
@@ -217,6 +215,7 @@
 import Header from './containers/Header'
 import Navbar from './containers/Navbar'
 import Search from './containers/Search'
+
 export default {
   name:'Home',
   components:{
@@ -230,7 +229,7 @@ export default {
         searchKey: '',
         searchItems: []
       },
-      stores: [],
+      newStores: [],
       provinces:[],
       listStores:[]
     }
@@ -238,7 +237,7 @@ export default {
   mounted(){
       const id = this.$route.params.id
       this.$http.get('https://localhost:44398/api/Store/GetAll/').then(response => {
-            this.stores=response.data
+            this.newStores=response.data
       }),
      this.$http.get('https://localhost:44398/api/Province/GetAll').then(response => {
             this.provinces=response.data
@@ -256,8 +255,32 @@ export default {
       })
       return this.type[0].businessTypeName;
     },
-    searchs(){
+    searchstore(){
       this.$refs.form.searchs();
+    },
+    changeCategory(index){
+      switch(index){
+        case 'Tất cả':  this.$http.get('https://localhost:44398/api/Store/GetAll/').then(response => {
+            this.newStores=response.data
+          });
+          break;
+        case 'Đồ ăn':  this.$http.get('https://localhost:44398/api/Store/GetByIDBusinessType/1').then(response => {
+            this.newStores=response.data
+          });
+          break;
+        case 'Thức uống':  this.$http.get('https://localhost:44398/api/Store/GetByIDBusinessType/2').then(response => {
+            this.newStores=response.data
+          });
+          break;
+        case 'Nhà hàng':  this.$http.get('https://localhost:44398/api/Store/GetByIDBusinessType/3').then(response => {
+            this.newStores=response.data
+          });
+          break;
+        case 'Vỉa hè':  this.$http.get('https://localhost:44398/api/Store/GetByIDBusinessType/4' ).then(response => {
+            this.newStores=response.data
+          });
+          break;
+      }
     }
   }
 }

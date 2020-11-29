@@ -1,5 +1,5 @@
 <template>
-  	<div class="navbar-fixed" style="position: absolute; top: 35px;">
+  	<div class="navbar-fixed position-sticky" style="position: absolute; top: 35px;">
 		<div class="container-header clearfix">
 			<div class="logo fl_left">
 				<a href="" title="deliveryNow.vn">

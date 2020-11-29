@@ -135,7 +135,7 @@
           </li>
           <li>
             <a href="">
-              <i class="fas fa-bookmark"></i>
+              <i v-on:click="isMapOpen=!isMapOpen" class="fas fa-bookmark"></i>
               Xem bản đồ
             </a>
           </li>
@@ -400,6 +400,12 @@
             </div>
           </div>
         </div>
+        <div class="microsite-gallery" style="margin-top: 15px">
+          <div class="microsite-box-heading">
+              <a href="" style="color: #333">Bản đồ</a>
+            </div>
+        <GoogleMap/>
+        </div>
       </div>
     </div>
   </div>
@@ -409,6 +415,8 @@
 <script>
 import Header from './containers/Header'
 import Navbar from './containers/Navbar'
+import GoogleMap from './containers/GoogleMap'
+
 export default {
   name: 'storeDetail',
    beforeRouteEnter(to, from, next) {
@@ -420,12 +428,14 @@ export default {
     return{
       storeOpen: [],
       storeMenu:[],
-      menuId: ''
+      menuId: '',
+      isMapOpen: false
     }
   },
   components:{
     Header,
-    Navbar
+    Navbar,
+    GoogleMap
   },
 methods:{
     show(index){
