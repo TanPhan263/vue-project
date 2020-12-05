@@ -59,6 +59,9 @@ export default {
       username: ''
     };
   },
+  props:{
+    avt:''
+  },
   // async created() {
   //   if (!this.$store.getters.isLoggedIn) {
   //     this.$router.push('/login');

@@ -36,6 +36,11 @@
       </CHeaderNavItem>
     </CHeaderNav>
     <CHeaderNav class="mr-4">
+       <CHeaderNavItem class="d-md-down-none mx-2">
+        <CHeaderNavLink>
+            Xin chao {{ username }}
+        </CHeaderNavLink>
+      </CHeaderNavItem>
       <CHeaderNavItem class="d-md-down-none mx-2">
         <CHeaderNavLink>
           <CIcon name="cil-bell"/>
@@ -51,11 +56,21 @@
 
 <script>
 import TheHeaderDropdownAccnt from './TheHeaderDropdownAccnt'
-
+const baseUrl = 'https://localhost:44398/api/User/'
 export default {
   name: 'TheHeader',
+  data(){
+    return{
+      username: ''
+    }
+  },
   components: {
     TheHeaderDropdownAccnt
+  },
+  mounted() {
+    this.$http.get(baseUrl+ 'GetByID?token=' + localStorage.getItem('isAuthen')).then(response => {
+      this.username= response.data[0].userName
+    })
   }
 }
 </script>

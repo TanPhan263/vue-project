@@ -1,8 +1,5 @@
 <template>
   <div class="wraper">
-<Header/>
-  <Navbar/>
-  <Search/>
     <div class="discover">
       <div class="artical">
         <div class="menu-artical">
@@ -35,11 +32,26 @@ import Header from './containers/Header'
 import Navbar from './containers/Navbar'
 import Search from './containers/Search'
 export default {
+	data(){
+		return{
+		stores:[]
+		}
+	},
     components:{
         Header,
         Navbar,
         Search
-    }
+	},
+	mounted(){
+		debugger;
+		const key = this.$route.query.key
+		this.$http.get('https://localhost:44398/api/Dish/Search?dishname=' + key).then(response => {
+         if(response.data !='Không có kết quả tìm kiếm')
+            this.stores = response.data
+          else this.stores = []
+         console.log(this.stores)
+      });
+	}
 }
 </script>
 

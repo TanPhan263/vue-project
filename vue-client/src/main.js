@@ -9,6 +9,9 @@ import store from './store'
 import axios from 'axios'
 import babelPolyfill from 'babel-polyfill'
 import * as VueGoogleMaps from "vue2-google-maps";
+import VueSuggestion from 'vue-suggestion'
+
+Vue.use(VueSuggestion) // Define default global options here (optional)
 
 Vue.use(VueGoogleMaps, {
   load: {

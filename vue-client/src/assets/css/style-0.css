@@ -172,6 +172,16 @@ a.btn:hover{
 	float: left;
 	font-size: 15px;
 }
+.search_suggest{
+	width: 600px;
+	background: #fff;
+	height: 60px;
+	border: none;
+	padding: 0 15px;
+	border-radius: 4px;
+	float: left;
+	font-size: 15px;
+}
 .search-1 .icon-search{
 	background: url('../imgs/ico-search.png') no-repeat 15px 16px #e1e1e1;
 	display: block;

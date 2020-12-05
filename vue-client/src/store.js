@@ -64,6 +64,7 @@ export default new Vuex.Store({
   },
   actions: {
     login: ({ commit, dispatch }, { token, user }) => {
+      debugger;
       commit('SET_TOKEN', token);
       commit('SET_USER', user);
       // set auth header

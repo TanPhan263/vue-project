@@ -7,40 +7,46 @@
 				<h1></h1>
 				<form action="#" id="searchform" method="#">
 					<div class="search-1 clearfix">
-						<input type="text" name="searchKey" placeholder="Tìm món trực tuyến tại 10973 địa điểm ở TP. HCM">
+						 <!-- <vue-suggestion :items="stores" 
+							v-model="item" 
+							:setLabel="setLabel"
+							:itemTemplate="itemTemplate"
+							@changed="inputChange" 
+							@selected="itemSelected">
+  						</vue-suggestion> -->
+						  <input type="text" >
 						<a class="icon-search"></a>
 					</div>
-					<!-- <div>
-						<ul>
-							<li> Hello babe</li>
-						</ul>
-						<ul v-for="store in listStore" :key="store.storeID">
-							<li>{{ store.storeName }}</li>
-						</ul>
-					</div> -->
 				</form>
 			</div>
 		</div>
 </template>
 <script>
+import itemTemplate from '../itemSearch';
 export default {
 	name: 'searchbar',
 	data(){
 		return{
-
+			item: {},
+			itemTemplate
 		}
 	},
 	props:{
-		listStore: Array
+		stores: Array
 	},
-	methods:{
-		searchStore()
-		{
-			this.$http.get('https://localhost:44398/api/Store/GetAll/').then(response => {
-            this.listStores = response.data
-      })
+	methods: {
+    itemSelected (item) {
+      this.item = item;
     },
-	}
+    setLabel (item) {
+      return item.storeName;
+    },
+    inputChange (text) {
+      // your search method
+      this.items = this.stores.filter(item => item.storeName.contains(text));
+      // now `items` will be showed in the suggestion list
+    },
+  },
 }
 </script>
 <script>

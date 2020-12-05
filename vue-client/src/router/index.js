@@ -29,13 +29,16 @@ const Changepass = () => import('@/views/change-pass/changepass')
 const Homepage = () => import('@/client/views/HomePage') 
 const Search = () => import('@/client/views/SearchPage')
 const storeDetail= () => import('@/client/views/storeDetail') 
+const ForgetPass= () => import('@/client/views/ForgetPass') 
+const UserInfor= () => import('@/client/views/UserInfor') 
 
 Vue.use(Router)
 
 const isAuthen = (to, from, next) => {  
-  var isAuthen = localStorage.getItem("isAuthen");
+  debugger;
+  var isAuthen = localStorage.getItem('isAuthen');
 
-  if (!isAuthen){
+  if (isAuthen != null){
     next();
     return;
   }
@@ -55,13 +58,12 @@ function configRoutes () {
       path: '/',      
       name: 'Home',
       component: TheContainer,
-      //beforeEnter: isAuthen,
+      beforeEnter: isAuthen,
       children: [
         {
           path: 'dashboard',
           name: 'Dashboard',
           component: Dashboard,
-          //beforeEnter: isAuthen    
         },       
         {
           path: 'charts',
@@ -200,17 +202,34 @@ function configRoutes () {
       path: '/Homepage',      
       name: 'Homepage',
       component: Homepage,
+      children:[
+        {
+          path: '/search',      
+          name: 'search',
+          component: Search
+        }
+      ]
     },
     {
-      path: '/storeDetail',      
+      path: '/storeDetail/:id',      
       name: 'storeDetail',
       component: storeDetail
     },
     {
-      path: '/search',      
-      name: 'search',
-      component: Search
+      path: '/ForgetPass',      
+      name: 'ForgetPass',
+      component: ForgetPass
+    },
+    {
+      path: '/UserInformation',      
+      name: 'UserInfor',
+      component: UserInfor
     }
+    // {
+    //   path: '/search',      
+    //   name: 'search',
+    //   component: Search
+    // }
 
   ]
 }

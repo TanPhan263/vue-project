@@ -94,28 +94,40 @@
 <script>
 import AuthService from '@/services/AuthService.js';
 import UsersVue from '../users/Users.vue';
+const baseUrl ='https://localhost:44398/api/User/';
 export default {
   name: "Login",
   data() {
     return { 
         username: "",
         password: "",
-        mgs:''
+        mgs:'',
+        role: []
     }
   },
   methods: {
     async login() {
+      debugger;
       try {
         const credentials = {
           userName: this.username,
           password: this.password
         };
         const response = await AuthService.login(credentials);
-        this.msg = response.msg;
-        const token = 'User';
-        const user = response.user;
-        this.$store.dispatch('login', { token, user });
-        this.$router.push('/Homepage');
+        const token =response;
+        localStorage.setItem('isAuthen',token);
+        const role = await AuthService.getRole(token)
+        //this.$http.get(baseUrl + 'GetRole?token=' + token).then(response => response.data)
+        if(role.userTyleID == '1' )
+        {
+          alert(role.userTyleID)
+          this.$router.push('/');
+        }else if(role.userTyleID == '0' ){
+          alert(role.userTyleID)
+          alert(token)
+          this.$router.push('/Homepage');
+        }
+        this.$router.push('/login');
       } catch (error) {
         this.$router.push('/pages/404');
       }

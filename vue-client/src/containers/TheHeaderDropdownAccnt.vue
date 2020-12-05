@@ -59,9 +59,12 @@ export default {
       username: ''
     };
   },
+  props:{
+    avt:''
+  },
   methods: {
     logout() {
-      this.$store.dispatch('logout');
+      localStorage.removeItem("isAuthen")
       this.$router.push('/login');
     },
     async created() {

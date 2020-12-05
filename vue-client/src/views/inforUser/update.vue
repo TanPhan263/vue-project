@@ -13,28 +13,33 @@
                 horizontal
                 value=''
                 v-model="id"
-              />{{ id }}
+                disabled
+              />
               <CInput
                 label="Họ tên"
                 value=''
                 horizontal
                 autocomplete="name"
+                 v-model="name"
               />
               <CInput
                 label="Địa chỉ"
                 value=''
                 horizontal
+                v-model="address"
               />
               <CInput
                 label="Số điện thoại"
                 horizontal
                 value=''
+                v-model="phone"
               />
               <CInput
                 label="Ngày sinh"
                 type="date"
                 horizontal
-                value=''
+                :value='birth'
+                v-model="birth"
               />
               <CInput
                 label="Email "
@@ -46,11 +51,12 @@
                 required
                 was-validated
                 value=''
+                v-model="mail"
               />
             </CForm>
           </CCardBody>
           <CCardFooter>
-            <CButton  class="btn_submit" type="submit" size="sm" color="primary"><CIcon name="cil-check-circle"/> Submit</CButton>
+            <CButton v-on:click="update"  class="btn_submit" type="submit" size="sm" color="primary"><CIcon name="cil-check-circle"/> Submit</CButton>
             <CButton  class="btn_back" type="reset" size="sm" color="danger"><CIcon name="cil-ban"/> Back</CButton>
           </CCardFooter>
         </CCard>
@@ -61,11 +67,11 @@
             <CForm>
                 <div class="center_div">
                 <img  v-on:click="changeAvt=!changeAvt"
-                    src="img/avatars/6.jpg"
+                    :src="avt"
                     class="c-avatar-img "
                 />
                  <CCardHeader>
-                    <strong class="center_div">Tên admin nè</strong>
+                    <strong class="center_div" style="margin-left: 20px">Tên admin nè</strong>
                 </CCardHeader>
                 </div>
             </CForm>
@@ -86,35 +92,61 @@
 </template>
 
 <script>
-const url = "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH&tsyms=USD,EUR";
+import axios from 'axios';
+import UserService from '@/services/UserService.js';
+const baseUrl = ""
 export default {
     name: 'update',
     data(){
         return{
             changeAvt: false,
-            id: 'Hello',
-            Userinfo: [{
-                id : '',
-                name: '',
-                address: '',
-                img: '',
-                phone: '',
-                birth:'',
-                }
-            ]
+            id: '',
+            name: '',
+            address: '',
+            phone: '',
+            birth: '',
+            mail: '',
+            avt: '',
+            pass: '', 
+            sex: '',
+            type: '',
         };
     },
     methods: {
         uploadfile(){
             changeAvt = !changeAvt
         },
-         mounted() {
-          this.$http.get(url).then(response => {
-            this.id = response.data
-          })
+        update(){
+          const credentials = {
+          userID: this.id,
+          userName: this.name,
+          phone: this.phone,
+          address: this.address,
+          password: this.pass,
+          email: this.mail,
+          picture: this.avt,
+          sex: this.sex,
+          birthday: this.birth,
+          userTypeID: this.type
+          };
+          axios.post("https://localhost:44398/api/User/EditByID?token=" + localStorage.getItem("isAuthen") , credentials).then(respone =>{ 
+            alert(respone.data)})
         }
     },
-   
+    mounted() {
+          this.$http.get("https://localhost:44398/api/User/GetByID?token=" + localStorage.getItem("isAuthen")).then(respone =>{
+            this.id= respone.data[0].userID
+            this.name=respone.data[0].userName
+            this.phone=respone.data[0].phone
+            this.address= respone.data[0].address
+            this.mail=respone.data[0].email
+            this.birth=respone.data[0].birthday
+            this.avt= respone.data[0].picture
+            this.pass= respone.data[0].password
+            this.type= respone.data[0].userTypeID
+            this.sex= respone.data[0].sex
+          })
+    }
 }
 </script>
 
@@ -128,7 +160,7 @@ export default {
   width:200px;
 }
 .btn_right{
-    margin-left: 130px ;
+    margin-left: 190px ;
     width: 200px;
     margin-bottom: 50px;
 }
