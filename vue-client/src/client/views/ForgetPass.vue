@@ -2,8 +2,7 @@
 <div
     class="c-app flex-row align-items-center"
     style="
-      background-image: url('https://wallpaperaccess.com/full/1631410.jpg');
-    "
+      background-image: url('https://wallpaperaccess.com/full/1631410.jpg'); "
   >
   <CRow class="center_div col-md-4">
   <CCard>
@@ -79,8 +78,7 @@ export default {
       return val ? val.length >= 8 : false
     },
     sendCode(){
-        const credentials ={
-            
+        const credentials ={   
         }
         axios.post("https://localhost:44398/api/User/ForgetPass", credentials).then(respone =>{ 
             alert(respone.data)})

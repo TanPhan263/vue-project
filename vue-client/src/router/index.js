@@ -31,7 +31,7 @@ const Search = () => import('@/client/views/SearchPage')
 const storeDetail= () => import('@/client/views/storeDetail') 
 const ForgetPass= () => import('@/client/views/ForgetPass') 
 const UserInfor= () => import('@/client/views/UserInfor') 
-
+const Homebody= () => import('@/client/views/Homebody') 
 Vue.use(Router)
 
 const isAuthen = (to, from, next) => {  
@@ -201,13 +201,19 @@ function configRoutes () {
     {
       path: '/Homepage',      
       name: 'Homepage',
+      redirect: '/Homepage/body',
       component: Homepage,
       children:[
         {
-          path: '/search',      
+          path: 'search',      
           name: 'search',
           component: Search
-        }
+        },
+        {
+          path: 'body',      
+          name: 'body',
+          component: Homebody
+        },
       ]
     },
     {

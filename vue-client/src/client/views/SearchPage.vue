@@ -15,7 +15,7 @@
             <li v-for="store in stores" v-bind:key="store.storeID">
               <a href=""
                 ><img :src="store.storePicture" width="205" height="150" />
-                <div class="name-food">{{ store.storeName }}</div>
+                <div class="name-food">{{ store.storeName.substr(0,20) }}</div>
                 <div class="address-store">{{ store.storeAddress.substr(0,30) }}...</div>
                 <div class="comment"></div>
               </a>
@@ -49,7 +49,7 @@ export default {
          if(response.data !='Không có kết quả tìm kiếm')
             this.stores = response.data
           else this.stores = []
-         console.log(this.stores)
+         	console.log(this.stores)
       });
 	}
 }

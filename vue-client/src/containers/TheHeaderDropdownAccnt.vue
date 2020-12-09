@@ -9,8 +9,8 @@
       <CHeaderNavLink>
         <div class="c-avatar">
           <img
-            src="img/avatars/6.jpg"
-            class="c-avatar-img "
+            :src="avt"
+            class="c-avatar-img"
           />
         </div>
       </CHeaderNavLink>

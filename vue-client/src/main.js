@@ -9,10 +9,12 @@ import store from './store'
 import axios from 'axios'
 import babelPolyfill from 'babel-polyfill'
 import * as VueGoogleMaps from "vue2-google-maps";
-import VueSuggestion from 'vue-suggestion'
+import { BFormRating } from 'bootstrap-vue'
+import CommentGrid from 'vue-comment-grid'
 
-Vue.use(VueSuggestion) // Define default global options here (optional)
+Vue.use(CommentGrid)
 
+Vue.component('b-form-rating', BFormRating)
 Vue.use(VueGoogleMaps, {
   load: {
     key: "AIzaSyBWpwCzPne3JzfEIxHqDb1I2uZp_0dfkas",

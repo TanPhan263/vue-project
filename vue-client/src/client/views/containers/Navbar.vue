@@ -6,35 +6,40 @@
 					<img src="../../../assets/imgs/foody-vn.png" alt="now.vn" width="112" style="margin-top: 5px;">
 				</a>
 			</div>
-            <CSelect
+            <select
+			id="province"
+			style="width:180px;"
             class="country fl_left"
             vertical
-
-            :options="getProvince()"
+			v-model="provinceSelected"
             placeholder="Địa điểm"
-            />
+			@change="getProvince()"
+            >
+			<option style="font-weight: bold;" value="">{{provinces[provinceSelected].provinceName}}</option>
+			<option v-on:click="getProvince" v-for="pro in provinces" v-bind:key="pro.provinceID" :value="pro.provinceID">
+			{{pro.provinceName}}
+			</option>
+            </select>
 			<div class="top-category">
 				<ul class="top-category-1">
-					<li><a href="#">Tất cả</a></li>
+					<li><a href="#">Gần bạn</a></li>
 					<li><a href="#">Đồ ăn</a></li>
 					<li><a href="#">Thức uống</a></li>
-					<li><a href="#">Nhà hàng</a></li>
-					<li><a href="#">Deal hot</a></li>
-					<li><a href="#">{{isLoggedin}}</a></li>
+					<li><a href="#">Ăn vặt</a></li>
 				</ul>
 			</div>
-			<div v-if="isLoggedin !=='Đăng nhập thất bại' && isLoggedin !==null" class="fl_right">
+			<div v-if="isLoggedin" class="fl_right">
 			  <CHeaderNav class="mr-4">
 				<CHeaderNavItem class="d-md-down-none mx-2">
 					<CHeaderNavLink>
 					<CIcon name="cil-bell"/>
 					</CHeaderNavLink>
 				</CHeaderNavItem>
-				<TheHeaderDropdownAccnt v-bind:avt="avt"/>
+				<TheHeaderDropdownAccnt style="" v-bind:avt="getAvt"/>
 			  </CHeaderNav>
 			</div>
-			<div v-if="isLoggedin==='Đăng nhập thất bại'"  id="login" class="fl_right">
-				<router-link to="/login" class="btn-login">Đăng nhập</router-link>
+			<div v-else  id="login" class="fl_right">
+				<router-link style="margin-right: 5px;" to="/login" class="btn-login">Đăng nhập</router-link>
 				<router-link to="/register" class="btn-login">Đăng kí</router-link>
 			</div>
 		</div>
@@ -42,48 +47,65 @@
 </template>
 
 <script>
+const baseUrl='https://localhost:44398/api/'
 import TheHeaderDropdownAccnt from '../../../containers/TheHeaderDropdownAccnt'
 export default {
 name: 'navbars',
 props:{
-	province: Array
+	province: Array,
 },
 components:{
 	TheHeaderDropdownAccnt
 },
 data(){
     return{
-        
+		provinceSelected: '',
+		avt:'',
+		provinces: '',
     }
 },
 computed:{
 	isLoggedin: function() {
-		return localStorage.isAuthen;
-	},
-	getUser: function() {
-		 this.$http.get("https://localhost:44398/api/User/GetByID?token=" + localStorage.getItem("isAuthen")).then(respone =>{
-            this.id= respone.data[0].userID
-            this.name=respone.data[0].userName
-            this.phone=respone.data[0].phone
-            this.address= respone.data[0].address
-            this.mail=respone.data[0].email
-            this.birth=respone.data[0].birthday
-            this.avt= respone.data[0].picture
-            this.pass= respone.data[0].password
-            this.type= respone.data[0].userTypeID
-            this.sex= respone.data[0].sex
-          })
-	},
+		if(localStorage.getItem('isAuthen') == null || localStorage.getItem('isAuthen') == 'Đăng nhập thất bại') return false
+		return true
+	}
   },
   methods:{
 	  getProvince(){
-		  const proName= [];
-		  this.province.forEach(element => {
-			  proName.push(element.provinceName)
-		  });
-		  return proName;
+		try{
+		localStorage.setItem('provinceId',this.provinceSelected)
+		this.$router.go();
+		}
+		catch(e)
+		{
+
+		}
 	  },
-	  
+	  getAvt(){
+		  if(this.avt=='')
+			  return this.avt='../assets/imgs/userPic.png';
+		  else if(this.avt[0].picture =='') return this.avt='../assets/imgs/userPic.png';
+		  return this.avt[0].picture
+	  }
+  },
+  mounted(){
+	this.$http.get(baseUrl + 'Province/GetAll').then(response => {
+            this.provinces=response.data
+    })
+	if (localStorage.getItem('provinceId')==null)
+	  {
+		  this.provinceSelected=58;
+		  localStorage.setItem('provinceId', this.provinceSelected)
+	  }
+	  if(localStorage.getItem('provinceId')!=''){
+		  this.provinceSelected=localStorage.getItem('provinceId')
+	  }
+	if(localStorage.getItem('isAuthen')!= null && localStorage.getItem('isAuthen') != 'Đăng nhập thất bại')
+	{
+		 this.$http.get("https://localhost:44398/api/User/GetByID?token=" + localStorage.getItem("isAuthen")).then(respone =>{
+            this.avt= respone.data
+		})
+	}
   }
 }
 </script>

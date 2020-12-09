@@ -489,7 +489,7 @@
 	width:85%;
     margin:0 auto;
     border:1px solid #ddd;
-    height:43em;
+    height:50.5em;
     background-color:#eee;  
 }
 .main .ship .menu-ship{
@@ -520,7 +520,7 @@
 }
 .main .ship .menu-ship .grid{
 	width:60%;
-	float:left;
+	float:right;
 	margin:0 auto;
 	padding:12px 0;
 }
@@ -565,12 +565,14 @@
 
 
 .main .ship .sub-menu-ship{
-    clear:both;
+	clear:both;
+	height: 300em;
 }
 .main .ship .sub-menu-ship ul{
 	padding:0;
 	margin:0;
-	list-style-type:none; 
+	list-style-type:none;
+	
 }
 .main .ship .sub-menu-ship ul li{
 	float:left;
@@ -895,6 +897,20 @@
 	text-decoration:none;    
 }
 
+.left-thing{
+	width: 10%; 
+	height: 90%;
+}
+.middle-thing{
+	width: 50%;
+	font-size: 13px;
+}
+.right-thing{
+	width: 36%;
+	float: right;
+	text-align: right;
+	font-size: 13px;
+}
 
 
 

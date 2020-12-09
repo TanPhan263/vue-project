@@ -406,6 +406,8 @@
             </div>
         <GoogleMap/>
         </div>
+         <div class="microsite-gallery" style="margin-top: 15px"> <Rating/>
+        <Comments/></div>
       </div>
     </div>
   </div>
@@ -416,7 +418,9 @@
 import Header from './containers/Header'
 import Navbar from './containers/Navbar'
 import GoogleMap from './containers/GoogleMap'
+import Comments from './containers/Comments/comments'
 
+const baseUrl='https://localhost:44398/api';
 export default {
   name: 'storeDetail',
    beforeRouteEnter(to, from, next) {
@@ -436,7 +440,8 @@ export default {
   components:{
     Header,
     Navbar,
-    GoogleMap
+    GoogleMap,
+    Comments
   },
 methods:{
     show(index){
@@ -454,7 +459,6 @@ methods:{
     this.$http.get(baseUrl + 'Province/GetAll').then(response => {
             this.provinces=response.data
       })
-
   }
 }
 </script>

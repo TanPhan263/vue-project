@@ -7,7 +7,7 @@
         </CCardHeader>
         <CCardBody>
           <CDataTable
-             hover
+            hover
             border
             striped
             small
@@ -50,8 +50,6 @@ export default {
         { key: 'closeTime' },
         { key: 'ratePoint' },
         { key: 'provinceID' }
-
-
       ],
       activePage: 1
     }
