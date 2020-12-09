@@ -1,7 +1,7 @@
 <template>
 <div >
   <Header/>
-  <Navbar  v-bind:province="provinces" />
+  <Navbar/>
   <div class="pn-microsite">
     <div class="micro-content">
       <div class="micro-header clearfix">
@@ -450,15 +450,16 @@ methods:{
 },
   mounted(){
     const id = this.$route.params.id
-    this.$http.get('https://localhost:44398/api/Store/GetByID/'+ id).then(response => {
+    this.$http.get('https://localhost:44398/api/Store/GetByID?id='+ id).then(response => {
             this.storeOpen =response.data
-            this.$http.get('https://localhost:44398/api/Dish/GetByID/' +this.storeOpen[0].menuID).then(response => {
+            this.$http.get('https://localhost:44398/api/Dish/GetByIDMenu?id=' +this.storeOpen[0].menuID).then(response => {
               this.storeMenu = response.data
+              alert(this.storeMenu[0].dishName)
     });
     });
-    this.$http.get(baseUrl + 'Province/GetAll').then(response => {
-            this.provinces=response.data
-      })
+    // this.$http.get(baseUrl + '/Province/GetAll').then(response => {
+    //         this.provinces=response.data
+    //   })
   }
 }
 </script>

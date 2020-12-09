@@ -22,7 +22,7 @@
               <img :src="store.storePicture" width="205" height="150" />
               <div class="name-food">{{ store.storeName.substr(0,20)}}</div>
               <div class="address-store">{{ store.storeAddress.substr(0,30) }}...</div>
-              <div class="intro">{{type[store.businessTypeID].businessTypeName}}</div>
+              <div class="intro"></div>
             </a>
           </li>
         </ul>
@@ -226,7 +226,7 @@ data() {
   },
     mounted(){
       var id= localStorage.getItem('provinceId')
-      this.$http.get( baseUrl+'Store/GetByIDProvince/' + id).then(response => {
+      this.$http.get( baseUrl+'Store/GetByIDProvince?id=' + id).then(response => {
             this.stores=response.data;
             this.stores= this.stores.slice(0,15);
             this.stores.sort(function(a, b){ var x = a.ratePoint; var y = b.ratePoint;
@@ -234,23 +234,22 @@ data() {
             if(x>y) return 1;
             return 0  });
       }),
-      this.$http.get(baseUrl+'Store/GetByIDBusinessType/1').then(response => {
+      this.$http.get(baseUrl+'Store/GetByIDBusinessType?id=1').then(response => {
             this.news=response.data
             this.news.sort(function(a, b){ var x = a.ratePoint; var y = b.ratePoint;
             if(x<y) return -1;
             if(x>y) return 1;
             return 0  });
       })
-      this.$http.get(baseUrl+ 'Store/GetByIDBusinessType/2').then(response => {
+      this.$http.get(baseUrl+ 'Store/GetByIDBusinessType?id=1').then(response => {
             this.promotion=response.data
       })
-      this.$http.get(baseUrl+ 'Store/GetByIDBusinessType/3').then(response => {
+      this.$http.get(baseUrl+ 'Store/GetByIDBusinessType?id=1').then(response => {
             this.discover=response.data
       })
       this.$http.get(baseUrl + 'BusinessType/GetAll').then(response => {
             this.type = response.data;
       })
-      return this.type[0].businessTypeName;
   },
   methods:{
      storeClicked (item) {
@@ -285,7 +284,7 @@ data() {
       }
     },
     changeProvince(index){
-      this.$http.get(baseUrl+ 'GetByIDProvince/' + index).then(response => {
+      this.$http.get(baseUrl+ 'GetByIDProvince?id=' + index).then(response => {
         this.stores= response.data
       });
     },

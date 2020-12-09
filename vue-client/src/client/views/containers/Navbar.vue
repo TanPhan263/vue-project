@@ -15,9 +15,9 @@
             placeholder="Địa điểm"
 			@change="getProvince()"
             >
-			<option style="font-weight: bold;" value="">{{provinces[provinceSelected].provinceName}}</option>
+			<option style="font-weight: bold;" value="">{{getProvinceSelected()}}</option>
 			<option v-on:click="getProvince" v-for="pro in provinces" v-bind:key="pro.provinceID" :value="pro.provinceID">
-			{{pro.provinceName}}
+				{{pro.provinceName}}
 			</option>
             </select>
 			<div class="top-category">
@@ -26,6 +26,7 @@
 					<li><a href="#">Đồ ăn</a></li>
 					<li><a href="#">Thức uống</a></li>
 					<li><a href="#">Ăn vặt</a></li>
+					<li>{{provinceSelected}}</li>
 				</ul>
 			</div>
 			<div v-if="isLoggedin" class="fl_right">
@@ -86,6 +87,15 @@ computed:{
 			  return this.avt='../assets/imgs/userPic.png';
 		  else if(this.avt[0].picture =='') return this.avt='../assets/imgs/userPic.png';
 		  return this.avt[0].picture
+	  },
+	  getProvinceSelected(){
+		  if(this.provinces!=''){
+			this.provinces.forEach(element => {
+				if(element.provinceID == localStorage.getItem('provinceId'))
+					return element.provinceName
+			});
+		  }
+		  return 'TP Hồ Chí Minh'
 	  }
   },
   mounted(){

@@ -21,8 +21,8 @@
         />
       </CCardBody>
       <CCardFooter>
-        <CButton type="submit" class="center_div" size="sm" color="primary"
-          ><CIcon name="cil-check-circle" /> Send code</CButton
+        <CButton @click="sendCode" class="center_div" size="sm" color="primary"
+          ><CIcon name="cil-check-circle"/> Send code</CButton
         >
       </CCardFooter>
     </CForm>
@@ -34,7 +34,7 @@
             invalid-feedback="Please provide at least 4 characters."
             placeholder="Valid value"
             :is-valid="validator"
-            v-model="code"
+            v-model="code2"
             />
         <CInput
           type="password"
@@ -47,7 +47,7 @@
         />
       </CCardBody>
       <CCardFooter>
-        <CButton type="submit" class="btn_left" size="sm" color="primary"
+        <CButton @click="isValid" type="submit" class="btn_left" size="sm" color="primary"
           ><CIcon name="cil-check-circle" /> Change</CButton
         >
         <CButton class="btn_right" type="reset" size="sm" color="danger"
@@ -67,7 +67,8 @@ export default {
         return{
             email:'',
             code: '',
-            pass: ''
+            pass: '',
+            code2: '',
         }
     },
  methods: {
@@ -78,10 +79,24 @@ export default {
       return val ? val.length >= 8 : false
     },
     sendCode(){
-        const credentials ={   
-        }
-        axios.post("https://localhost:44398/api/User/ForgetPass", credentials).then(respone =>{ 
-            alert(respone.data)})
+      debugger
+        axios.post("https://localhost:44398/api/User/ForgetPass?Email="+ this.email).then(respone =>{ 
+            this.code=respone.data.code
+            console.log(this.code)});
+    },
+    isValid(){
+        if(this.code== this.code2)
+          { try{ axios.post("https://localhost:44398/api/User/ResetPass?Email=" + this.email +"&Password="+ this.pass)
+        alert('Doi pass thanh cmn cong')}
+        catch(e)
+        {
+          alert("loi roi")
+        }}
+          else 
+            alert('Sai roi')
+    },
+    changePass(){
+    
     }
   }
 }
