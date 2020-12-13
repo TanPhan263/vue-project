@@ -11,7 +11,7 @@
               <img
                 :src="storeOpen[0].storePicture"
                 alt="foody-mobile.jpg"
-                style="width: 488px; height: 275px; border: 0"
+                style="width: 488px; height: 275px;border-radius: 15px 0px 0px 15px;"
               />
             </a>
           </div>
@@ -23,30 +23,14 @@
               <span class="main-info-title-contracted fl_left">
                 <span class="fas fa-check-circle"></span>
               </span>
-              <h1 style="width: 600px" class="fl_left">{{storeOpen[0].storeName}}
+              <h1 style="width: 600px; font-size: 30px" class="fl_left">{{storeOpen[0].storeName.toUpperCase()}}
               </h1>
               <div class="clearfix"></div>
               <div class="category">
-                <div class="category-items fl_left" style="max-width: 200px">
-                  <a href="#" title="category-items">{{storeOpen[0].businessTypeID}}</a>
+                <div class="category-items fl_left" style="max-width: 200px;">
+                  <a title="category-items;" style="font-size:large;">{{ getType(storeOpen[0].businessTypeID) }}</a>
                 </div>
                 <div class="category-cuisines fl_left">
-                  <div class="cuisines-separator fl_left">-</div>
-                  <div
-                    class="cuisines-list fl_left"
-                    style="
-                      margin-right: 5px;
-                      max-width: 150px;
-                      padding-top: 2px;
-                    "
-                  >
-                    <a href="#">{{storeOpen[0].businessTypeID}}</a>
-                  </div>
-                  <div
-                    class="audiences fl_left"
-                    style="max-width: 150px; margin-top: 3px"
-                  >
-                  </div>
                 </div>
               </div>
             </div>
@@ -56,7 +40,7 @@
                 <span class="fas fa-location-arrow locationicon"></span>
                 <span>
                   <a href="" target="_blank">
-                    <span>{{storeOpen[0].storeAddress}}</span>
+                    <span style="font-size:large;">{{storeOpen[0].storeAddress}}</span>
                   </a>
                 </span>
               </div>
@@ -65,13 +49,13 @@
               <div class="res-common-price">
                 <div class="micro-timesopen">
                   <span class="far fa-clock houricon"></span>
-                  <span class="itsopen" title="Chưa mở cửa">Đang mở cửa</span>
-                  <span> {{storeOpen[0].openTime}} | {{storeOpen[0].cLoseTime}}</span>
+                  <span class="itsopen" title="Chưa mở cửa" style="font-size:large;">Đang mở cửa</span>
+                  <span style="font-size:large;"> {{storeOpen[0].openTime}} | {{storeOpen[0].cLoseTime}}</span>
                   <span class="fas fa-exclamation-circle"></span>
                 </div>
                 <div class="res-common-minmaxprice">
                   <span class="fas fa-tag minmaxpriceicon"></span>
-                  <span>300.000đ - 500.000đ</span>
+                  <span style="font-size:large;">300.000đ - 500.000đ</span>
                 </div>
               </div>
             </div>
@@ -80,7 +64,7 @@
       </div>
     </div>
 
-    <div class="micro-main-menu fl_left">
+    <div class="micro-main-menu fl_left" style="position:fixed;">
       <div class="tool-bar">
         <ul class="list-tool">
           <li class="active">
@@ -104,7 +88,6 @@
           <li>
             <a href=""
               >Comment
-              <span>555</span>
               <span
                 class="fas fa-angle-right"
                 style="float: right; font-size: 14px"
@@ -114,7 +97,6 @@
           <li>
             <a href=""
               >Xem trên Map
-              <span>555</span>
               <span
                 class="fas fa-angle-right"
                 style="float: right; font-size: 14px"
@@ -125,41 +107,6 @@
       </div>
     </div>
     <div class="micro-right fl_right">
-      <div class="right-tool-bar clearfix">
-        <ul class="micro-act-btns">
-          <li>
-            <a href="">
-              <i class="fas fa-phone"></i>
-              Gọi điện thoại
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <i v-on:click="isMapOpen=!isMapOpen" class="fas fa-bookmark"></i>
-              Xem bản đồ
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <i class="fas fa-comment"></i>
-              Xem ảnh
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <i class="fas fa-camera"></i>
-              Xem đánh giá
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <i class="fas fa-share-alt"></i>
-              Thêm vào yêu thích
-            </a>
-          </li>
-        </ul>
-      </div>
-
       <div
         class="micro-main-content"
         style="clear: both; position: static; min-height: 500px"
@@ -172,7 +119,7 @@
                 title="Menu"
                 target="_blank"
                 style="color: #f37934"
-                >Menu</a
+                >MENU</a
               >
             </h2>
           </div>
@@ -180,7 +127,7 @@
             <div class="tb-content">
               <div v-for="dish in storeMenu" v-bind:key="dish.dish_ID" class="tb-offer-item">
                 <div class="tb-item-left">
-                  <img :src="dish.dishPicture" style="width: 50px; height: 50px; border: 0" />
+                  <img :src="dish.dishPicture" style="width: 125px; height: 125px; border-radius:10px" />
                   <span
                     class="fas fa-angle-double-right"
                     style="color: #2aaf11"
@@ -194,6 +141,11 @@
                   <a href="" class="tb-shorttitle">
                     <span>
                       20000 VND</span
+                    >
+                  </a>
+                  <a href="" class="tb-shorttitle">
+                    <span>
+                      Something about dish</span
                     >
                   </a>
                 </div>
@@ -314,13 +266,14 @@
         <div class="microsite-gallery">
           <div class="microsite-professional-photo">
             <div class="microsite-box-heading">
-              <a href="" style="color: #333">Hình ảnh từ khách hàng</a>
+              <a href="" style="color: #333">HÌNH ẢNH TỪ KHÁCH HÀNG</a>
             </div>
             <div class="prof-photos-items">
               <div v-for="dish in storeMenu" v-bind:key="dish.dish_ID" class="microsite-professional-photo-item">
                 <a href="">
-                  <img
+                  <img style="border-radius:10px;"
                     :src="dish.dishPicture"
+                    height="150px" width="150px"
                     alt="foody-albummax_.jpg"
                   />
                 </a>
@@ -434,7 +387,8 @@ export default {
       storeMenu:[],
       menuId: '',
       isMapOpen: false,
-      provinces: []
+      provinces: [],
+      businessTypeName:''
     }
   },
   components:{
@@ -446,6 +400,12 @@ export default {
 methods:{
     show(index){
       console.log(index)
+    },
+    getType(index){
+      this.$http.get(baseUrl +'/BusinessType/GetByID?id='+index).then(response => {
+            this.businessTypeName = response.data;
+      })
+      return this.businessTypeName[0].businessTypeName
     }
 },
   mounted(){

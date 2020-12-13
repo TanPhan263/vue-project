@@ -23,10 +23,10 @@
 			<div class="top-category">
 				<ul class="top-category-1">
 					<li><a href="#">Gần bạn</a></li>
-					<li><a href="#">Đồ ăn</a></li>
-					<li><a href="#">Thức uống</a></li>
-					<li><a href="#">Ăn vặt</a></li>
-					<li>{{provinceSelected}}</li>
+					<li><a href="#">Buffet</a></li>
+					<li><a href="#">Ăn chay</a></li>
+					<li><a href="#">Ăn vặt/vỉa hè</a></li>
+					<li><a href="#">Cafe/Dessert</a></li>
 				</ul>
 			</div>
 			<div v-if="isLoggedin" class="fl_right">
@@ -40,8 +40,8 @@
 			  </CHeaderNav>
 			</div>
 			<div v-else  id="login" class="fl_right">
-				<router-link style="margin-right: 5px;" to="/login" class="btn-login">Đăng nhập</router-link>
-				<router-link to="/register" class="btn-login">Đăng kí</router-link>
+				<router-link style="border-radius: 15px;margin-right: 5px;" to="/login" class="btn-login">Đăng nhập</router-link>
+				<router-link style="border-radius: 15px;margin-right: 5px; width: 90px; text-align:center;" to="/register" class="btn-login">Đăng kí</router-link>
 			</div>
 		</div>
 	</div>
@@ -52,9 +52,6 @@ const baseUrl='https://localhost:44398/api/'
 import TheHeaderDropdownAccnt from '../../../containers/TheHeaderDropdownAccnt'
 export default {
 name: 'navbars',
-props:{
-	province: Array,
-},
 components:{
 	TheHeaderDropdownAccnt
 },

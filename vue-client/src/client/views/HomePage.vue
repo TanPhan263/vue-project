@@ -1,7 +1,7 @@
 <template>
-<div class="wraper">
+<div @click="disableDropdown" class="wraper"  style="background-color:#f6f6f6;">
   <Header/>
-  <Navbar v-bind:province="provinces" v-bind:avt ="avt"/>
+  <Navbar v-bind:avt ="avt"/>
   <!--Search v-bind:stores="stores"/-->
   <div class="content-banner">
 			<div class="banner">
@@ -13,7 +13,7 @@
 					<div class="search-1 clearfix">
             <input v-model="keyword" type="text" placeholder="Nhập món ăn, tên quán, khu vực,..." @input="onkeychange">
 						<a @click="onSearchClicked" class="icon-search"></a>
-            <div class="dropdown" v-if="results.length">
+            <div class="dropdown" v-if="isDropdown">
             <div id="myDropdown" class="dropdown-content" style="width: 600px;
                 height: 600px;
                 overflow: auto;">
@@ -39,7 +39,18 @@
 					</div>
 				</form>
 			</div>
-		</div>
+	</div>
+    <vueper-slides 
+      style="width: 80% ;margin: 0 auto; margin-top:20px;background-color:#f6f6f6;"
+       class="no-shadow"
+      :visible-slides="3"
+      slide-multiple
+      :gap="3"
+      :slide-ratio="1 / 4"
+      :dragging-distance="200"
+      :breakpoints="{ 800: { visibleSlides: 2, slideMultiple: 2 } }">
+      <vueper-slide style="border-radius:10px;" v-for="(slide, i) in banner" :key="i" :image="slide.src" />
+    </vueper-slides>
       <transition name="fade" mode="out-in">
           <router-view :key="$route.path"></router-view>
       </transition>
@@ -47,6 +58,8 @@
 </template>
 
 <script>
+import { VueperSlides, VueperSlide } from 'vueperslides'
+import 'vueperslides/dist/vueperslides.css'
 import Header from './containers/Header'
 import Navbar from './containers/Navbar'
 import Homebody from './Homebody'
@@ -57,14 +70,50 @@ export default {
   name:'Home',
   components:{
         Header,
-        Navbar
+        Navbar,
+        VueperSlides, VueperSlide
       },
   data() {
     return {
       keyword: '',
       provinces:[],
       results: [],
-      avt: ''
+      avt: '',
+      isDropdown: false,
+      banner:[
+        {
+          id:1,
+           src: require('../../assets/imgs/banner1.jpg')
+        },
+         {
+          id:2,
+          src: require('../../assets/imgs/banner2.jpg')
+        },
+         {
+          id:3,
+          src: require('../../assets/imgs/banner3.jpg')
+        },
+         {
+          id:4,
+            src: require('../../assets/imgs/banner4.jpg')
+        },
+         {
+          id:5,
+          src: require('../../assets/imgs/banner1.jpg')
+        },
+         {
+          id:6,
+         src: require('../../assets/imgs/banner2.jpg')
+        },
+         {
+          id:7,
+          src: require('../../assets/imgs/banner3.jpg')
+        },
+         {
+          id:8,
+           src: require('../../assets/imgs/banner4.jpg')
+        }
+      ]
     }
   },
    mounted(){
@@ -80,6 +129,7 @@ export default {
       return item.storeName;
     },
     onkeychange(){
+      this.isDropdown=true;
        this.$http.get('https://localhost:44398/api/Dish/Search?dishname=' + this.keyword).then(response => {
          if(response.data !='Không có kết quả tìm kiếm')
             this.results = response.data
@@ -99,7 +149,11 @@ export default {
       if( open <= hour < close)
           return true;
       return false
-	  }
+    },
+    disableDropdown(){     
+        this.isDropdown = false
+        return this.isDropdown
+    }
   }
 }
 </script>

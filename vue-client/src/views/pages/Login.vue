@@ -117,17 +117,14 @@ export default {
         const token =response;
         localStorage.setItem('isAuthen',token);
         const role = await AuthService.getRole(token)
-        //this.$http.get(baseUrl + 'GetRole?token=' + token).then(response => response.data)
-        if(role.userTyleID == '1' )
-        {
-          alert(role.userTyleID)
-          this.$router.push('/');
-        }else if(role.userTyleID == '0' ){
-          alert(role.userTyleID)
-          alert(token)
-          this.$router.push('/Homepage');
-        }
-        this.$router.push('/login');
+        alert(role.userTyleID)
+        // if(role.userTyleID == '-MO5VBnzdGsuypsTzHaV' )
+        // {
+        //   this.$router.push('/');
+        // }else if(role.userTyleID == '-MO5VYNnWIjXtvJO4AXi' ){
+        //   this.$router.push('/Homepage');
+        // }
+        // else this.$router.push('/login');
       } catch (error) {
         this.$router.push('/pages/404');
       }

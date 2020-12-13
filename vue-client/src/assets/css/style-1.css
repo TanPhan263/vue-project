@@ -224,15 +224,16 @@ header.header .header-wrapper{
 /* end header-toolbar */
 
 .pn-microsite{
-	width: 1170px;
+	width: 89%;
 	margin: 0 auto;
-	padding-top: 30px;
+	padding-top: 10px;
 	overflow: hidden;
 }
 .pn-microsite .micro-content{
 	background: #fff;
 	margin-bottom: 15px;
-	margin-top: 50px;
+	margin-top: 10px;
+	border-radius: 15px;
 }
 .micro-content .main-information{
 	width: 635px;
@@ -342,7 +343,9 @@ header.header .header-wrapper{
 /* end micro-content */
 
 .pn-microsite .micro-main-menu{
-	width: 160px;
+	width: 200px;
+	background-color: #fff;
+	border-radius: 10px;
 }
 .active a{
 	color: red !important;
@@ -351,9 +354,8 @@ header.header .header-wrapper{
 .pn-microsite .micro-main-menu ul.list-tool li a{
 	display: block;
 	padding: 8px 10px;
-	border-bottom: #e6e6e6 1px solid;
 	color: #333;
-	border-left: 1px solid #eee;
+	font-size: 17px;
 }
 .pn-microsite .micro-main-menu ul.list-tool li a:hover{
 	color: red !important;
@@ -417,7 +419,7 @@ header.header .header-wrapper{
 	overflow: hidden;
     border: 1px solid #eee;
     margin-bottom: 15px;
-    border-radius: 2px;
+    border-radius: 15px;
 }
 .pn-microsite .micro-right .micro-main-content .tb-title{
 	overflow: hidden;
@@ -429,7 +431,7 @@ header.header .header-wrapper{
     padding: 10px 15px;
     border-top: 1px solid #eeeeee;
     float: left;
-    width: 100%;
+	width: 100%;
 }
 .pn-microsite .micro-right .micro-main-content .tb-offers-box .tb-offer-item .tb-item-left {
 	float: left;
@@ -490,7 +492,8 @@ header.header .header-wrapper{
 .pn-microsite .micro-right .micro-main-content .microsite-gallery{
 	background: #fff;
     overflow: hidden;
-    padding: 15px;
+	padding: 15px;
+	border-radius: 15px;
 }
 .pn-microsite .micro-right .micro-main-content .microsite-gallery .microsite-professional-photo{
 	overflow: hidden;

@@ -481,29 +481,27 @@
 
 .main{
 	width:100%;
-	height:auto;
-	background-color:#eee;
+	background-color:#f6f6f6;
 	padding:20px 5px 0 5px;   
 }
 .main .ship{
 	width:85%;
-    margin:0 auto;
-    border:1px solid #ddd;
-    height:50.5em;
-    background-color:#eee;  
+	margin:0 auto;
+	height:auto;
+	background-color:#f6f6f6;  
 }
 .main .ship .menu-ship{
 	width:100%;
 	padding:0 10px 0 10px;
-	margin:0 auto;
 	overflow:hidden;
     display:block; 
-    background-color:#fff;
-    border-bottom:1px solid #eee;
-    text-align:center;
+	text-align:center;
+	border-radius:10px; 
+	border-bottom:1px solid #818181; 
+	margin-bottom: 15px;
 }
 .main .ship .menu-ship .hero{
-	width:30%;
+	width:100%;
 	float:left;
 }
 .main .ship .menu-ship .hero img{
@@ -542,8 +540,7 @@
 	list-style-type:none;  
 }
 .main .ship .menu-ship .grid ul li{
-	float:left;
-	 
+	float:left; 
 }
 .main .ship .menu-ship .grid ul li a:hover {
     color:#960014;
@@ -566,26 +563,28 @@
 
 .main .ship .sub-menu-ship{
 	clear:both;
-	height: 300em;
+	padding-bottom: 30px;
 }
 .main .ship .sub-menu-ship ul{
 	padding:0;
 	margin:0;
-	list-style-type:none;
-	
+	list-style-type:none;	
 }
 .main .ship .sub-menu-ship ul li{
 	float:left;
-	margin:14px 0 -5px 16px;
+	margin:0px 0 15px 16px;
 	background-color:#fff; 
-	border:1px solid #ccc; 
 	text-align:left; 
+	border-radius: 10px;
+	height: 16em;
 }
 .main .ship .sub-menu-ship ul li a{
 	text-decoration:none; 
 	display:block; 
 	white-space:nowrap;  
 	color:#000;
+  	border-radius: 10px;
+
 }
 .main .ship .sub-menu-ship ul li router-link{
 	text-decoration:none; 
@@ -617,10 +616,8 @@
 .main .promotion{
 	width:85%;
     margin:0 auto;
-    border:1px solid #ddd;
-    height:45em;
-    background-color:#eee;  
-    margin-top:20px;
+    background-color:#f6f6f6;  
+    
 }
 .main .promotion .menu-promotion{
 	width:100%;
@@ -629,12 +626,12 @@
 	overflow:hidden;
     display:block; 
     background-color:#fff;
-    border-bottom:1px solid #eee;
-    text-align:center;
+	text-align:center;
 }
 .main .promotion .menu-promotion .block{
 	width:30%;
 	float:left;
+	
 }
 .main .promotion .menu-promotion .block img{
 	float:left; 
@@ -672,13 +669,15 @@
 
 
 .main .promotion .sub-menu-promotion{
-    clear:both;
+	clear:both;
+	border-radius: 25px;
 
 }
 .main .promotion .sub-menu-promotion ul{
 	padding:0;
 	margin:0;
 	list-style-type:none; 
+	border-radius: 25px;
 }
 .main .promotion .sub-menu-promotion ul li{
 	float:left;
@@ -686,6 +685,8 @@
 	background-color:#fff; 
 	border:1px solid #ccc; 
 	text-align:left; 
+	padding: 10px;
+	border-radius: 25px;
 }
 .main .promotion .sub-menu-promotion ul li a{
 	text-decoration:none; 

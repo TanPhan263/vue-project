@@ -65,5 +65,5 @@ html[xmlns] .clearfix {
   box-sizing: border-box;
 }
 /*Add your css into here*/
-.fl_left{ float: left;}
+.fl_left{ float: left; }
 .fl_right{ float: right;}

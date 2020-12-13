@@ -1,13 +1,33 @@
 <template>
 <div class="main">
+   <div class="ship">
+	<div style="width:100%">
+        <div class="hero" style="width:30%;">
+          <h2 style="font-size:20px">CHỌN THEO THỂ LOẠI</h2>
+        </div>
+    </div>
+      <div id="Giaotannoi" class="sub-menu-ship" >
+        <ul>
+          <li v-for="dish in dishes" v-bind:key="dish.businessTypeID" style="height:110px;">
+            <a>
+              <img :src="dish.dishPicture" style="border-radius:10px 10px 10px 10px; width:100px; height:100px"/>
+              <div class="name-food" style=" text-align: center">{{dish.dishName}}</div>
+            </a>
+          </li>
+        </ul>
+      </div>
+       <CCol class="center_div" style="">
+            <CButton size="sm" shape="pill" style=" text-align: center;margin-top: 20px;">XEM THÊM</CButton>
+        </CCol>
+  </div>
     <div class="ship">
-      <div class="menu-ship">
-        <div class="hero">
-          <h2>Được đánh giá cao</h2>
+      <div class="menu-ship" style="width:100%">
+        <div class="hero"  style="width:30%">
+          <h3>ĐƯỢC ĐÁNH GIÁ CAO</h3>
         </div>
         <div class="grid">
           <ul>
-            <li><a href="" v-on:click="changeCategory('Tất cả')" >Tất cả</a></li>
+            <li><a href="">Tất cả</a></li>
             <li><a href=""  v-on:click="changeCategory('Tất cả')">Đồ ăn</a></li>
             <li><a href=""  v-on:click="changeCategory('Tất cả')">Thức uống</a></li>
             <li><a href=""  v-on:click="changeCategory('Tất cả')" >Nhà hàng</a></li>
@@ -15,204 +35,93 @@
           </ul>
         </div>
       </div>
-      <div id="Giaotannoi" class="sub-menu-ship">
+      <div id="Giaotannoi" class="sub-menu-ship" >
         <ul>
           <li v-for="store in stores" v-bind:key="store.storeID">
             <a v-on:click="storeClicked(store.storeID)">
-              <img :src="store.storePicture" width="205" height="150" />
-              <div class="name-food">{{ store.storeName.substr(0,20)}}</div>
-              <div class="address-store">{{ store.storeAddress.substr(0,30) }}...</div>
+              <img :src="store.storePicture"  style="border-radius:10px 10px 0px 0px; width:205px; height:150px"/>
+              <div class="name-food">{{ store.storeName.substr(0,20)}}...</div>
+              <div class="address-store"><i class="fa fa-map-marker"></i>{{ store.storeAddress.substr(0,30) }}...</div>
+                <div class="address-store">{{ getType(store.businessTypeID) }}</div>
               <div class="intro"></div>
             </a>
           </li>
         </ul>
       </div>
     </div>
-    <div><h4  class="center_div">Xem tất cả >></h4></div>
-    <div class="promotion">
-      <div class="menu-promotion">
-        <div class="block">
-          <h2>Cửa hàng gần bạn</h2>
+     <div class="ship">
+      <div class="menu-ship" style="width:100%">
+        <div class="hero"  style="width:30%">
+          <h3>CỬA HÀNG GẦN BẠN</h3>
         </div>
-        <div class="options">
-          <div class="all">
-            <select>
-              Tất cả
-              <option v-on:click="changeCategory('Tất cả')">Tất cả</option>
-              <option v-on:click="changeCategory('Gần tôi')">Gần tôi</option>
-              <option v-on:click="changeCategory('Xem nhiều nhất')"> Xem nhiều nhất</option>
-              <option v-on:click="changeCategory('Đánh giá tốt nhất')">Đánh giá tốt nhất</option>
-            </select>
-          </div>
+        <div class="grid">
+          <ul>
+            <li><a href="">Tất cả</a></li>
+            <li><a href=""  v-on:click="changeCategory('Tất cả')">Đồ ăn</a></li>
+            <li><a href=""  v-on:click="changeCategory('Tất cả')">Thức uống</a></li>
+            <li><a href=""  v-on:click="changeCategory('Tất cả')" >Nhà hàng</a></li>
+            <li><a href="" v-on:click="changeCategory('Tất cả')" >Vỉa hè</a></li>
+          </ul>
         </div>
       </div>
-      <div id="Uudai" class="sub-menu-promotion">
+      <div id="Giaotannoi" class="sub-menu-ship" >
         <ul>
-          <li v-for="store in promotion" v-bind:key="store.storeID">
-            <a>
-              <img v-on:click="storeClicked(store.storeID)" :src="store.storePicture" width="205" height="150" />
-              <div class="name-food">{{ store.storeName.substr(0,20) }}</div>
-              <div class="address-store">{{ store.storeAddress.substr(0,30) }}...</div>
-              <div class="intro">
-                <img :src="store.storePicture" height="20" width="20"  style="margin-bottom: 5px;"/>
-                <h5 value="Hello"></h5>
-              </div>
+          <li v-for="store in stores" v-bind:key="store.storeID">
+            <a v-on:click="storeClicked(store.storeID)">
+              <img :src="store.storePicture"  style="border-radius:10px 10px 0px 0px; width:205px; height:150px"/>
+              <div class="name-food">{{ store.storeName.substr(0,20)}}...</div>
+              <div class="address-store"><i class="fa fa-map-marker"></i>{{ store.storeAddress.substr(0,30) }}...</div>
+                <div class="address-store">{{ getType(store.businessTypeID) }}</div>
+              <div class="intro"></div>
             </a>
           </li>
         </ul>
       </div>
     </div>
-     <div><h4  class="center_div">Xem tất cả >></h4></div>
-    <div class="discover">
-      <div class="section">
-        <ul>
-          <li>
-            <img src="../../assets/imgs/F.png" width="25" height="25" style="margin-top: 10px; margin-left:5px;"/>
-            <h1 style="font-size: 1.5em">Khám phá</h1>
-          </li>
-          <li>
-            <a href=""
-              >Ở đâu<span
-                style="
-                  float: right;
-                  font-size: 20px;
-                  line-height: 11px;
-                  color: #000;
-                "
-                >&raquo;</span
-              ></a
-            >
-          </li>
-          <li>
-            <a
-              >Ăn gì<span
-                style="
-                  float: right;
-                  font-size: 20px;
-                  line-height: 11px;
-                  color: #000;
-                "
-                >&raquo;</span
-              ></a
-            >
-          </li>
-          <li>
-            <a 
-              >Sưu tập<span
-                style="
-                  float: right;
-                  font-size: 20px;
-                  line-height: 11px;
-                  color: #000;
-                "
-                >&raquo;</span
-              ></a
-            >
-          </li>
-          <li>
-            <a 
-              >Bình luận<span
-                style="
-                  float: right;
-                  font-size: 20px;
-                  line-height: 11px;
-                  color: #000;
-                "
-                >&raquo;</span
-              ></a
-            >
-          </li>
-          <li>
-            <a 
-              >Giao hàng<span
-                style="
-                  float: right;
-                  font-size: 20px;
-                  line-height: 11px;
-                  color: #000;
-                "
-                >&raquo;</span
-              ></a
-            >
-          </li>
-        </ul>
-      </div>
-      <div class="artical">
-        <div class="menu-artical">
-          <div class="menu-left">
-            <a>Mới nhất</a>
-            <a>Gần tôi</a>
-          </div>
-          <div class="menu-right">
-            <select>
-              -Danh mục-
-              <option>-Danh mục-</option>
-              <option>Sang trọng</option>
-              <option>Buffet</option>
-              <option>Nhà hàng</option>
-              <option>Ăn vặt/vỉa hè</option>
-              <option>Ăn chay</option>
-              <option>Cafe/Dessert</option>
-              <option>Quán ăn</option>
-              <option>Bar/Pub</option>
-              <option>Quán nhậu</option>
-              <option>Beer Club</option>
-              <option>Tiệm bánh</option>
-              <option>Tiệc tận nơi</option>
-              <option>Shop online</option>
-              <option>Giao cơm văn phòng</option>
-              <option>Khu ẩm thực</option>
-            </select>
-            <select>
-              -Ẩm thực-
-              <option>-Ẩm thực-</option>
-              <option>Miền Bắc</option>
-              <option>Trung Hoa</option>
-              <option>Miền Trung</option>
-              <option>Miền Nam</option>
-              <option>Ấn Độ</option>
-              <option>Thái Lan</option>
-              <option>Ý</option>
-              <option>Pháp</option>
-              <option>Đức</option>
-              <option>Nhật Bản</option>
-              <option>Hàn Quốc</option>
-              <option>Thụy Sĩ</option>
-              <option>Tây Nguyên</option>
-              <option>Singapore</option>
-              <option>Malaysia</option>
-              <option>Brazil</option>
-              <option>Mỹ</option>
-              <option>Tây Ban Nha</option>
-              <option>Indonesia</option>
-            </select>
+     <!--Loadmore-->
+    <div v-if="toShow < totalShow || toShow > totalShow" style="margin-top: 20px">
+      <div v-for="i in toShow" v-bind:key="i" class="ship">
+        <div  class="menu-ship">
+          <div class="hero">
+            <h3>{{type[i].businessTypeName.toUpperCase()}}</h3>
           </div>
         </div>
-        <div id="KhamPha" class="slider">
+        <div v-if="loadMoreList[i].lenght" class="sub-menu-ship">
           <ul>
-            <li v-for="store in discover" v-bind:key="store.storeID">
-              <a href=""
-                ><img :src="store.storePicture" width="205" height="150" />
-                <div class="name-food">{{ store.storeName.substr(0,20) }}</div>
+            <li v-for="store in loadMoreList[i]" v-bind:key="store.storeID">
+              <a v-on:click="storeClicked(store.storeID)">
+                <img :src="store.storePicture"  style="border-radius:10px 10px 0px 0px; width:205px; height:150px"/>
+                <div class="name-food">{{ store.storeName.substr(0,20)}}...</div>
                 <div class="address-store">{{ store.storeAddress.substr(0,30) }}...</div>
-                <div class="comment"></div>
+                  <div class="address-store">{{ getType(store.businessTypeID) }}</div>
+                <div class="intro"></div>
               </a>
             </li>
           </ul>
-        </div>
+        </div> 
+        <div v-else>
+          <img src="../../assets/imgs/opps.png" alt=""></div> 
       </div>
     </div>
+    <div style="margin-top:30px" class="center_div" v-if="toShow < totalShow || totalShow > toShow">
+       <CCol>
+            <CButton @click="toShow+=2" size="sm" shape="pill">show more</CButton>
+          </CCol>
+     </div>
   </div>
 </template>
 
 <script>
 
 const baseUrl='https://localhost:44398/api/'
+
 export default {
 name: 'body',
+
 data() {
     return {
       stores: [],
+      storesTemp: '',
       listStores:[],
       news: [],
       promotion: [],
@@ -221,11 +130,16 @@ data() {
       item: {},
       items: [],
       type: [],
-      storeToShow: 3,
+      toShow: 2,
+      totalShow:0,
+      loadMoreList: [],
+      dishes: []
     }
   },
     mounted(){
+      //get province id from loacl storage
       var id= localStorage.getItem('provinceId')
+      //get all store in the province
       this.$http.get( baseUrl+'Store/GetByIDProvince?id=' + id).then(response => {
             this.stores=response.data;
             this.stores= this.stores.slice(0,15);
@@ -234,31 +148,19 @@ data() {
             if(x>y) return 1;
             return 0  });
       }),
-      this.$http.get(baseUrl+'Store/GetByIDBusinessType?id=1').then(response => {
-            this.news=response.data
-            this.news.sort(function(a, b){ var x = a.ratePoint; var y = b.ratePoint;
-            if(x<y) return -1;
-            if(x>y) return 1;
-            return 0  });
-      })
-      this.$http.get(baseUrl+ 'Store/GetByIDBusinessType?id=1').then(response => {
-            this.promotion=response.data
-      })
-      this.$http.get(baseUrl+ 'Store/GetByIDBusinessType?id=1').then(response => {
-            this.discover=response.data
-      })
+      //getall business type
       this.$http.get(baseUrl + 'BusinessType/GetAll').then(response => {
             this.type = response.data;
+      }),
+      this.$http.get(baseUrl + 'Dish/GetAll').then(response => {
+            this.dishes = response.data;
+            this.dishes = this.dishes.slice(30,39)
       })
   },
   methods:{
      storeClicked (item) {
       this.$router.push('/storeDetail/' + item)
     },
-    // storeClicked (item) {
-    //   this.$store.commit("SET_INFORID", item)
-    //   this.$router.push({path: `/storeDetail`})
-    // },
     changeCategory(index){
       switch(index){
         case 'Tất cả':  this.$http.get(baseUrl + 'Store/GetByIDProvince/58').then(response => {
@@ -290,8 +192,30 @@ data() {
     },
     onChildClick(value){
       this.provinceID= value
-    },//Search
-   
+    },
+    getType(index){
+      var temp='Unknown'
+      this.type.forEach(element => {
+         	if(element.businessTypeID == index)
+             temp = element.businessTypeName
+      });
+      return temp
+    }
+  },
+  updated(){
+      this.totalShow=this.type.length;
+      var i=0;
+      this.type.forEach(element => {
+        //  this.$http.get(baseUrl + 'Store/GetByIDBusinessType?id=' +element.businessTypeID ).then(response => {
+        //     this.loadMoreList[i]=(response.data)
+        //     this.loadMoreList[i]=this.loadMoreList[i].slice(0,10)
+        //     i++;
+        //   });
+       this.loadMoreList[i]=this.stores.filter(function(store) {
+        return store.businessTypeID == element.businessTypeID;});
+        console.log(this.loadMoreList[i]);
+        i++;
+      }); 
   }
 }
 </script>
