@@ -93,7 +93,8 @@
 
 <script>
 import AuthService from '@/services/AuthService.js';
-import UsersVue from '../users/Users.vue';
+import UserService from '@/services/UserService.js';
+
 const baseUrl ='https://localhost:44398/api/User/';
 export default {
   name: "Login",
@@ -110,21 +111,24 @@ export default {
       debugger;
       try {
         const credentials = {
-          userName: this.username,
+          email: this.username,
           password: this.password
         };
         const response = await AuthService.login(credentials);
-        const token =response;
-        localStorage.setItem('isAuthen',token);
-        const role = await AuthService.getRole(token)
+        const token=response;
+        const response2 = await UserService.getInfo(token.token);
+        localStorage.setItem('isAuthen',token.token);
+        localStorage.setItem('userInfor',JSON.stringify(response2[0]));
+        console.log(localStorage.getItem('userInfor'))
+        const role = await AuthService.getRole(token.token)
         alert(role.userTyleID)
-        // if(role.userTyleID == '-MO5VBnzdGsuypsTzHaV' )
-        // {
-        //   this.$router.push('/');
-        // }else if(role.userTyleID == '-MO5VYNnWIjXtvJO4AXi' ){
-        //   this.$router.push('/Homepage');
-        // }
-        // else this.$router.push('/login');
+        if(role.userTyleID == '-MO5VBnzdGsuypsTzHaV' )
+        {
+          this.$router.push('/');
+        }else if(role.userTyleID == '-MO5VYNnWIjXtvJO4AXi' ){
+          this.$router.push('/Homepage');
+        }
+        else this.$router.push('/login');
       } catch (error) {
         this.$router.push('/pages/404');
       }

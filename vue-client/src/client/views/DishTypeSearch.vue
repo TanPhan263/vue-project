@@ -2,15 +2,13 @@
     <div class="discover">
       <div class="artical">
         <div class="menu-artical">
-          <div class="menu-left">
-            <a href="" class="action">Đúng nhất</a>
-            <a href="">Gần tôi</a>
-            <a href="">Đánh giá cao</a>
-          </div>
+          <button class="menu-left">
+            {{ this.$route.query.key.toUpperCase()}}
+          </button>
         </div>
         <div id="KhamPha" class="slider">
           <ul>
-            <li v-for="store in stores" v-bind:key="store.storeID">
+            <li  v-for="store in stores" v-bind:key="store.storeID">
               <a href=""
                 ><img :src="store.storePicture" style="border-radius:10px 10px 0px 0px; width:205px; height:150px" />
                 <div class="name-food">{{ store.storeName.substr(0,20) }}</div>
@@ -31,7 +29,7 @@ import Search from './containers/Search'
 export default {
 	data(){
 		return{
-		stores:[]
+        stores:[]
 		}
 	},
     components:{
@@ -40,13 +38,17 @@ export default {
         Search
 	},
 	mounted(){
-		const key = this.$route.query.key
+        const key = this.$route.query.key
+        console.log(key)
 		this.$http.get('https://localhost:44398/api/Dish/Search?dishname=' + key).then(response => {
          if(response.data !='Không có kết quả tìm kiếm')
             this.stores = response.data
           else this.stores = []
          	console.log(this.stores)
       });
+	},
+	methods:{
+		
 	}
 }
 </script>
@@ -54,14 +56,11 @@ export default {
 <style scope>
 .main{
 	width:100%;
-	background-color:#f6f6f6;
 	padding:20px 5px 0 5px;   
 }
 .artical{
-	width:100%;
 	border-radius: 20px;
 	margin: 0 auto;
-	background-color:#f6f6f6;
 }
 .artical .menu-artical{
     text-align:center;
@@ -69,8 +68,14 @@ export default {
 }
 .artical .menu-artical .menu-left{
 	float:left;
-	margin:0;
-	width:50%;
+    margin:0;
+    border:none;
+    height: 50px;
+    width: 15%;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 10px;
+    color: darkred;
 }
 .artical .menu-artical .menu-left .action{
 	border-bottom:2px solid #960014;
@@ -100,7 +105,6 @@ export default {
     display:flex;
     flex-direction:column;
 	flex-wrap:wrap;    
-	background-color:#f6f6f6;
 }
 .discover .artical .slider ul{
 	margin:0;
@@ -111,7 +115,6 @@ export default {
 	float:left;
 	margin-top:10px;
 	margin-left:17px;
-	background-color:#fff; 
 	border-radius:10px
 }
 .discover .artical .slider ul li a{

@@ -62,13 +62,6 @@ export default {
   props:{
     avt:''
   },
-  // async created() {
-  //   if (!this.$store.getters.isLoggedIn) {
-  //     this.$router.push('/login');
-  //   }
-  //   this.username = this.$store.getters.getUser.username;
-  //   this.secretMessage = await AuthService.getSecretContent();
-  // },
   methods: {
     logout() {
       this.$store.dispatch('logout');

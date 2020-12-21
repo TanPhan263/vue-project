@@ -79,24 +79,20 @@ export default {
       return val ? val.length >= 8 : false
     },
     sendCode(){
-      debugger
         axios.post("https://localhost:44398/api/User/ForgetPass?Email="+ this.email).then(respone =>{ 
-            this.code=respone.data.code
+            this.code=respone.data.code;
             console.log(this.code)});
     },
     isValid(){
         if(this.code== this.code2)
           { try{ axios.post("https://localhost:44398/api/User/ResetPass?Email=" + this.email +"&Password="+ this.pass)
-        alert('Doi pass thanh cmn cong')}
+        alert('Doi pass thanh cmn cong');}
         catch(e)
         {
-          alert("loi roi")
+          alert("loi roi");
         }}
           else 
-            alert('Sai roi')
-    },
-    changePass(){
-    
+            alert('Sai roi');
     }
   }
 }
@@ -105,7 +101,7 @@ export default {
 <style>
 .center_div{
     margin: 0 auto;
-    width:100% /* value of your choice which suits your alignment */
+    width:100%;
 }
 .btn_left{
   margin-right: 80px;

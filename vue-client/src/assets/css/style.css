@@ -517,7 +517,7 @@
     float:left;  
 }
 .main .ship .menu-ship .grid{
-	width:60%;
+	width:35%;
 	float:right;
 	margin:0 auto;
 	padding:12px 0;
@@ -726,12 +726,12 @@
 	margin:0 auto; 
 	margin-top:20px; 
 	position:relative; 
-	height:80em;
+	height:auto;
 	background-color:#eee; 
 }
 .discover .section{
     float:left;
-    width:18%;
+    width:30%;
     text-align:left;  
     overflow:hidden; 
     margin-right:20px;  
@@ -765,19 +765,18 @@
 	padding:8px;  
 }
 .discover .artical{
-	width:80%;
+	width:100%;
 	height:auto; 
 	float:right;
 }
 .artical .menu-artical{
-    background-color:#c1c1c1;
     text-align:center;
     overflow:hidden; 
 }
 .artical .menu-artical .menu-left{
 	float:left;
 	margin:0;
-	width:30%;
+	width:40%;
 }
 .artical .menu-artical .menu-left .action{
 	border-bottom:2px solid #960014;

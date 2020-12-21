@@ -20,7 +20,8 @@
       />
     </CSidebarBrand>
 
-    <CRenderFunction flat :content-to-render="$options.nav"/>
+    <CRenderFunction v-if="isAdmin()" flat :content-to-render="$options.nav"/>
+    <CRenderFunction v-else flat :content-to-render="$options.nav_storeOwner"/>
     <CSidebarMinimizer
       class="d-md-down-none"
       @click.native="$store.commit('set', ['sidebarMinimize', !minimize])"
@@ -30,10 +31,24 @@
 
 <script>
 import nav from './_nav'
-
+import nav_storeOwner from '../store_owner/_nav_storeOwner.js'
 export default {
   name: 'TheSidebar',
   nav,
+  nav_storeOwner,
+  props:{
+    userType: String
+  },
+  mounted(){
+    console.log(this.userType)
+    console.log(this.isAdmin())
+  },
+  methods:{
+    isAdmin(){
+      if(this.userType == '-MO5VBnzdGsuypsTzHaV') return true;
+      return false;
+    }
+  },
   computed: {
     show () {
       return this.$store.state.sidebarShow 

@@ -2,7 +2,7 @@
   	<div class="navbar-fixed" style="position: absolute; top: 35px;">
 		<div class="container-header clearfix">
 			<div class="logo fl_left">
-				<a href="" title="deliveryNow.vn">
+				<a href="/Homepage/" title="deliveryNow.vn">
 					<img src="../../../assets/imgs/foody-vn.png" alt="now.vn" width="112" style="margin-top: 5px;">
 				</a>
 			</div>
@@ -22,11 +22,11 @@
             </select>
 			<div class="top-category">
 				<ul class="top-category-1">
-					<li><a href="#">Gần bạn</a></li>
-					<li><a href="#">Buffet</a></li>
-					<li><a href="#">Ăn chay</a></li>
-					<li><a href="#">Ăn vặt/vỉa hè</a></li>
-					<li><a href="#">Cafe/Dessert</a></li>
+					<li @click="storeClicked"><a>Gần bạn</a></li>
+					<li @click="storeClicked"><a >Buffet</a></li>
+					<li @click="storeClicked"><a>Ăn chay</a></li>
+					<li @click="storeClicked"><a>Ăn vặt/vỉa hè</a></li>
+					<li @click="storeClicked"><a >Cafe/Dessert</a></li>
 				</ul>
 			</div>
 			<div v-if="isLoggedin" class="fl_right">
@@ -93,7 +93,10 @@ computed:{
 			});
 		  }
 		  return 'TP Hồ Chí Minh'
-	  }
+	  },
+	  storeClicked(){
+			this.$emit('storeClicked','Xá xíu ngũ vị');
+		}
   },
   mounted(){
 	this.$http.get(baseUrl + 'Province/GetAll').then(response => {
@@ -109,7 +112,7 @@ computed:{
 	  }
 	if(localStorage.getItem('isAuthen')!= null && localStorage.getItem('isAuthen') != 'Đăng nhập thất bại')
 	{
-		 this.$http.get("https://localhost:44398/api/User/GetByID?token=" + localStorage.getItem("isAuthen")).then(respone =>{
+		 this.$http.get("https://localhost:44398/api/User/GetByID",{ headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}}).then(respone =>{
             this.avt= respone.data
 		})
 	}

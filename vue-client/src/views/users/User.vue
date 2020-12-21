@@ -96,6 +96,7 @@
             
 <script>
 const url = 'https://localhost:44340/api/User/GetbyId/'
+import UserService from '@/services/UserService.js'
 export default {
   name: 'User',
   beforeRouteEnter(to, from, next) {
@@ -130,11 +131,9 @@ export default {
     }
   },
    mounted(){
-      const id = this.$route.params.id
-      this.$http.get('https://localhost:44398/api/User/GetByID/'+id).then(response => {
-            this.userData =response.data
-            this.userData = JSON.parse(this.userData)
-    })
+      const token = localStorage.getItem('isAuthen');
+      const id = this.$route.params.id;
+      this.userData = UserService.getInfo(token);
   }
   
 }

@@ -38,7 +38,7 @@
     <CHeaderNav class="mr-4">
        <CHeaderNavItem class="d-md-down-none mx-2">
         <CHeaderNavLink>
-            Xin chao {{ username }}
+            Xin chao {{ userName }}
         </CHeaderNavLink>
       </CHeaderNavItem>
       <CHeaderNavItem class="d-md-down-none mx-2">
@@ -61,16 +61,14 @@ export default {
   name: 'TheHeader',
   data(){
     return{
-      username: ''
+    
     }
+  },
+  props:{
+    userName: String
   },
   components: {
     TheHeaderDropdownAccnt
-  },
-  mounted() {
-    this.$http.get(baseUrl+ 'GetByID?token=' + localStorage.getItem('isAuthen')).then(response => {
-      this.username= response.data[0].userName
-    })
   }
 }
 </script>

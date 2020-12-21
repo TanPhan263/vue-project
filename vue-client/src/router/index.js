@@ -32,6 +32,8 @@ const storeDetail= () => import('@/client/views/storeDetail')
 const ForgetPass= () => import('@/client/views/ForgetPass') 
 const UserInfor= () => import('@/client/views/UserInfor') 
 const Homebody= () => import('@/client/views/Homebody') 
+const DishTypeSearch= () => import('@/client/views/DishTypeSearch') 
+
 Vue.use(Router)
 
 const isAuthen = (to, from, next) => {  
@@ -55,7 +57,8 @@ export default new Router({
 function configRoutes () {
   return [
     {
-      path: '/',      
+      path: '/',     
+      redirect: '/dashboard',
       name: 'Home',
       component: TheContainer,
       beforeEnter: isAuthen,
@@ -214,6 +217,11 @@ function configRoutes () {
           name: 'body',
           component: Homebody
         },
+        {
+          path: 'DishType',      
+          name: 'DishType',
+          component: DishTypeSearch
+        }
       ]
     },
     {
@@ -236,7 +244,6 @@ function configRoutes () {
     //   name: 'search',
     //   component: Search
     // }
-
   ]
 }
 

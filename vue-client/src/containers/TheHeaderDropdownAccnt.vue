@@ -9,14 +9,14 @@
       <CHeaderNavLink>
         <div class="c-avatar">
           <img
-            :src="avt"
-            class="c-avatar-img"
+            :src="user.picture"
+            style="width:45px; height:40px;border-radius:50%;"
           />
         </div>
       </CHeaderNavLink>
     </template>
     <CDropdownHeader tag="div" class="text-center" color="light">
-      <strong>Account</strong>
+      <strong>{{user.userName}}</strong>
     </CDropdownHeader>
     <CDropdownItem>
       <CIcon name="cil-envelope-open" /> Messages
@@ -40,7 +40,7 @@
       <CIcon name="cil-settings" /> Settings
     </CDropdownItem>
     <CDropdownItem>
-      <CIcon name="cil-shield-alt" /> Lock Account
+      <CIcon name="cil-shield-alt" />LockAccount
     </CDropdownItem>
     <CDropdownItem @click="logout">
       <CIcon name="cil-lock-locked" /> Logout
@@ -56,11 +56,15 @@ export default {
     return {
       itemsCount: 30,
       secretMessage: '',
-      username: ''
+      user:''
     };
   },
   props:{
     avt:''
+  },
+  mounted(){
+    this.user=localStorage.getItem('userInfor');
+    this.user=JSON.parse(this.user)
   },
   methods: {
     logout() {
@@ -71,8 +75,6 @@ export default {
     if (!this.$store.getters.isLoggedIn) {
       this.$router.push('/login');
     }
-    this.username = this.$store.getters.getUser.username;
-    this.secretMessage = await AuthService.getSecretContent();
   },
   }
 }

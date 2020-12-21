@@ -1,6 +1,6 @@
 <template>
 <div >
-  <Header/>
+  <Header />
   <Navbar/>
   <div class="pn-microsite">
     <div class="micro-content">
@@ -23,7 +23,7 @@
               <span class="main-info-title-contracted fl_left">
                 <span class="fas fa-check-circle"></span>
               </span>
-              <h1 style="width: 600px; font-size: 30px" class="fl_left">{{storeOpen[0].storeName.toUpperCase()}}
+              <h1 style="width: 600px; margin-top:20px;font-size: 25px" class="fl_left">{{storeOpen[0].storeName.toUpperCase()}}
               </h1>
               <div class="clearfix"></div>
               <div class="category">
@@ -55,7 +55,6 @@
                 </div>
                 <div class="res-common-minmaxprice">
                   <span class="fas fa-tag minmaxpriceicon"></span>
-                  <span style="font-size:large;">300.000đ - 500.000đ</span>
                 </div>
               </div>
             </div>
@@ -67,7 +66,7 @@
     <div class="micro-main-menu fl_left" style="position:fixed;">
       <div class="tool-bar">
         <ul class="list-tool">
-          <li class="active">
+          <li >
             <a href=""
               >Thông tin quán
               <span
@@ -106,11 +105,11 @@
         </ul>
       </div>
     </div>
+  
     <div class="micro-right fl_right">
       <div
         class="micro-main-content"
-        style="clear: both; position: static; min-height: 500px"
-      >
+        style="clear: both; position: static; min-height: 500px">
         <div class="microsite-table-book">
           <div class="tb-title">
             <h2 style="font-size: 16px; padding: 5px 0; cursor: pointer">
@@ -149,116 +148,7 @@
                     >
                   </a>
                 </div>
-                <div class="tb-item-right">
-                  <span class=""
-                    >Ưu đãi không áp dụng ngày đang chọn.</span
-                  >
-                </div>
               </div>
-              <!-- <div class="tb-offer-item">
-                <div class="tb-item-left">
-                   <img src="Image/foody-phuongnam.jpg" />
-                  <span
-                    class="fas fa-angle-double-right"
-                    style="color: #2aaf11"
-                  ></span>
-                </div>
-                <div class="tb-item-mid">
-                  <a href="" style="color: #277bb9" class="tb-oi-time">
-                    <span class="">Món ăn</span>
-                    -
-                    <span class=""></span>
-                  </a>
-                  <a href="" class="tb-shorttitle">
-                    <span>
-                      20000 VND</span
-                    >
-                  </a>
-                </div>
-                <div class="tb-item-right">
-                  <span class=""
-                    >Ưu đãi không áp dụng ngày đang chọn. Chọn ngày khác.</span
-                  >
-                </div>
-              </div> -->
-              <!-- <div class="tb-offer-item">
-                <div class="tb-item-left">
-                   <img src="Image/foody-phuongnam.jpg" />
-                  <span
-                    class="fas fa-angle-double-right"
-                    style="color: #2aaf11"
-                  ></span>
-                </div>
-                <div class="tb-item-mid">
-                  <a href="" style="color: #277bb9" class="tb-oi-time">
-                    <span class="">Món ăn</span>
-                    -
-                    <span class=""></span>
-                  </a>
-                  <a href="" class="tb-shorttitle">
-                    <span>
-                      20000 VND</span
-                    >
-                  </a>
-                </div>
-                <div class="tb-item-right">
-                  <span class=""
-                    >Ưu đãi không áp dụng ngày đang chọn. Chọn ngày khác.</span
-                  >
-                </div>
-              </div>
-              <div class="tb-offer-item">
-                <div class="tb-item-left">
-                   <img src="Image/foody-phuongnam.jpg" />
-                  <span
-                    class="fas fa-angle-double-right"
-                    style="color: #2aaf11"
-                  ></span>
-                </div>
-                <div class="tb-item-mid">
-                  <a href="" style="color: #277bb9" class="tb-oi-time">
-                    <span class="">Món ăn</span>
-                    -
-                    <span class=""></span>
-                  </a>
-                  <a href="" class="tb-shorttitle">
-                    <span>
-                      20000 VND</span
-                    >
-                  </a>
-                </div>
-                <div class="tb-item-right">
-                  <span class=""
-                    >Ưu đãi không áp dụng ngày đang chọn. Chọn ngày khác.</span
-                  >
-                </div>
-              </div>
-              <div class="tb-offer-item">
-                <div class="tb-item-left">
-                   <img src="Image/foody-phuongnam.jpg" />
-                  <span
-                    class="fas fa-angle-double-right"
-                    style="color: #2aaf11"
-                  ></span>
-                </div>
-                <div class="tb-item-mid">
-                  <a href="" style="color: #277bb9" class="tb-oi-time">
-                    <span class="">Món ăn</span>
-                    -
-                    <span class=""></span>
-                  </a>
-                  <a href="" class="tb-shorttitle">
-                    <span>
-                      20000 VND</span
-                    >
-                  </a>
-                </div>
-                <div class="tb-item-right">
-                  <span class=""
-                    >Ưu đãi không áp dụng ngày đang chọn. Chọn ngày khác.</span
-                  >
-                </div>
-              </div> -->
             </div>
           </div>
         </div>
@@ -278,90 +168,18 @@
                   />
                 </a>
               </div>
-              <!-- <div class="microsite-professional-photo-item">
-                <a href="">
-                  <img
-                    src="Image/foody-albummax_.jpg"
-                    alt="foody-albummax_.jpg"
-                  />
-                </a>
-              </div>
-              <div class="microsite-professional-photo-item">
-                <a href="">
-                  <img
-                    src="Image/foody-albummax_.jpg"
-                    alt="foody-albummax_.jpg"
-                  />
-                </a>
-              </div>
-              <div class="microsite-professional-photo-item">
-                <a href="">
-                  <img
-                    src="Image/foody-albummax_.jpg"
-                    alt="foody-albummax_.jpg"
-                  />
-                </a>
-              </div>
-              <div class="microsite-professional-photo-item">
-                <a href="">
-                  <img
-                    src="Image/foody-albummax_.jpg"
-                    alt="foody-albummax_.jpg"
-                  />
-                </a>
-              </div>
-              <div class="microsite-professional-photo-item">
-                <a href="">
-                  <img
-                    src="Image/foody-albummax_.jpg"
-                    alt="foody-albummax_.jpg"
-                  />
-                </a>
-              </div>
-              <div class="microsite-professional-photo-item">
-                <a href="">
-                  <img
-                    src="Image/foody-albummax_.jpg"
-                    alt="foody-albummax_.jpg"
-                  />
-                </a>
-              </div>
-              <div class="microsite-professional-photo-item">
-                <a href="">
-                  <img
-                    src="Image/foody-albummax_.jpg"
-                    alt="foody-albummax_.jpg"
-                  />
-                </a>
-              </div>
-              <div class="microsite-professional-photo-item">
-                <a href="">
-                  <img
-                    src="Image/foody-albummax_.jpg"
-                    alt="foody-albummax_.jpg"
-                  />
-                </a>
-              </div>
-              <div class="microsite-professional-photo-item">
-                <a href="">
-                  <img
-                    src="Image/foody-albummax_.jpg"
-                    alt="foody-albummax_.jpg"
-                  />
-                </a>
-              </div> -->
             </div>
           </div>
         </div>
         <div class="microsite-gallery" style="margin-top: 15px">
           <div class="microsite-box-heading">
-              <a href="" style="color: #333">Bản đồ</a>
-            </div>
-        <GoogleMap/>
+              <a href="" style="color: #333">ĐÁNH GIÁ CỦA KHÁCH HÀNG</a>
+            </div> 
+          <Comments  v-bind:storeID="storeID" /></div>
         </div>
-         <div class="microsite-gallery" style="margin-top: 15px"> <Rating/>
-        <Comments/></div>
-      </div>
+        <div class="microsite-gallery" style="margin-top: 15px">
+          <GoogleMap/>
+        </div>
     </div>
   </div>
 </div>
@@ -372,7 +190,6 @@ import Header from './containers/Header'
 import Navbar from './containers/Navbar'
 import GoogleMap from './containers/GoogleMap'
 import Comments from './containers/Comments/comments'
-
 const baseUrl='https://localhost:44398/api';
 export default {
   name: 'storeDetail',
@@ -383,12 +200,16 @@ export default {
   },
   data(){
     return{
+      storeID:'',
       storeOpen: [],
       storeMenu:[],
       menuId: '',
       isMapOpen: false,
       provinces: [],
-      businessTypeName:''
+      businessTypeName:'',
+      ratePoint:[],
+      totalRate:5,
+      commentList:[]
     }
   },
   components:{
@@ -406,20 +227,20 @@ methods:{
             this.businessTypeName = response.data;
       })
       return this.businessTypeName[0].businessTypeName
-    }
+    },
+    
 },
   mounted(){
-    const id = this.$route.params.id
+    const id = this.$route.params.id;
+    this.storeID=id;
     this.$http.get('https://localhost:44398/api/Store/GetByID?id='+ id).then(response => {
-            this.storeOpen =response.data
-            this.$http.get('https://localhost:44398/api/Dish/GetByIDMenu?id=' +this.storeOpen[0].menuID).then(response => {
+          this.storeOpen =response.data
+          this.storeID=this.storeOpen[0].storeID
+          this.$http.get('https://localhost:44398/api/Dish/GetByIDMenu?id=' +this.storeOpen[0].menuID).then(response => {
               this.storeMenu = response.data
               alert(this.storeMenu[0].dishName)
+          });
     });
-    });
-    // this.$http.get(baseUrl + '/Province/GetAll').then(response => {
-    //         this.provinces=response.data
-    //   })
   }
 }
 </script>

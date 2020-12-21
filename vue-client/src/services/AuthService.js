@@ -13,7 +13,7 @@ export default {
   },
   getRole(credentials) {
     return axios
-      .get(url + 'GetRole',{ headers: {'Authorization': credentials}})
+      .get(url + 'GetRole',{ headers: {"Authorization" : `Bearer ${credentials}`}})
       .then(response => response.data);
   },
   getSecretContent() {

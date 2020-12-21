@@ -25,7 +25,7 @@ export default [
       {
         _name: 'CSidebarNavItem',
         name: 'Đổi mật khẩu',
-        to: '/changepass',
+        to: '/ForgetPass',
         icon: 'cil-pencil'
       },
       {
@@ -59,7 +59,7 @@ export default [
       },
       {
         _name: 'CSidebarNavItem',
-        name: 'Sao lưu dữ liệu',
+        name: 'Quán chờ xác nhận',
         icon: 'cil-star',
       },
       {

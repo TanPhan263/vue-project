@@ -11,6 +11,14 @@ import babelPolyfill from 'babel-polyfill'
 import * as VueGoogleMaps from "vue2-google-maps";
 import { BFormRating } from 'bootstrap-vue'
 import CommentGrid from 'vue-comment-grid'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+
+library.add(faUserSecret)
+ 
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(CommentGrid)
 

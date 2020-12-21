@@ -2,11 +2,11 @@ import axios from 'axios';
 const url = 'https://localhost:44398/api/User/';
 export default{
     getInfo(token){
-        return axios.get(url+ 'GetByID?token=' + token).then(respone => respone.data);
+        return axios.get(url+ 'GetByID',{ headers: {"Authorization" : `Bearer ${token}`}}).then(respone => respone.data);
     },
     updateInfo(credentials,token) {
         return axios
-          .post(url + 'EditByID?token='+ token, credentials)
+          .post(url + 'EditByID',{ headers: {"Authorization" : `Bearer ${token}`}}, credentials)
           .then(response => response.data);
-      },
+    },
 };

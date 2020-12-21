@@ -135,7 +135,7 @@ export default {
     userData () {
       const id = this.$route.params.id
       const user=null
-      this.$http.get('https://localhost:44340/api/User/GetbyId/'+id).then(response => {
+      this.$http.get('https://localhost:44340/api/User/GetbyId?id='+id,{ headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}}).then(response => {
             user = response.data
       })
       return this.user
@@ -154,7 +154,7 @@ export default {
   },
    mounted(){
       const id = this.$route.params.id
-      this.$http.get('https://localhost:44398/api/Store/GetByID/'+id).then(response => {
+      this.$http.get('https://localhost:44398/api/Store/GetByID?id='+id,{ headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}}).then(response => {
             this.storeOpened =response.data
             this.storeOpened = JSON.parse(this.userData)
     })

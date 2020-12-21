@@ -96,10 +96,12 @@ ul.top-category-1 a{
 	color: #555;
 	padding: 18px 8px;
 	float: left;
-	font-size: 14px;
+	font-size: 15px;
 }
 ul.top-category-1 a:hover{
 	text-decoration: underline;
+	font-size: 17px;
+	color: darkred;
 }
 #login{
 	margin-left: 10px;
@@ -146,7 +148,7 @@ a.btn:hover{
 	position: relative;
 }
 .content-banner .search{
-	background: url('../imgs/banner-dat-giao-hang.png');
+	background: url('../imgs/newyearBanner.jpg');
 	position: absolute;
 	z-index: 2;
 	width: 100%;

@@ -36,7 +36,7 @@
               />
               <CInput
                 label="Ngày sinh"
-                type="date"
+                type="text"
                 horizontal
                 :value='birth'
                 v-model="birth"
@@ -129,12 +129,12 @@ export default {
           birthday: this.birth,
           userTypeID: this.type
           };
-          axios.post("https://localhost:44398/api/User/EditByID?token=" + localStorage.getItem("isAuthen") , credentials).then(respone =>{ 
+          axios.post("https://localhost:44398/api/User/EditByID" ,{ headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}} , credentials).then(respone =>{ 
             alert(respone.data)})
         }
     },
     mounted() {
-          this.$http.get("https://localhost:44398/api/User/GetByID?token=" + localStorage.getItem("isAuthen")).then(respone =>{
+          this.$http.get("https://localhost:44398/api/User/GetByID" , { headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}}).then(respone =>{
             this.id= respone.data[0].userID
             this.name=respone.data[0].userName
             this.phone=respone.data[0].phone

@@ -82,7 +82,7 @@ export default {
     }
   },
   mounted() {
-    this.$http.get(url).then(response => {
+    this.$http.get(url,{ headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}}).then(response => {
             this.items = response.data
           })
   },

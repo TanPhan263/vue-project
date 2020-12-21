@@ -1,8 +1,8 @@
 <template>
   <div class="c-app">
-    <TheSidebar/>
+    <TheSidebar v-bind:userType="userType"/>
     <CWrapper>
-      <TheHeader/>
+      <TheHeader v-bind:userName="userName"/>
       <div class="c-body">
         <main class="c-main">
           <CContainer fluid>
@@ -21,9 +21,36 @@
 import TheSidebar from './TheSidebar'
 import TheHeader from './TheHeader'
 import TheFooter from './TheFooter'
-
+import UserService from '@/services/UserService.js'
+import AuthService from '@/services/AuthService.js'
 export default {
   name: 'TheContainer',
+  data(){
+    return {
+      user:[],
+      userType:'',
+      userName:''
+    }
+  },
+  mounted() {
+    this.getUser()
+  },
+  methods:{
+    async getUser(){
+      try{
+        const token = localStorage.getItem('isAuthen')
+        console.log(token);
+        this.user = await UserService.getInfo(token);
+        console.log(this.user);
+        this.userName=this.user[0].userName;
+        console.log(this.userName);
+        const role = await AuthService.getRole(token);
+        this.userType = role.userTyleID;
+        console.log(this.userType);
+      }
+      catch{}
+    }
+  },
   components: {
     TheSidebar,
     TheHeader,
