@@ -3,7 +3,7 @@
     <CCol col="12" lg="6">
       <CCard>
         <CCardHeader>
-          Store ID id:  {{ $route.params.id }}
+          THÔNG TIN QUÁN
         </CCardHeader>
          <CCardBody>
             <CForm>

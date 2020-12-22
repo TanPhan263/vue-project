@@ -82,7 +82,7 @@ export default {
             pass: '', 
             pass2:'',
             sex: '',
-            type: 1,
+            type: '-MO5VYNnWIjXtvJO4AXi' ,
     };
   },
   methods: {
