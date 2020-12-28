@@ -18,5 +18,8 @@ export default{
     },
     getUserType(token){
         return axios.get(url2+ 'GetAll',{ headers: {"Authorization" : `Bearer ${token}`}}).then(respone => respone.data);
+    },
+    getUserbyIDnoToken(id){
+        return axios.get(url+ 'GetByIDNotToken?id='+id).then(respone => respone.data[0]);
     }
 };

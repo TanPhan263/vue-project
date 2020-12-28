@@ -33,7 +33,7 @@
                 
               />
                <CInput
-               :value=" storeOpened[0].cLoseTime"
+               :value="storeOpened[0].cLoseTime"
                 label="Giờ đóng cửa"
                 horizontal
            
@@ -79,7 +79,6 @@
 
 <script>
 import StoreService from '@/services/StoreService.js';
-
 export default {
   name: 'Store',
   data () {
@@ -100,7 +99,6 @@ export default {
     this.user=localStorage.getItem('userInfor');
     this.user= JSON.parse(this.user);
     this.getStore(this.user.userID);
-    console.log(this.storeOpened);
   }
 }
 </script>

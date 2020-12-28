@@ -117,7 +117,8 @@ export default {
   },
   data () {
     return {
-      userTypes: null,
+        userID: this.userID,
+        userTypes: null,
         userID: '',
         userName: '',
         phone: '',
@@ -143,6 +144,7 @@ export default {
       this.userName = userData[0].userName;
       this.phone = userData[0].phone;
       this.address = userData[0].address;
+      this.password = null;
       this.email = userData[0].email;
       this.picture = userData[0].picture;
       this.sex = userData[0].sex;
@@ -174,17 +176,18 @@ export default {
           else{ this.update();}
         },
         update(){
-           const id = this.$route.params.id;
+          const id = this.$route.params.id;
           const credentials = {
           userName: this.userName,
           phone: this.phone,
           address: this.address,
-          email: this.mail,
+          email: this.email,
           picture: this.picture,
           sex: this.sex,
-          birthday: this.birth,
+          birthday: this.birthday,
           userTypeID: this.userTypeID
           };
+
           axios.post("https://localhost:44398/api/User/EditByID?id=" + id, credentials ,{ headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}}).then(respone =>{ 
             alert(respone.data)})
         }
@@ -207,4 +210,5 @@ export default {
     margin: 0 auto; 
     width: 30%;
 }
+
 </style>

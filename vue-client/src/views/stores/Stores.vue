@@ -271,7 +271,7 @@ export default {
 }
 </script>
 <style>
-@import url('../../assets/css/comments.css');
+@import url('../../assets/css/dialog.css');
   .center_div{
   margin: 0 auto;
   width:100% /* value of your choice which suits your alignment */

@@ -206,7 +206,12 @@ export default {
       menuId: '',
       isMapOpen: false,
       provinces: [],
-      businessTypeName:'',
+      businessTypeName:[
+        {
+          businessTypeName: String,
+          businessTypeID: String
+        }
+      ],
       ratePoint:[],
       totalRate:5,
       commentList:[]

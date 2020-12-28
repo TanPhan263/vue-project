@@ -4,7 +4,7 @@
       <CCard class="center_div">
         <CCardHeader>
          <div class="row">
-            <h2  style="margin-left: 12px;"> User</h2>
+            <h2  style="margin-left: 12px;">User</h2>
             <CInput
             style="margin-left: 620px;"
                       v-model="keyword"
@@ -245,9 +245,10 @@ export default {
 }
 </script>
 <style>
-@import url('../../assets/css/comments.css');
+@import url('../../assets/css/dialog.css');
 .center_div{
   margin: 0 auto;
   width: 100% /* value of your choice which suits your alignment */
 }
+
 </style>

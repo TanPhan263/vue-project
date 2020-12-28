@@ -64,14 +64,15 @@
 				<div v-for="comment in commentList" :key="comment.commentID" class="row" style="margin-top:15px;">
 					<div class="row" v-if="comment.parentComment_ID===null">
 						<div class="col-sm-1">
-							<img style="border-radius:50%;" src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+							<img v-if="userCommentPic===''" style="border-radius:50%;" src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+							<img v-else style="width:55px ; height: 55px;border-radius:50%;" :src="getPicture(comment.commentID)" class="img-rounded">
 						</div>
 						<div class="col-sm-9"  style="background-color:#FAFAFA;">
 							<div  class="review-block-rate">
-								<div class="review-block-name"><a href="#">{{comment.userID}}</a></div>
+								<div class="review-block-name"><a href="#">{{getName(comment.userID)}}</a></div>
 								<div class="review-block-date">{{comment.date}}</div>
 							</div>
-						<div class="review-block-description">{{comment.content}} {{getUserName('-MO5fHaugbt8nhvBdoFq')}}</div>
+						<div class="review-block-description">{{comment.content}}</div>
 						<div  class="review-block-rate">
 								<div class="review-block-name"><a @click="getParentID(comment.commentID)">Trả lời</a></div>
 						</div>						
@@ -80,11 +81,12 @@
 							<div v-if="comment2.parentComment_ID===comment.commentID" class="row" style="margin-top:15px;">
 								<div class="col-sm-2"></div>
 								<div class="col-sm-1">
-									<img style="border-radius:50%;" src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+									<img v-if="userCommentPic===''" style="border-radius:50%;" src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
+							<img v-else style="width:55px ; height: 55px;border-radius:50%;" :src="getPicture(comment2.commentID)" class="img-rounded">
 								</div>
 								<div class="col-sm-8" style="background-color:#FAFAFA; boder-radius:10px;">
 									<div  class="review-block-rate">
-										<div class="review-block-name"><a href="#">{{comment2.userID}}</a></div>
+										<div class="review-block-name"><a href="#">{{getName(comment2.userID)}}</a></div>
 										<div class="review-block-date">{{comment2.date}}</div>
 									</div>
 									<div class="review-block-description">{{comment2.content}}</div>
@@ -108,7 +110,17 @@ import UserService from '@/services/UserService.js';
 export default {
 data() {
 	return{
-		commentList:[],
+		userCommentName: '',
+		userCommentPic: '',
+		commentList:[{
+			commentID: String,
+			content: String,
+			date: String,
+			image: String,
+			userID: String,
+			storeID: String,
+			parentComment_ID: String
+		}],
 		parentCommentID:'',
 		userList:[],
 		value:'',
@@ -145,6 +157,11 @@ methods:{
 	//   })
 		try{
 			this.commentList=await CommentService.getCommentByStore(this.storeID);
+			console.log(this.commentList)
+			this.commentList.forEach(element => {
+				this.getUsers(element.userID);
+			});
+			console.log(this.userList);
 		}
 		catch{}
 	},
@@ -183,10 +200,6 @@ methods:{
 		this.getCommnents();
 	},
 	async getRate(){
-		// this.$http.get(baseUrl +'/ListOfReview/GetByID?id='+this.storeID).then(response => {
-		//         this.value = response.data;
-		//         this.averageRate=this.rate/this.value.length;
-		//   })
 		try{
 		this.value= await CommentService.getRateByStore(this.storeID)
 		this.value.forEach(element => {
@@ -212,10 +225,27 @@ methods:{
 		this.active=true;
 		this.parentCommentID=index;
 	},
-	getUserName(id){
-		const token = localStorage.getItem('isAuthen');
-		const user = UserService.getUserbyID(id,token);
-		console.log(user);
+	getName(id){
+		this.getUsers(id);
+		const a = this.userCommentName;
+		return a;
+	},
+	getPicture(id){
+		this.getUsers(id);
+		const a = this.userCommentPic;
+		return a;
+	},
+	async getUsers(id){
+		var response = await UserService.getUserbyIDnoToken(id);
+		this.userCommentName = response.userName;
+		this.userCommentPic = response.picture;
+	},
+	async getUserPicture(id){
+		var name = '';
+		const response = await UserService. getUserbyIDnoToken(id);
+		name= String.parse(response.userName);
+		console.log(name)
+		return name;
 	}
   }
 }
