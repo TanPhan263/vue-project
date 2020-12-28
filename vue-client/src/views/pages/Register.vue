@@ -26,7 +26,7 @@
                   type="password"
                   autocomplete="new-password"
                   v-model="pass"
-                >{{ pass }}
+                >
                   <template #prepend-content><CIcon name="cil-lock-locked"/></template>
                 </CInput>
                 <CInput
@@ -41,6 +41,8 @@
                   <template #prepend-content><CIcon name="cil-lock-locked"/></template>
                 </CInput>
                 <CButton v-on:click="signUp" color="success" block>Create Account</CButton>
+                <br>
+                 <a style="margin:0 auto;" href="/RegisterStore"> Tạo quán cho riêng bạn...</a>
               </CForm>
             </CCardBody>
             <CCardFooter class="p-4">

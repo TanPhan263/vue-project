@@ -229,6 +229,7 @@ methods:{
       return this.businessTypeName[0].businessTypeName
     },
     
+    
 },
   mounted(){
     const id = this.$route.params.id;
@@ -238,7 +239,6 @@ methods:{
           this.storeID=this.storeOpen[0].storeID
           this.$http.get('https://localhost:44398/api/Dish/GetByIDMenu?id=' +this.storeOpen[0].menuID).then(response => {
               this.storeMenu = response.data
-              alert(this.storeMenu[0].dishName)
           });
     });
   }

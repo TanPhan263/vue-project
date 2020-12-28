@@ -14,6 +14,7 @@ const Page404 = () => import('@/views/pages/Page404')
 const Page500 = () => import('@/views/pages/Page500')
 const Login = () => import('@/views/pages/Login')
 const Register = () => import('@/views/pages/Register')
+const RegisterStore = () => import('@/views/pages/RegisterStore')
 
 // Users
 const Users = () => import('@/views/users/Users')
@@ -33,13 +34,14 @@ const ForgetPass= () => import('@/client/views/ForgetPass')
 const UserInfor= () => import('@/client/views/UserInfor') 
 const Homebody= () => import('@/client/views/Homebody') 
 const DishTypeSearch= () => import('@/client/views/DishTypeSearch') 
-
+//StoreOwner
+const Dish = () => import('@/store_owner/manageMenu/Dish') 
+const ManageMenu = () => import('@/store_owner/manageMenu/MangeMenu') 
+const ManageStoreInfor = () => import('@/store_owner/MangeStoreInfor') 
 Vue.use(Router)
 
 const isAuthen = (to, from, next) => {  
-  debugger;
   var isAuthen = localStorage.getItem('isAuthen');
-
   if (isAuthen != null){
     next();
     return;
@@ -159,6 +161,34 @@ function configRoutes () {
             }
           ]
         },
+        {
+          path: 'manageMenu',
+          meta: {
+            label: 'Menus'
+          },
+          component: {
+            render(c) {
+              return c('router-view')
+            }
+          },
+          children: [
+            {
+              path: ':id',
+              name: 'dish',
+              component: Dish
+            },
+            {
+              path: '',
+              name: 'manageMenu',
+              component: ManageMenu
+            }
+          ]
+        },
+        {
+          path: 'manageStore',
+          name: 'manageStore',
+          component: ManageStoreInfor
+        }
       ]
     },
     {
@@ -233,6 +263,11 @@ function configRoutes () {
       path: '/ForgetPass',      
       name: 'ForgetPass',
       component: ForgetPass
+    },
+    {
+      path: '/RegisterStore',      
+      name: '/RegisterStore',
+      component: RegisterStore
     },
     {
       path: '/UserInformation',      

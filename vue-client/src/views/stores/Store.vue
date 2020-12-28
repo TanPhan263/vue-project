@@ -8,46 +8,66 @@
          <CCardBody>
             <CForm>
               <CInput
-                label="Ngày đăng kí"
+                label="Store ID"
                 horizontal
-                value="1/1/2020"
+                :value ="storeID"
                 disabled
               />
               <CInput
                 label="Tên quán"
-                 disabled
+              
                 horizontal
                 autocomplete="name"
-                :value="storeOpened[0].storeName"
+                v-model="storeName"
+              />
+              <CInput
+                label="Chủ quán"
+              disabled
+                horizontal
+                autocomplete="name"
+                v-model="storeOwnerName"
               />
               <CInput
                 label="Địa chỉ"
-                 disabled
+             
                 horizontal
-                :value="storeOpened[0].storeAddress"
+                v-model="storeAddress"
               ></CInput>
               <CInput
-               disabled
+                label="Longtitude"
+             
+                horizontal
+                v-model="storeLat"
+              ></CInput>
+              <CInput
+                label="Latitude"
+             
+                horizontal
+                v-model="storeLong"
+              ></CInput>
+              <CInput
+              
                 label="Giờ mở cửa"
                 horizontal
-                :value="storeOpened[0].openTime"
+                v-model="openTime"
               />
                <CInput
-                disabled
+               
                 label="Giờ đóng cửa"
                 horizontal
-                :value="storeOpened[0].cLoseTime"
+                v-model="closeTime"
               />
               <CInput
-              disabled
+             
                 label="Loại hình quán"
-                placeholder="Enter your email"
-                type="email"
                 horizontal
-                autocomplete="email"
-                required
-                was-validated
-               :value="storeOpened[0].provinceID"
+               v-model="storeStype"
+              />
+               <CInput
+             
+                label="Rating"
+                horizontal
+               v-model="storeRate"
               />
             
             </CForm>
@@ -62,24 +82,14 @@
         </CCardHeader>
         <CCardBody>
           <CCarousel
-            arrows
             indicators
             animate
-            height="252px"
+            height="333px"
           >
             <CCarouselItem
-              height="200px"
-              captionHeader="First Slide"
-              :image="storeOpened[0].storePicture"
-              captionText="Nulla vitae elit libero, a pharetra augue mollis interdum."
-            />
-            <CCarouselItem
-              captionHeader="Blank page"
-              :image="{ placeholderColor: 'grey' }"
-              captionText="Nulla vitae elit libero, a pharetra augue mollis interdum."
-            />
-            <CCarouselItem
-            image="https://picsum.photos/1024/480/?image=54"
+              height="333px"
+              :image="storePicture"
+             
             />
           </CCarousel>
         </CCardBody>
@@ -103,7 +113,7 @@
           />
           <CRow form class="form-group">
           <CButton class="btn_left" color="danger" @click="goBack">Back</CButton>
-          <CButton class="btn_right" color="primary" @click="goBack">Update</CButton>
+          <CButton class="btn_right" color="primary" @click="updateStore">Update</CButton>
            </CRow>
         </CCardFooter>
       </CCard>
@@ -112,34 +122,32 @@
 </template>
 
 <script>
+import { loadOptions } from '@babel/core'
+import StoreService from '../../services/StoreService'
 import storeData from './StoreData'
 export default {
   name: 'Store',
   data () {
     return {
-      storeOpened:[],
       options: ['1 week', '1 month', 'forever'],
+      storeID: '',
+      storeName: '',
+      storeAddress: '',
+      storeOwner: '',
+      storeOwnerName: '',
+      openTime: '',
+      closeTime: '',
+      imageData: null,
+      storePicture: null,
+      storeLat:'',
+      storeLong:'',
+      storeProvince:'',
+      storeStype: '',
+      storeRate: ''
     }
   },
   computed: {
-    fields () {
-      return [
-        { key: 'storeID', label: this.username, _style: 'width:150px'},
-        { key: 'storeAddress', label: '', _style: 'width:150px;' },
-        { key: 'storeName', label: '', _style: 'width:150px;' },
-        { key: 'openTime', label: '', _style: 'width:150px;' },
-        { key: 'closeTime', label: '', _style: 'width:150px;' },
-        { key: 'ratePoint', label: '', _style: 'width:150px;' },
-      ]
-    },
-    userData () {
-      const id = this.$route.params.id
-      const user=null
-      this.$http.get('https://localhost:44340/api/User/GetbyId?id='+id,{ headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}}).then(response => {
-            user = response.data
-      })
-      return this.user
-    },
+    
     visibleData () {
       return this.userData.filter(param => param.key !== 'username')
     },
@@ -150,13 +158,52 @@ export default {
   methods: {
     goBack() {
       this.usersOpened ? this.$router.go(-1) : this.$router.push({path: '/store'})
-    }
+    },
+    deleteStore(){
+
+    },
+    banStore(){
+
+    },
+    async updateStore(){
+      const id = this.$route.params.id
+      const store ={
+        storeAddress: this.storeAddress,
+        storeName:this.storeName,
+        storePicture: this.storePicture,
+        openTime: this.openTime,
+        cLoseTime: this.closeTime,
+        userID: this.storeOwner,
+        provinceID: this.storeProvince,
+        businessTypeID: this.storeStype,
+        ratePoint: this.storeRate
+      }
+      const response = await StoreService.updateStore(id, store, localStorage.getItem('isAuthen'));
+      alert(response)
+    },
+    getStoreOwner() {
+      this.$http.get('https://localhost:44398/api/User/GetByID?id='+this.storeOwner,{ headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}}).then(response => {
+            this.storeOwnerName = response.data[0].userName;
+            console.log( this.storeOwnerName)
+      })
+      
+      return this.user
+    },
   },
    mounted(){
       const id = this.$route.params.id
       this.$http.get('https://localhost:44398/api/Store/GetByID?id='+id,{ headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}}).then(response => {
-            this.storeOpened =response.data
-            this.storeOpened = JSON.parse(this.userData)
+            this.storeName = response.data[0].storeName;
+            this.storeAddress = response.data[0].storeAddress;
+            this.storePicture = response.data[0].storePicture;
+            this.storeProvince = response.data[0].provinceID;
+            this.storeRate = response.data[0].ratePoint;
+            this.storeStype = response.data[0].businessTypeID;
+            this.storeOwner = response.data[0].userID;
+            this.openTime = response.data[0].openTime;
+            this.closeTime = response.data[0].cLoseTime;
+            this.storeID =  response.data[0].storeID;
+            this.getStoreOwner();                  
     })
   }
 }

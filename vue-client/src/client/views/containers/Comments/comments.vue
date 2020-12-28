@@ -68,10 +68,10 @@
 						</div>
 						<div class="col-sm-9"  style="background-color:#FAFAFA;">
 							<div  class="review-block-rate">
-								<div class="review-block-name"><a href="#">nktailor</a></div>
+								<div class="review-block-name"><a href="#">{{comment.userID}}</a></div>
 								<div class="review-block-date">{{comment.date}}</div>
 							</div>
-						<div class="review-block-description">{{comment.content}}</div>
+						<div class="review-block-description">{{comment.content}} {{getUserName('-MO5fHaugbt8nhvBdoFq')}}</div>
 						<div  class="review-block-rate">
 								<div class="review-block-name"><a @click="getParentID(comment.commentID)">Trả lời</a></div>
 						</div>						
@@ -84,7 +84,7 @@
 								</div>
 								<div class="col-sm-8" style="background-color:#FAFAFA; boder-radius:10px;">
 									<div  class="review-block-rate">
-										<div class="review-block-name"><a href="#">nktailor</a></div>
+										<div class="review-block-name"><a href="#">{{comment2.userID}}</a></div>
 										<div class="review-block-date">{{comment2.date}}</div>
 									</div>
 									<div class="review-block-description">{{comment2.content}}</div>
@@ -104,6 +104,7 @@
 <script>
 const baseUrl='https://localhost:44398/api';
 import CommentService from '@/services/CommentService.js';
+import UserService from '@/services/UserService.js';
 export default {
 data() {
 	return{
@@ -180,38 +181,43 @@ methods:{
 		alert(respone2);
 		this.updateRate();
 		this.getCommnents();
-  },
-  async getRate(){
-    // this.$http.get(baseUrl +'/ListOfReview/GetByID?id='+this.storeID).then(response => {
-    //         this.value = response.data;
-    //         this.averageRate=this.rate/this.value.length;
-	//   })
-	try{
-	this.value= await CommentService.getRateByStore(this.storeID)
-	this.value.forEach(element => {
-			  this.rate+=parseInt(element.ratePoint)
-			  switch(parseInt(element.ratePoint)){
-				  case 1: this.rate1+=1; break;
-				  case 2: this.rate2+=1; break;
-				  case 3: this.rate3+=1; break;
-			      case 4: this.rate4+=1; break;
-				  case 5: this.rate5+=1; break;
-			  }
-			});
-	this.averageRate=this.rate/this.value.length;
+	},
+	async getRate(){
+		// this.$http.get(baseUrl +'/ListOfReview/GetByID?id='+this.storeID).then(response => {
+		//         this.value = response.data;
+		//         this.averageRate=this.rate/this.value.length;
+		//   })
+		try{
+		this.value= await CommentService.getRateByStore(this.storeID)
+		this.value.forEach(element => {
+				this.rate+=parseInt(element.ratePoint)
+				switch(parseInt(element.ratePoint)){
+					case 1: this.rate1+=1; break;
+					case 2: this.rate2+=1; break;
+					case 3: this.rate3+=1; break;
+					case 4: this.rate4+=1; break;
+					case 5: this.rate5+=1; break;
+				}
+				});
+		this.averageRate=this.rate/this.value.length;
+		}
+		catch{
+		}
+	},
+	updateRate() {
+		this.rate+=this.rateSubmit;
+		this.averageRate=this.rate/(this.value.length+1);
+	},
+	getParentID(index){
+		this.active=true;
+		this.parentCommentID=index;
+	},
+	getUserName(id){
+		const token = localStorage.getItem('isAuthen');
+		const user = UserService.getUserbyID(id,token);
+		console.log(user);
 	}
-	catch{
-	}
-  },
-  updateRate() {
-    this.rate+=this.rateSubmit;
-	this.averageRate=this.rate/(this.value.length+1);
-  },
-  getParentID(index){
-	  this.active=true;
-	  this.parentCommentID=index;
   }
-}
 }
 </script>
 

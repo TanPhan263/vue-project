@@ -9,44 +9,51 @@
             <CForm>
               <CInput
                 label="Id user"
-                horizontal
-                :value="userData[0].userID"
                 disabled
+                horizontal
+                :value="userID"
               />
               <CInput
                 label="Họ tên"
-                 disabled
                 horizontal
                 autocomplete="name"
-                :value="userData[0].userName"
+                v-model="userName"
               />
               <CInput
                 label="Địa chỉ"
-                 disabled
+               
                 horizontal
-                :value="userData[0].address"
+                v-model="address"
               ></CInput>
               <CInput
-              disabled
+            
                 label="Số điện thoại"
                 horizontal
-                value="12313"
+                v-model="phone"
               />
               <CInput
-              disabled
+             
                 label="Ngày sinh"
-                
                 horizontal
-              :value="userData[0].birthday"
+              v-model="birthday"
               />
-               <CInput
-                disabled
-                label="Quyền"
-                horizontal
-                :value="userAuthor(userData[0].userTypeID)"
-              />
+              <div class="row">
+              <p style="margin-left: 15px;">Quyền</p>
+                <select
+                    id="usertype"
+                    style="width:345px;height:35px;border-radius:4px; border: 1px solid #D3D3D3; margin-bottom: 10px; margin-left: 75px;"
+                    class="country fl_left"
+                    vertical
+                    v-model="userTypeID"
+                    >
+
+                    <option v-for="userType in userTypes" v-bind:key="userType.userTypeID" :value="userType.userTypeID">
+                        {{userType.userTypeName}}
+                    </option>
+                </select>
+                </div>
               <CInput
-              disabled
+             
                 label="Email "
                 placeholder="Enter your email"
                 type="email"
@@ -54,7 +61,7 @@
                 autocomplete="email"
                 required
                 was-validated
-               :value="userData[0].email"
+               v-model="email"
               />
             
             </CForm>
@@ -68,9 +75,11 @@
           <CCardBody>
             <CForm>
                 <div class="center_div">
-                <img
-                    :src="userData[0].picture"
-                    class="c-avatar-img "
+                <img 
+                  style="border-radius: 50%;
+                  height: 200px; width:200px;"
+                    :src="picture"
+                    class="c-avatar-img"
                 />
                 </div>
                 <CRow form class="form-group">
@@ -86,7 +95,7 @@
             </CForm>
           </CCardBody>
           <CCardFooter>
-            <CButton  class="btn_left" type="submit" size="sm" color="primary"><CIcon name="cil-check-circle"/> Submit</CButton>
+            <CButton  @click="onUpload" class="btn_left" type="submit" size="sm" color="primary"><CIcon name="cil-check-circle"/> Update</CButton>
             <CButton  class="btn_right" type="reset" size="sm" color="danger"><CIcon name="cil-ban"/> Back</CButton>
           </CCardFooter>
         </CCard>
@@ -95,8 +104,10 @@
 </template>
             
 <script>
-const url = 'https://localhost:44340/api/User/GetbyId/'
-import UserService from '@/services/UserService.js'
+import axios from 'axios';
+import firebase from 'firebase';
+const url = 'https://localhost:44398/api/User/GetbyId/';
+import UserService from '@/services/UserService.js';
 export default {
   name: 'User',
   beforeRouteEnter(to, from, next) {
@@ -106,34 +117,80 @@ export default {
   },
   data () {
     return {
-      author: 'Admin',
-      userData:[],
-      options: [ 'User', 'Store Owner', 'Admin'],
+      userTypes: null,
+        userID: '',
+        userName: '',
+        phone: '',
+        address: '',
+        password: '',
+        email: '',
+        picture: null,
+        imageData: null,
+        sex: '',
+        birthday: '',
+        userTypeID: ''
     };
   },
   computed: {
   },
   methods: {
+    async onInit(){
+      const token = localStorage.getItem('isAuthen');
+      const id = this.$route.params.id;
+      const userData = await UserService. getUserbyID(id,token);
+      this.userTypes = await UserService.getUserType(localStorage.getItem('isAuthen'));
+      this.userID = userData[0].userID;
+      this.userName = userData[0].userName;
+      this.phone = userData[0].phone;
+      this.address = userData[0].address;
+      this.email = userData[0].email;
+      this.picture = userData[0].picture;
+      this.sex = userData[0].sex;
+      this.birthday = userData[0].birthday;
+      this.userTypeID = userData[0].userTypeID;
+    },
     goBack() {
       this.usersOpened ? this.$router.go(-1) : this.$router.push({path: '/users'})
       },
-    userAuthor(index){
-      switch(index)
-      {
-        case 1: this.author = 'User';
-        break;
-        case 2: this.author ='Store Owner'
-        break;
-        case 3: this.author ='Admin'
-        break;
-      }
-      return this.author
-    }
+     previewImage(event){
+          this.picture=null;
+          this.imageData= event.target.files[0];
+        },
+        onUpload(){
+          if(this.imageData != null){
+          const storageRef = firebase.storage().ref(`image/${this.imageData.name}`).put(this.imageData);
+          storageRef.on(`state_change`, snapshot => {
+            this.uploadValue=(snapshot.bytesTransfered/snapshot.totalBytes)*100;
+          },error =>{console.log(error.message)},
+          ()=> {
+            this.uploadValue=100;
+            storageRef.snapshot.ref.getDownloadURL().then((url) => {
+              this.picture=url;
+               this.update();
+              })
+            }
+          )
+          }
+          else{ this.update();}
+        },
+        update(){
+           const id = this.$route.params.id;
+          const credentials = {
+          userName: this.userName,
+          phone: this.phone,
+          address: this.address,
+          email: this.mail,
+          picture: this.picture,
+          sex: this.sex,
+          birthday: this.birth,
+          userTypeID: this.userTypeID
+          };
+          axios.post("https://localhost:44398/api/User/EditByID?id=" + id, credentials ,{ headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}}).then(respone =>{ 
+            alert(respone.data)})
+        }
   },
    mounted(){
-      const token = localStorage.getItem('isAuthen');
-      const id = this.$route.params.id;
-      this.userData = UserService.getInfo(token);
+      this.onInit();
   }
   
 }

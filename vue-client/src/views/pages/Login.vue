@@ -121,7 +121,6 @@ export default {
         localStorage.setItem('userInfor',JSON.stringify(response2[0]));
         console.log(localStorage.getItem('userInfor'))
         const role = await AuthService.getRole(token.token)
-        alert(role.userTyleID)
         if(role.userTyleID == '-MO5VBnzdGsuypsTzHaV' )
         {
           this.$router.push('/');

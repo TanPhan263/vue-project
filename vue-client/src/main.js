@@ -14,7 +14,18 @@ import CommentGrid from 'vue-comment-grid'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import firebase from 'firebase'
 
+firebase.initializeApp({
+  apiKey: "AIzaSyDNRD7rcNybO5pVkC8POMiMhYYwmfreUVQ",
+  authDomain: "tlcn-1a9cf.firebaseapp.com",
+  databaseURL: "https://tlcn-1a9cf.firebaseio.com",
+  projectId: "tlcn-1a9cf",
+  storageBucket: "tlcn-1a9cf.appspot.com",
+  messagingSenderId: "295500543953",
+  appId: "1:295500543953:web:b85c401589d343127152f0",
+  measurementId: "G-RC7XRDEM86"
+})
 
 library.add(faUserSecret)
  

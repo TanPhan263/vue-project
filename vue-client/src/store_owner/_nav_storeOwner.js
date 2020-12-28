@@ -38,11 +38,11 @@ export default [
         items: [
           {
             name: 'Quản lý menu',
-            to: '/users'
+            to: '/manageMenu'
           },
           {
             name: 'Thông tin quán',
-            to: '/store'
+            to: '/manageStore'
           }
         ]
       },

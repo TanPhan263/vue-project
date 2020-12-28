@@ -3,7 +3,7 @@
       <CCol md="6">
         <CCard>
           <CCardHeader>
-            <strong>Thông tin Admin</strong>
+            <strong>Thông tin tài khoản</strong>
           </CCardHeader>
           <CCardBody>
             <CForm>
@@ -64,27 +64,30 @@
       <CCol md="6">
         <CCard>
           <CCardBody>
-            <CForm>
+            <CForm  style="width:100%">
                 <div class="center_div">
                 <img  v-on:click="changeAvt=!changeAvt"
-                    :src="avt"
-                    class="c-avatar-img "
+                    :src="picture"
+                    style="border-radius:50%; height:120px;width:150px;"
                 />
-                 <CCardHeader>
-                    <strong class="center_div" style="margin-left: 20px">Tên admin nè</strong>
+                 <CCardHeader style="text-align:center;">
+                    <strong >{{name}}</strong>
                 </CCardHeader>
                 </div>
             </CForm>
           </CCardBody>
-          <CCardFooter>
-            <CButton v-on:click="changeAvt=!changeAvt" class="btn_right" type="submit" color="primary">Change avatar</CButton>
-            <CInputFile
-                v-if="changeAvt"
-                label="Chọn ảnh"
-                horizontal
-                custom
-                size="sm"
+          <CCardFooter class="center_div">
+            <CButton v-on:click="changeAvt=!changeAvt" type="submit" color="primary" style="width:120px;">Change avatar</CButton>
+            <div v-if="changeAvt" class="center_div" style="margin-top:20px;">
+            <input
+                type="file"
+                @change="previewImage"
               />
+              <CButton @click="onUpload" type="submit" color="primary">Upload</CButton>
+              <div class="row">
+                <p v-if="uploadValue>0">progress: {{uploadValue.toFixed()+ "%"}}</p>
+              </div>
+            </div>
           </CCardFooter>
         </CCard>
       </CCol>
@@ -92,6 +95,7 @@
 </template>
 
 <script>
+import firebase from 'firebase'
 import axios from 'axios';
 import UserService from '@/services/UserService.js';
 const baseUrl = ""
@@ -99,6 +103,9 @@ export default {
     name: 'update',
     data(){
         return{
+            imageData: null,
+            picture: null,
+            uploadValue: 0,
             changeAvt: false,
             id: '',
             name: '',
@@ -106,7 +113,6 @@ export default {
             phone: '',
             birth: '',
             mail: '',
-            avt: '',
             pass: '', 
             sex: '',
             type: '',
@@ -116,7 +122,26 @@ export default {
         uploadfile(){
             changeAvt = !changeAvt
         },
+        previewImage(event){
+          this.uploadValue=0;
+          this.picture=null;
+          this.imageData= event.target.files[0];
+        },
+        onUpload(){
+          this.picture=null;
+          const storageRef = firebase.storage().ref(`image/${this.imageData.name}`).put(this.imageData);
+          storageRef.on(`state_change`, snapshot => {
+            this.uploadValue=(snapshot.bytesTransfered/snapshot.totalBytes)*100;
+          },error =>{console.log(error.message)},
+          ()=> {
+            this.uploadValue=100;
+            storageRef.snapshot.ref.getDownloadURL().then((url) => {this.picture=url;})
+            }
+          )
+          this.update();
+        },
         update(){
+          console.log(this.picture);
           const credentials = {
           userID: this.id,
           userName: this.name,
@@ -124,12 +149,12 @@ export default {
           address: this.address,
           password: this.pass,
           email: this.mail,
-          picture: this.avt,
+          picture: this.picture,
           sex: this.sex,
           birthday: this.birth,
           userTypeID: this.type
           };
-          axios.post("https://localhost:44398/api/User/EditByID" ,{ headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}} , credentials).then(respone =>{ 
+          axios.post("https://localhost:44398/api/User/EditByID" , credentials ,{ headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}}).then(respone =>{ 
             alert(respone.data)})
         }
     },
@@ -141,7 +166,7 @@ export default {
             this.address= respone.data[0].address
             this.mail=respone.data[0].email
             this.birth=respone.data[0].birthday
-            this.avt= respone.data[0].picture
+            this.picture= respone.data[0].picture
             this.pass= respone.data[0].password
             this.type= respone.data[0].userTypeID
             this.sex= respone.data[0].sex
