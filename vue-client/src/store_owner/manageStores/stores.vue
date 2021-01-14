@@ -6,7 +6,7 @@
           <div class="row">
             <h2  style="margin-left: 12px;"> Stores</h2>
             <CInput
-              style="margin-left: 620px;"
+            style="margin-left: 620px;"
                       v-model="keyword"
                       placeholder="Tìm quán"
                       v-on:keyup="onChange(keyword)"
@@ -140,11 +140,11 @@
 import firebase from 'firebase';
 import ProvinceService from '../../services/ProvinceService';
 import StoreService from '../../services/StoreService';
-const url = 'https://localhost:44398/api/Store/GetAll'
 export default {
-  name: 'Stores',
+  name: 'OwnerStores',
   data () {
     return {
+      user: null,
       keyword: '',
       result: null,
       provinces:[
@@ -194,6 +194,16 @@ export default {
     }
   },
   methods: {
+    async onInit(){
+        this.user=localStorage.getItem('userInfor');
+        this.user=JSON.parse(this.user)
+        const token = localStorage.getItem('isAuthen');
+        this.items = await StoreService.getByUser(this.user.userID,token);
+        this.result=this.items;
+        console.log(this.items);
+        this.getProvince();
+        this.getBussinessType();
+    },
     getBadge (status) {
       switch (status) {
         case 'Active': return 'success'
@@ -204,7 +214,7 @@ export default {
       }
     },
     rowClicked (item) {
-      this.$router.push({path: `store/${item.storeID}`})
+      this.$router.push({path: `manageStores/${item.storeID}`})
     },
     pageChange (val) {
       this.$router.push({ query: { page: val }})
@@ -261,12 +271,7 @@ export default {
     }
   },
   mounted() {
-    this.$http.get(url,{ headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}}).then(response => {
-            this.items = response.data;
-            this.result= this.items;
-          });
-    this.getProvince();
-    this.getBussinessType();
+      this.onInit();
   },
 }
 </script>

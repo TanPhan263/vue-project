@@ -64,6 +64,8 @@ export default {
   },
   methods: {
     logout() {
+      localStorage.removeItem('userInfor');
+      localStorage.removeItem('isAuthen');
       this.$store.dispatch('logout');
       this.$router.push('/login');
     }

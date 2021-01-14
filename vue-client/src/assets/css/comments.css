@@ -1,3 +1,24 @@
+
+.loading {
+  text-align: center;
+  position: fixed;
+  color: #fff;
+  z-index: 9;
+  font-size: large;
+  background: rgba(180, 6, 6, 0.904);
+  padding: 8px 18px;
+  border-radius: 5px;
+  left: calc(50% - 65px);
+  top: calc(50% - 30px);
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0
+}
+
 body {
     padding-top: 70px;
   }
@@ -27,6 +48,7 @@ body {
       font-size:15px;
       font-weight: bold;
       margin:10px 0;
+      cursor: pointer;
   }
   .review-block-date{
       font-size:12px;
@@ -121,3 +143,4 @@ body {
   progress::-moz-progress-bar {
     background: lightcolor;
   }
+  

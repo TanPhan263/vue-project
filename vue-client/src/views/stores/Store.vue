@@ -101,19 +101,15 @@
            <CSwitch 
               class="mr-1"
               color="danger"
-              :checked="true"
+              :checked="false"
               shape="pill"
             />
             </CRow>
-           <CSelect
-            label="Ban time"
-            horizontal
-            :options="options"
-            placeholder="Please select"
-          />
-          <CRow form class="form-group">
-          <CButton class="btn_left" color="danger" @click="goBack">Back</CButton>
-          <CButton class="btn_right" color="primary" @click="updateStore">Update</CButton>
+          <CRow form class="form-group" style="float:right;">
+            <CButton class="btn_left" color="danger" @click="goBack">Back</CButton>
+           </CRow>
+           <CRow form class="form-group" style="float:left;">
+            <CButton class="btn_right" color="primary" @click="updateStore">Update</CButton>
            </CRow>
         </CCardFooter>
       </CCard>
@@ -129,7 +125,6 @@ export default {
   name: 'Store',
   data () {
     return {
-      options: ['1 week', '1 month', 'forever'],
       storeID: '',
       storeName: '',
       storeAddress: '',
@@ -210,10 +205,11 @@ export default {
 </script>
 <style>
 .btn_left{
-  margin-right: 260px;
+  float: left;
   width:100px;
 }
 .btn_right{
   width: 100px;
+  float: right;
 }
 </style>

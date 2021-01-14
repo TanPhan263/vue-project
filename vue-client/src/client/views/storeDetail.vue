@@ -1,9 +1,9 @@
 <template>
-<div >
-  <Header />
-  <Navbar/>
+<div style="background-color: #f6f6f6f6"> 
+  <Header/>
+  <Navbar v-bind:user="user" @storeClicked="dishClicked"/>
   <div class="pn-microsite">
-    <div class="micro-content">
+    <div id="storeInfor" class="micro-content">
       <div class="micro-header clearfix">
         <div class="main-image fl_left">
           <div class="img" style="height: 275px">
@@ -20,15 +20,15 @@
           <div class="res-common">
             <div class="breadcrum"></div>
             <div class="main-info-title">
-              <span class="main-info-title-contracted fl_left">
-                <span class="fas fa-check-circle"></span>
+              <span class="main-info-title-contracted" style="float:right">
+                <span class="fa fa-check-circle" style="font-size: 30px"></span>
               </span>
-              <h1 style="width: 600px; margin-top:20px;font-size: 25px" class="fl_left">{{storeOpen[0].storeName.toUpperCase()}}
+              <h1 style="width: 600px; margin-top:20px;font-size: 25px" class="fl_left">{{storeOpen[0].storeName}}
               </h1>
               <div class="clearfix"></div>
               <div class="category">
                 <div class="category-items fl_left" style="max-width: 200px;">
-                  <a title="category-items;" style="font-size:large;">{{ getType(storeOpen[0].businessTypeID) }}</a>
+                  <a title="category-items;" style="font-size:large;"><span class="fa fa-cutlery"></span>  {{ businessTypeName }}</a>
                 </div>
                 <div class="category-cuisines fl_left">
                 </div>
@@ -37,10 +37,9 @@
             <div class="res-summary-point"></div>
             <div class="disableSection">
               <div class="res-common-add">
-                <span class="fas fa-location-arrow locationicon"></span>
                 <span>
-                  <a href="" target="_blank">
-                    <span style="font-size:large;">{{storeOpen[0].storeAddress}}</span>
+                  <a href="#map">
+                    <span style="font-size:large;">  <span class="fa fa-location-arrow locationicon fa-3x"></span> {{storeOpen[0]['storeAddress']}}</span>
                   </a>
                 </span>
               </div>
@@ -48,13 +47,13 @@
               ></div>
               <div class="res-common-price">
                 <div class="micro-timesopen">
-                  <span class="far fa-clock houricon"></span>
-                  <span class="itsopen" title="Chưa mở cửa" style="font-size:large;">Đang mở cửa</span>
-                  <span style="font-size:large;"> {{storeOpen[0].openTime}} | {{storeOpen[0].cLoseTime}}</span>
-                  <span class="fas fa-exclamation-circle"></span>
+                  <span class="fa fa-clock-o houricon"></span>
+                  <span style="font-size:large;"> {{storeOpen[0].openTime}} || {{storeOpen[0].cLoseTime}}   </span>
+                  <span v-if="getActiveTime(storeOpen[0].openTime,storeOpen[0].cLoseTime)" class="itsopen" title="Chưa mở cửa" style="font-size:large;">Đang mở cửa</span>
+                  <span v-else class="itsclose" title="Chưa mở cửa" style="font-size:large;">Đóng cửa</span>
                 </div>
                 <div class="res-common-minmaxprice">
-                  <span class="fas fa-tag minmaxpriceicon"></span>
+                  <span class="fa fa-tag minmaxpriceicon"> Khuyến mãi</span>
                 </div>
               </div>
             </div>
@@ -63,41 +62,48 @@
       </div>
     </div>
 
-    <div class="micro-main-menu fl_left" style="position:fixed;">
+    <div :class="'micro-main-menu fl_left ' + scroll">
       <div class="tool-bar">
         <ul class="list-tool">
-          <li >
-            <a href=""
-              >Thông tin quán
+          <li>
+            <a href="#storeInfor" v-bind:class="activeClass1" @click="changeActive('Thông tin quán')"
+              >
+              <i class="fa fa-info-circle" aria-hidden="true"></i>
+              Thông tin quán
               <span
-                class="fas fa-angle-right"
+                class="fa fa-angle-right"
                 style="float: right; font-size: 14px"
               ></span>
             </a>
           </li>
           <li>
-            <a href=""
-              >Thực đơn
+            <a href="#menu" v-bind:class="activeClass2" @click="changeActive('Thực đơn')"
+              >
+              <i class="fa fa-list" aria-hidden="true"></i>
+              Thực đơn
               <span
-                class="fas fa-angle-right"
+                class="fa fa-angle-right"
+                style="float: right; font-size: 14px ;"
+              ></span>
+            </a>
+          </li>
+          <li>
+            <a href="#comment" v-bind:class="activeClass3" @click="changeActive('Comments')"
+              >
+              <i class="fa fa-comment-o" aria-hidden="true"></i>
+              Comments
+              <span
+                class="fa fa-angle-right"
                 style="float: right; font-size: 14px"
               ></span>
             </a>
           </li>
           <li>
-            <a href=""
-              >Comment
+            <a href="#map" v-bind:class="activeClass4" @click="changeActive('Xem trên Map')"
+              > <i class="fa fa-location-arrow"></i>
+              Xem trên Map
               <span
-                class="fas fa-angle-right"
-                style="float: right; font-size: 14px"
-              ></span>
-            </a>
-          </li>
-          <li>
-            <a href=""
-              >Xem trên Map
-              <span
-                class="fas fa-angle-right"
+                class="fa fa-angle-right"
                 style="float: right; font-size: 14px"
               ></span>
             </a>
@@ -107,10 +113,9 @@
     </div>
   
     <div class="micro-right fl_right">
-      <div
-        class="micro-main-content"
+      <div class="micro-main-content"
         style="clear: both; position: static; min-height: 500px">
-        <div class="microsite-table-book">
+        <div id="menu" class="microsite-table-book">
           <div class="tb-title">
             <h2 style="font-size: 16px; padding: 5px 0; cursor: pointer">
               <a
@@ -125,33 +130,75 @@
           <div class="tb-offers-box">
             <div class="tb-content">
               <div v-for="dish in storeMenu" v-bind:key="dish.dish_ID" class="tb-offer-item">
-                <div class="tb-item-left">
-                  <img :src="dish.dishPicture" style="width: 125px; height: 125px; border-radius:10px" />
-                  <span
-                    class="fas fa-angle-double-right"
-                    style="color: #2aaf11"
-                  ></span>
+                <div @click="showDishChoosed(dish)" class="tb-item-left" style="margin-left: 20px;">
+                  <img :src="dish.dishPicture" style="width: 100px; height: 90px; border-radius:10px; cursor:pointer;" />
                 </div>
                 <div class="tb-item-mid" style="">
-                  <a href="" style="color: #277bb9" class="tb-oi-time">
+                  <a @click="showDishChoosed(dish)" style="color: #277bb9" class="tb-oi-time">
                     <span class="">{{dish.dishName}}</span>
                     <span class=""></span>
                   </a>
-                  <a href="" class="tb-shorttitle">
+                  <a class="tb-shorttitle">
                     <span>
-                      20000 VND</span
+                      {{dish.dishPrice}}</span
                     >
                   </a>
-                  <a href="" class="tb-shorttitle">
+                  <a class="tb-shorttitle">
                     <span>
-                      Something about dish</span
+                      Something about dish...</span
                     >
                   </a>
                 </div>
+                <div style="width: 30px; height:30px; background-color: red; float:right; border-radius: 5px;"><p style="text-align: center; margin-top: 7px;"><span class="fa fa-plus fl-right" style="color:white;"></span></p></div>
               </div>
             </div>
           </div>
         </div>
+
+        <transition v-if="active">
+              <div class="modal-mask">
+              <div class="modal-wrapper">
+                <div class="modal-container">
+
+                <div class="modal-header">
+                  <slot name="header">
+                  <h3>{{dishChoosed.dishName}}</h3>
+                  <a class="tb-shorttitle" style="float:right; font-size: 20px;">
+                      <span>
+                        {{dishChoosed.dishPrice}}</span
+                      >
+                    </a>
+                  </slot>
+                </div>
+
+                <div class="modal-body">
+                <slot name="body">
+                  <div class="row">
+                  <div class="tb-item-left col-sm-6">
+                  <img :src="dishChoosed.dishPicture" style="width: 300px; height: 200px; border-radius:3px" />
+                  </div>
+                  <div class="tb-item-mid col-sm-4">
+                    <a class="tb-shorttitle">
+                      <span>
+                        Something about dish...</span
+                      >
+                    </a>
+                  </div>
+                  </div>
+                  </slot>
+                </div>
+
+                <div class="modal-footer">
+                  <slot name="footer">
+                  <button class="btn btn-danger" @click="active=false">
+                    Close
+                  </button>
+                  </slot>
+                </div>
+                </div>
+              </div>
+              </div>
+            </transition>
 
         <div class="microsite-gallery">
           <div class="microsite-professional-photo">
@@ -160,39 +207,39 @@
             </div>
             <div class="prof-photos-items">
               <div v-for="dish in storeMenu" v-bind:key="dish.dish_ID" class="microsite-professional-photo-item">
-                <a href="">
-                  <img style="border-radius:10px;"
+                <a>
+                  <img style="border-radius:2px;"
                     :src="dish.dishPicture"
-                    height="150px" width="150px"
-                    alt="foody-albummax_.jpg"
                   />
                 </a>
               </div>
             </div>
           </div>
         </div>
-        <div class="microsite-gallery" style="margin-top: 15px">
-          <div class="microsite-box-heading">
-              <a href="" style="color: #333">ĐÁNH GIÁ CỦA KHÁCH HÀNG</a>
+        <div id="comment" class="microsite-gallery" style="margin-top: 15px">
+            <div class="microsite-box-heading">
             </div> 
-          <Comments  v-bind:storeID="storeID" /></div>
+            <Comments v-bind:storeID="storeID" />
+          </div>
+          <div id="map" class="microsite-gallery" style="margin-top: 15px">
+            <GoogleMap />
         </div>
-        <div class="microsite-gallery" style="margin-top: 15px">
-          <GoogleMap/>
-        </div>
+      </div>
     </div>
   </div>
 </div>
 </template>
 
 <script>
-import Header from './containers/Header'
-import Navbar from './containers/Navbar'
-import GoogleMap from './containers/GoogleMap'
-import Comments from './containers/Comments/comments'
+import { freeSet } from '@coreui/icons';
+import Header from './containers/Header';
+import Navbar from './containers/Navbar';
+import GoogleMap from './containers/GoogleMap';
+import Comments from './containers/Comments/comments';
 const baseUrl='https://localhost:44398/api';
 export default {
   name: 'storeDetail',
+   icons: { freeSet },
    beforeRouteEnter(to, from, next) {
     next(vm => {
       vm.usersOpened = from.fullPath.includes('Homepage')
@@ -200,18 +247,38 @@ export default {
   },
   data(){
     return{
+      user: '',
+      //binding class
+      activeClass1: 'active',
+      activeClass2: '',
+      activeClass3: '',
+      activeClass4: '',
+      scroll: '',
+      //dishChoosed
+      active: false,
+      dishChoosed:'',
       storeID:'',
-      storeOpen: [],
-      storeMenu:[],
-      menuId: '',
-      isMapOpen: false,
-      provinces: [],
-      businessTypeName:[
+      storeOpen: [
         {
-          businessTypeName: String,
-          businessTypeID: String
+        storeID: String,
+        storeAddress: String,
+        storeName: String,
+        storePicture: String,
+        openTime: String,
+        cLoseTime: String ,
+        userID: String,
+        provinceID:String ,
+        menuID: String,
+        businessTypeID:String,
+        ratePoint: String
         }
       ],
+      storeMenu:[],
+      menuId: '',
+      dishType: [],
+      isMapOpen: false,
+      provinces: [],
+      businessTypeName:'',
       ratePoint:[],
       totalRate:5,
       commentList:[]
@@ -225,33 +292,102 @@ export default {
   },
 methods:{
     show(index){
-      console.log(index)
+      //console.log(index)
     },
     getType(index){
-      this.$http.get(baseUrl +'/BusinessType/GetByID?id='+index).then(response => {
-            this.businessTypeName = response.data;
-      })
-      return this.businessTypeName[0].businessTypeName
+      this.$http.get(baseUrl +'/BusinessType/GetByID?id='+ index).then(response =>{
+        this.businessTypeName = response.data[0].businessTypeName })
     },
-    
+    showDishChoosed(index)
+    {
+      this.active = true;
+      this.dishChoosed = index;
+    },
+    changeActive(tab){
+      switch(tab){
+              case 'Thông tin quán' : 
+                this.activeClass1 = 'active';
+                this.activeClass2 = '';
+                this.activeClass3 = '';
+                this.activeClass4 = '';
+                break;
+              case 'Thực đơn' : 
+                this.activeClass1 = '';
+                this.activeClass2 = 'active';
+                this.activeClass3 = '';
+                this.activeClass4 = '';
+                break;
+              case 'Comments' : 
+                this.activeClass1 = '';
+                this.activeClass2 = '';
+                this.activeClass3 = 'active';
+                this.activeClass4 = '';
+                break;
+              case 'Xem trên Map' : 
+                this.activeClass1 = '';
+                this.activeClass2 = '';
+                this.activeClass3 = '';
+                this.activeClass4 = 'active';
+                break;
+            }
+    },
+    getActiveTime(open,close){
+		  const today = new Date();
+      const hour = today.getHours();
+      const min = today.getMinutes();
+      open = parseInt(open.toString().substring(0,2)) 
+      close = parseInt(close.toString().substring(0,2))
+      if( open <= hour < close)
+          return true;
+      return false
+    },
+     dishClicked (item) {
+       this.$router.push({path: `DishType`, query:{key: item}})
+    },
+    onScroll(){
+      window.onscroll = () => {
+        if (document.documentElement.scrollTop > 400) {
+         this.scroll= 'sticky'
+        } else {
+          this.scroll= ''
+        }
+      };
+    }
     
 },
+  created(){
+    this.storeID=this.$route.params.id;
+  },
   mounted(){
+    this.user=localStorage.getItem('userInfor');
+    this.user = JSON.parse(this.user);
     const id = this.$route.params.id;
-    this.storeID=id;
     this.$http.get('https://localhost:44398/api/Store/GetByID?id='+ id).then(response => {
-          this.storeOpen =response.data
+          this.storeOpen = response.data
           this.storeID=this.storeOpen[0].storeID
           this.$http.get('https://localhost:44398/api/Dish/GetByIDMenu?id=' +this.storeOpen[0].menuID).then(response => {
-              this.storeMenu = response.data
+              this.storeMenu = response.data;
           });
+          this.getType(this.storeOpen[0].businessTypeID);
     });
+    this.$http.get('https://localhost:44398/api/DishType/GetAll').then(response => {
+       this.dishType = response.data;
+     });
+    this.onScroll();
   }
 }
 </script>
 
 <style>
-@import url('../../assets/css/style-0.css');
+@import url('../../assets/css/comments.css');
 @import url('../../assets/css/style-1.css');
 @import url('../../assets/css/reset.css');
+html {
+  scroll-behavior: smooth;
+}
+.sticky {
+  position: fixed;
+  top: 0;
+}
+
 </style>

@@ -72,17 +72,23 @@
       </CCol>
       <CCol md="6">
         <CCard>
-          <CCardBody>
-            <CForm>
-                <div class="center_div">
+          <CCardBody style="width:100%;">
+            <CForm style="width:100%;" class="center_div">
+               <div class="center_div">
+                <div style="width:100%;" class="profile">
                 <img 
-                  style="border-radius: 50%;
-                  height: 200px; width:200px;"
+                  style="border-radius:50%; height:150px;width:150px;
+                    display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 40%;"
                     :src="picture"
-                    class="c-avatar-img"
                 />
                 </div>
-                <CRow form class="form-group">
+               </div>
+              <CCardHeader style="text-align:center; height: 50px;">
+              </CCardHeader>
+            <CRow form class="form-group" style="margin-top:20px">
             <CCol tag="label" sm="10" class="col-form-label">
               Ban acount: 
             </CCol>
@@ -200,15 +206,20 @@ export default {
 </script>
 <style>
 .btn_left{
-  margin-right: 250px;
+  float: left;
   width:100px;
 }
 .btn_right{
+  float: right;
   width: 100px;
 }
 .center_div{
     margin: 0 auto; 
-    width: 30%;
+}
+.profile{
+  background-image: url('../../assets/imgs/profile.jpg'); 
+  padding-top: 30px;
+  margin-bottom: -40px;
 }
 
 </style>

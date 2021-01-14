@@ -1,6 +1,12 @@
 <template>
   <div class="d-flex align-items-center min-vh-100" style="background-image: url('https://wallpaperaccess.com/full/1631410.jpg');">
     <CContainer fluid>
+       <div v-if="show == 1" class="alert-red" style="margin-bottom: 20px;margin-top: 20px;">
+        <span class="closebtn" @click="show=0">&times;</span> {{ msg }}
+      </div>
+       <div v-if="show == 2" class="alert-blue" style="margin-bottom: 20px;margin-top: 20px;">
+        <span class="closebtn" @click="show=0">&times;</span> {{ msg }}
+      </div>
       <CRow class="justify-content-center">
         <CCol md="6">
           <CCard class="mx-4 mb-0">
@@ -16,10 +22,15 @@
                   <template #prepend-content><CIcon name="cil-user"/></template>
                 </CInput>
                 <CInput
+                  type="email"
                   placeholder="Email"
                   autocomplete="email"
                   prepend="@"
                   v-model="mail"
+                  description="Please enter your email."
+                  label="Email"
+                  required
+                  was-validated
                 />
                 <CInput
                   placeholder="Password"
@@ -27,7 +38,7 @@
                   autocomplete="new-password"
                   v-model="pass"
                 >
-                  <template #prepend-content><CIcon name="cil-lock-locked"/></template>
+                <template #prepend-content><CIcon name="cil-lock-locked"/></template>
                 </CInput>
                 <CInput
                   placeholder="Repeat password"
@@ -74,17 +85,19 @@ export default {
   name: "Register",
   data() {
     return {
-            id: '',
-            name: '',
-            address: '',
-            phone: '',
-            birth: '',
-            mail: '',
-            avt: '',
-            pass: '', 
-            pass2:'',
-            sex: '',
-            type: '-MO5VYNnWIjXtvJO4AXi' ,
+      msg:'plaplaspl',
+      show: 0,
+      id: '',
+      name: '',
+      address: '',
+      phone: '',
+      birth: '',
+      mail: '',
+      avt: '',
+      pass: '', 
+      pass2:'',
+      sex: '',
+      type: '-MO5VYNnWIjXtvJO4AXi' ,
     };
   },
   methods: {
@@ -104,21 +117,43 @@ export default {
           userTypeID: this.type
           };
           axios.post("https://localhost:44398/api/User/RegisterUser", credentials).then(respone =>{ 
-              alert(respone.data)})
-        }else 
-        alert("Vui long nhap dung password")
+              this.msg= respone.data
+              this.show = 1;
+              })
+          setTimeout(this.reset(), 2000);
+        }else{
+           this.msg="Vui lòng nhập đúng password";
+           this.show = 1;
+        }
       }catch (error) {
         this.msg = error.response.data.msg;
-        alert(msg)
+        this.show = 2;
       }
     },
     checkPass(){
-       if(this.pass == this.pass2){
-        return true}
-       else {
-        return false
+      if(this.pass=='') return false;
+      else if(this.pass == this.pass2){
+        return true;
+       } 
+        else {
+        return false;
        }
+    },
+    reset(){
+      this.name='';
+      this.phone='';
+      this.address='';
+      this.pass='';
+      this.mail='';
+      this.avt='';
+      this.sex='';
+      this.birth='';
+      this.pass2 = '';
+      this.$router.push('/login')
     }
   }
 };
 </script>
+<style>
+  @import url('../../assets/css/alert.css');
+</style>

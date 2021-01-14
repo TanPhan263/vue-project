@@ -62,10 +62,11 @@ export default {
     width:30% /* value of your choice which suits your alignment */
 }
 .btn_left{
-  margin-right: 80px;
+  float: left;
   width:100px;
 }
 .btn_right{
+  float: right;
   width: 100px;
 }
 </style>

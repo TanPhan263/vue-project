@@ -63,27 +63,34 @@
       </CCol>
       <CCol md="6">
         <CCard>
-          <CCardBody>
-            <CForm  style="width:100%">
+          <CCardBody style="width:100%;">
+            <CForm style="width:100%;" class="center_div" >
                 <div class="center_div">
-                <img  v-on:click="changeAvt=!changeAvt"
+                <div style="width:100%;" class="profile">
+                <img 
                     :src="picture"
-                    style="border-radius:50%; height:120px;width:150px;"
+                    style="border-radius:50%; height:150px;width:150px;
+                    display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 40%;"
                 />
-                 <CCardHeader style="text-align:center;">
-                    <strong >{{name}}</strong>
-                </CCardHeader>
+                </div>
                 </div>
             </CForm>
+              <CCardHeader style="text-align:center; height: 50px;">
+              </CCardHeader>
+                <CCardHeader style="text-align:center;">
+                    <strong >{{name}}</strong>
+              </CCardHeader>
           </CCardBody>
-          <CCardFooter class="center_div">
-            <CButton v-on:click="changeAvt=!changeAvt" type="submit" color="primary" style="width:120px;">Change avatar</CButton>
-            <div v-if="changeAvt" class="center_div" style="margin-top:20px;">
-            <input
+          <CCardFooter >
+            <div style="margin-top:20px; width:100%;">
+            <input style="float:left;"
                 type="file"
                 @change="previewImage"
               />
-              <CButton @click="onUpload" type="submit" color="primary">Upload</CButton>
+              <CButton style="float:right;" @click="onUpload" type="submit" color="primary">Upload</CButton>
               <div class="row">
                 <p v-if="uploadValue>0">progress: {{uploadValue.toFixed()+ "%"}}</p>
               </div>
@@ -178,16 +185,6 @@ export default {
 <style>
 .center_div{
     margin: 0 auto; 
-    width: 30%;
-}
-.btn_left{
-  margin-right: 257px;
-  width:200px;
-}
-.btn_right{
-    margin-left: 190px ;
-    width: 200px;
-    margin-bottom: 50px;
 }
 .btn_submit{
   margin-right: 255px;
@@ -195,5 +192,10 @@ export default {
 }
 .btn_back{
   width: 100px;
+}
+.profile{
+  background-image: url('../../assets/imgs/profile.jpg'); 
+  padding-top: 30px;
+  margin-bottom: -40px;
 }
 </style>

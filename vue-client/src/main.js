@@ -15,6 +15,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import firebase from 'firebase'
+import VueSmoothScroll from 'vue2-smooth-scroll'
+Vue.use(VueSmoothScroll)
 
 firebase.initializeApp({
   apiKey: "AIzaSyDNRD7rcNybO5pVkC8POMiMhYYwmfreUVQ",
@@ -28,8 +30,6 @@ firebase.initializeApp({
 })
 
 library.add(faUserSecret)
- 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.use(CommentGrid)
 

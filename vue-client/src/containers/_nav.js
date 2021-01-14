@@ -19,7 +19,7 @@ export default [
       {
         _name: 'CSidebarNavItem',
         name: 'Cập nhật thông tin',
-        to: '/update',
+        to: '/manage/update',
         icon: 'cil-puzzle'
       },
       {
@@ -39,11 +39,11 @@ export default [
         items: [
           {
             name: 'Quản lý người dùng',
-            to: '/users'
+            to: '/manage/users'
           },
           {
             name: 'Quản lý quán',
-            to: '/store'
+            to: '/manage/store'
           }
         ]
       },
@@ -54,43 +54,8 @@ export default [
       },
       {
         _name: 'CSidebarNavItem',
-        name: 'Xuất file',
-        icon: 'cil-chart-pie'
-      },
-      {
-        _name: 'CSidebarNavItem',
         name: 'Quán chờ xác nhận',
         icon: 'cil-star',
-      },
-      {
-        _name: 'CSidebarNavItem',
-        name: 'Địa điểm các quán',
-        route: '/notifications',
-        icon: 'cil-bell',
-      },
-      {
-        _name: 'CSidebarNavDropdown',
-        name: 'Pages',
-        route: '/pages',
-        icon: 'cil-star',
-        items: [
-          {
-            name: 'Login',
-            to: '/pages/login'
-          },
-          {
-            name: 'Register',
-            to: '/pages/register'
-          },
-          {
-            name: 'Error 404',
-            to: '/pages/404'
-          },
-          {
-            name: 'Error 500',
-            to: '/pages/500'
-          }
-        ]
       }
     ]
   }

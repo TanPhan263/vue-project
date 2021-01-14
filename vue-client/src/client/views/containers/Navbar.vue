@@ -8,14 +8,13 @@
 			</div>
             <select
 			id="province"
-			style="width:180px;"
+			style="width:180px; font-weight:bold; font-size: 15px;"
             class="country fl_left"
             vertical
 			v-model="provinceSelected"
             placeholder="Địa điểm"
 			@change="getProvince()"
             >
-			<option style="font-weight: bold;" value="">{{getProvinceSelected()}}</option>
 			<option v-on:click="getProvince" v-for="pro in provinces" v-bind:key="pro.provinceID" :value="pro.provinceID">
 				{{pro.provinceName}}
 			</option>
@@ -33,7 +32,7 @@
 			  <CHeaderNav class="mr-4">
 				<CHeaderNavItem class="d-md-down-none mx-2">
 					<CHeaderNavLink>
-					<CIcon name="cil-bell"/>
+					 <div v-if="user">Xin chào {{ getName() }}</div>	
 					</CHeaderNavLink>
 				</CHeaderNavItem>
 				<TheHeaderDropdownAccnt style="" v-bind:avt="getAvt"/>
@@ -62,6 +61,9 @@ data(){
 		provinces: '',
     }
 },
+props:{
+	user: String
+},
 computed:{
 	isLoggedin: function() {
 		if(localStorage.getItem('isAuthen') == null || localStorage.getItem('isAuthen') == 'Đăng nhập thất bại') return false
@@ -69,10 +71,19 @@ computed:{
 	}
   },
   methods:{
+	  getName(){
+		  try{
+		   	return this.user.userName;
+		  }
+		  catch{
+			  alert("Lỗi rồi")
+		  }
+		   
+	  },
 	  getProvince(){
 		try{
-		localStorage.setItem('provinceId',this.provinceSelected)
-		this.$router.go();
+			localStorage.setItem('provinceId',this.provinceSelected)
+			this.$router.go();
 		}
 		catch(e)
 		{
@@ -80,10 +91,11 @@ computed:{
 		}
 	  },
 	  getAvt(){
+		  this.user = JSON.parse(this.user)
 		  if(this.avt=='')
-			  return this.avt='../assets/imgs/userPic.png';
-		  else if(this.avt[0].picture =='') return this.avt='../assets/imgs/userPic.png';
-		  return this.avt[0].picture
+			  return '../assets/imgs/userPic.png';
+		  else if(this.user.picture =='') return '../assets/imgs/userPic.png';
+		  return this.user.picture
 	  },
 	  getProvinceSelected(){
 		  if(this.provinces!=''){
@@ -96,26 +108,26 @@ computed:{
 	  },
 	  storeClicked(){
 			this.$emit('storeClicked','Xá xíu ngũ vị');
-		}
+	}
   },
   mounted(){
 	this.$http.get(baseUrl + 'Province/GetAll').then(response => {
             this.provinces=response.data
     })
-	if (localStorage.getItem('provinceId')==null)
+	if(localStorage.getItem('provinceId')==null)
 	  {
-		  this.provinceSelected=58;
+		  this.provinceSelected='-MO5b_1K2_tF_C4GVDo3';
 		  localStorage.setItem('provinceId', this.provinceSelected)
 	  }
 	  if(localStorage.getItem('provinceId')!=''){
 		  this.provinceSelected=localStorage.getItem('provinceId')
 	  }
-	if(localStorage.getItem('isAuthen')!= null && localStorage.getItem('isAuthen') != 'Đăng nhập thất bại')
-	{
-		 this.$http.get("https://localhost:44398/api/User/GetByID",{ headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}}).then(respone =>{
-            this.avt= respone.data
-		})
-	}
+	// if(localStorage.getItem('isAuthen')!= null && localStorage.getItem('isAuthen') != 'Đăng nhập thất bại')
+	// {
+	// 	 this.$http.get("https://localhost:44398/api/User/GetByID",{ headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}}).then(respone =>{
+    //         this.avt= respone.data
+	// 	})
+	// }
   }
 }
 </script>

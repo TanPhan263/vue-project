@@ -6,11 +6,11 @@
     add-menu-classes="pt-0"
   >
     <template #toggler>
-      <CHeaderNavLink>
+      <CHeaderNavLink >
         <div class="c-avatar">
           <img
             :src="user.picture"
-            style="width:45px; height:40px;border-radius:50%;"
+            style="width: 45px; height:40px;border-radius:50%;"
           />
         </div>
       </CHeaderNavLink>
@@ -18,7 +18,7 @@
     <CDropdownHeader tag="div" class="text-center" color="light">
       <strong>{{user.userName}}</strong>
     </CDropdownHeader>
-    <CDropdownItem>
+    <!-- <CDropdownItem>
       <CIcon name="cil-envelope-open" /> Messages
       <CBadge color="success" class="mfs-auto">{{ itemsCount }}</CBadge>
     </CDropdownItem>
@@ -32,8 +32,11 @@
       color="light"
     >
       <strong>Settings</strong>
-    </CDropdownHeader>
-    <CDropdownItem to="/update">
+    </CDropdownHeader> -->
+    <CDropdownItem v-if="getRole(user.userTypeID) === true" to="/update">
+      <CIcon name="cil-user" /> Profile
+    </CDropdownItem>
+     <CDropdownItem v-else to="/UserInformation">
       <CIcon name="cil-user" /> Profile
     </CDropdownItem>
     <CDropdownItem>
@@ -69,13 +72,18 @@ export default {
   methods: {
     logout() {
       localStorage.removeItem("isAuthen")
-      this.$router.push('/login');
+      this.$router.go();
     },
     async created() {
     if (!this.$store.getters.isLoggedIn) {
       this.$router.push('/login');
     }
   },
+  getRole(index){
+    if(index == '-MO5VBnzdGsuypsTzHaV' || index == '-MO5VWchsca2XwktyNAw'   )
+      return true;
+    else return false;
+  }
   }
 }
 </script>

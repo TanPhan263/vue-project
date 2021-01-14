@@ -62,6 +62,7 @@
             height="252px"
           >
             <CCarouselItem
+            height="200px"
             :image="storeOpened[0].storePicture"
             />
           </CCarousel>
@@ -74,31 +75,38 @@
         </CCardFooter>
       </CCard>
     </CCol>
+     <MangeMenu v-bind:menuID="menuID"/>
   </CRow>
 </template>
 
 <script>
+import MangeMenu from '../manageMenu/MangeMenu'
 import StoreService from '@/services/StoreService.js';
 export default {
-  name: 'Store',
+  name: 'manageStore',
+  components:{
+    MangeMenu
+  },
   data () {
     return {
       user: '',
+      menuID: '',
       storeOpened:[],
     }
   },
   methods: {
     goBack() {
-      this.usersOpened ? this.$router.go(-1) : this.$router.push({path: '/store'})
+      this.usersOpened ? this.$router.go(-1) : this.$router.push({path: '/manageStores'})
     },
     async getStore(id){
-      this.storeOpened= await StoreService.getByUser(id,localStorage.getItem('isAuthen'))
+      this.storeOpened = await StoreService.getByID(id);
+      this.menuID = this.storeOpened[0].menuID;
+      console.log(this.menuID)
     }
   },
    mounted(){
-    this.user=localStorage.getItem('userInfor');
-    this.user= JSON.parse(this.user);
-    this.getStore(this.user.userID);
+    const id = this.$route.params.id;
+    this.getStore(id);
   }
 }
 </script>

@@ -12,19 +12,19 @@
       <vueper-slide   @click.native="active=true" style="border-radius:10px;" v-for="(slide, i) in banner" :key="i" :image="slide.src" />
     </vueper-slides>
     <transition v-if="active">
-			<div class="modal-mask">
+		<div class="modal-mask">
 			<div class="modal-wrapper">
 				<div class="modal-container">
 
 				<div class="modal-header">
 					<slot name="header">
-					<h3>ĐÁNH GIÁ QUÁN ĂN</h3>
+					<h3>DANH SÁCH QUÁN</h3>
 					</slot>
 				</div>
 
 				<div class="modal-body">
 					<slot name="body">
-					Helllo
+					  Danh sách quán
 					</slot>
 				</div>
 
@@ -39,7 +39,13 @@
 			</div>
 			</div>
 		</transition>
-
+     <transition v-if="loading">
+       	<div class="modal-mask">
+          <div class="loading" >
+            <span class="fa fa-spinner fa-spin"></span> Loading
+          </div>
+         </div>
+    </transition>
 
    <div class="ship">
 	  <div style="width:100%">
@@ -49,10 +55,11 @@
     </div>
       <div id="Giaotannoi" class="sub-menu-ship" >
         <ul>
-          <li v-for="dish in dishes" v-bind:key="dish.businessTypeID" style="height:110px;"  @click="dishClicked(dish.dishName)">
+          <li v-for="(dish, index) in dishes" v-bind:key="index" style="height:110px;width:90px;"  @click="dishClicked(dish.dishName)">
              <a>
-              <img :src="dish.dishPicture" style="border-radius:10px 10px 10px 10px; width:100px; height:100px"/>
-              <div  @click="dishClicked(dish.dishName)" class="name-food" style=" text-align: center">{{dish.dishName}}</div>
+              <img :src="dish.dishPicture" style="border-radius:10px 10px 10px 10px; width:90px; height:90px;cursor: pointer;"/>
+              <div  @click="dishClicked(dish.dishName)" class="name-food" style="text-align: center; 	background-color:#f6f6f6;"> 
+                <p style="font-family: Helvetica; font-size:12px; font-weight: bold; word-break: break-word;">{{dish.dishName}}</p></div>
           </a>
           </li>
         </ul>
@@ -66,24 +73,17 @@
         <div class="hero"  style="width:30%; text-align:left">
           <h3>ĐƯỢC ĐÁNH GIÁ CAO</h3>
         </div>
-        <div class="grid">
-          <ul>
-            <li><a href="">Tất cả</a></li>
-            <li><a href=""   >Đồ ăn</a></li>
-            <li><a href=""   >Thức uống</a></li>
-            <li><a href=""    >Nhà hàng</a></li>
-            <li><a href=""   >Vỉa hè</a></li>
-          </ul>
-        </div>
       </div>
       <div id="Giaotannoi" class="sub-menu-ship" >
         <ul>
-          <li v-for="store in stores" v-bind:key="store.storeID">
+          <li v-for="(store, index ) in rates" v-bind:key="index">
             <a v-on:click="storeClicked(store.storeID)">
               <img :src="store.storePicture"  style="border-radius:10px 10px 0px 0px; width:205px; height:150px"/>
-              <div class="name-food">{{ store.storeName.substr(0,20)}}...</div>
-              <div class="address-store"><i class="fa fa-map-marker"></i>{{ store.storeAddress.substr(0,30) }}...</div>
-                <div class="address-store">{{ getType(store.businessTypeID) }}</div>
+              <div class="name-food">{{ subString(store.storeName)}}...</div>
+              <div class="address-store"><i class="fa fa-map-marker" style="color: red"></i>{{ subString(store.storeAddress) }}...
+              <div style="color: black; float:right;">{{store.khoangcach}} km</div>
+              </div>
+                <div class="address-store"> <span class="fa fa-cutlery"></span> {{ getType(store.businessTypeID) }}</div>
               <div class="intro"></div>
             </a>
           </li>
@@ -93,62 +93,48 @@
      <div class="ship">
       <div class="menu-ship" style="width:100%">
         <div class="hero"   style="width:30% ;text-align:left">
-          <h3>CỬA HÀNG GẦN BẠN</h3>
-        </div>
-        <div class="grid">
-          <ul>
-            <li><a href="">Tất cả</a></li>
-            <li><a href=""  >Đồ ăn</a></li>
-            <li><a href=""  >Thức uống</a></li>
-            <li><a href=""   >Nhà hàng</a></li>
-            <li><a href=""   >Vỉa hè</a></li>
-          </ul>
+          <h3>GẦN BẠN NHẤT</h3>
         </div>
       </div>
       <div id="Giaotannoi" class="sub-menu-ship" >
         <ul>
-          <li v-for="store in stores" v-bind:key="store.storeID">
+          <li v-for="(store, index ) in stores" v-bind:key="index">
             <a v-on:click="storeClicked(store.storeID)">
               <img :src="store.storePicture"  style="border-radius:10px 10px 0px 0px; width:205px; height:150px"/>
-              <div class="name-food">{{ store.storeName.substr(0,20)}}...</div>
-              <div class="address-store"><i class="fa fa-map-marker"></i>{{ store.storeAddress.substr(0,30) }}...</div>
-                <div class="address-store">{{ getType(store.businessTypeID) }}</div>
+              <div class="name-food"> {{ subString(store.storeName)}}...</div>
+              <div class="address-store"><i class="fa fa-map-marker"  style="color: red"></i>  {{ subString(store.storeAddress) }}...
+              <div style="color: black; float:right;">{{store.khoangcach}} km</div></div>
+                <div class="address-store"> <span class="fa fa-cutlery"></span>  {{ getType(store.businessTypeID) }}</div>
               <div class="intro"></div>
             </a>
           </li>
         </ul>
       </div>
     </div>
-     <!--Loadmore-->
-    <div v-if="toShow < totalShow || toShow > totalShow" style="margin-top: 20px">
-      <div v-for="i in toShow" v-bind:key="i" class="ship">
-        <div  class="menu-ship">
+     <div style="margin-top: 20px;">
+      <div v-for="(list, index) in loadMoreList" v-bind:key="index" class="ship">
+        <div class="menu-ship">
           <div class="hero" style="width:30%">
-            <h3 style="text-align:left">{{type[i].businessTypeName.toUpperCase()}}</h3>
+            <h3 v-if="list" style="text-align:left"> {{ getType(list[0].businessTypeID) }}</h3>
           </div>
         </div>
-        <div v-if="loadMoreList[i].lenght > 0" class="sub-menu-ship">
+        <div v-if="list" class="sub-menu-ship">
           <ul>
-            <li v-for="store in loadMoreList[i]" v-bind:key="store.storeID">
+            <li v-for="(store,index) in list" v-bind:key="index">
               <a v-on:click="storeClicked(store.storeID)">
                 <img :src="store.storePicture"  style="border-radius:10px 10px 0px 0px; width:205px; height:150px"/>
-                <div class="name-food">{{ store.storeName.substr(0,20)}}...</div>
-                <div class="address-store">{{ store.storeAddress.substr(0,30) }}...</div>
-                  <div class="address-store">{{ getType(store.businessTypeID) }}</div>
+                <div class="name-food">{{ subString(store.storeName) }}...</div>
+                <div class="address-store"> <i class="fa fa-map-marker"  style="color: red"></i> {{ subString(store.storeAddress) }}...
+                  <div style="color: black; float:right;">{{store.khoangcach}} km</div>
+                </div>
+                  <div class="address-store"> <span class="fa fa-cutlery"></span>  {{ getType(store.businessTypeID) }}</div>
                 <div class="intro"></div>
               </a>
             </li>
           </ul>
         </div> 
-        <div v-else>
-          <img src="../../assets/imgs/opps.png" alt=""></div> 
-      </div>
+      </div>  
     </div>
-    <div style="margin-top:30px" class="center_div" v-if="toShow < totalShow || totalShow > toShow">
-       <CCol>
-            <CButton @click="toShow+=2" size="sm" shape="pill">show more</CButton>
-          </CCol>
-     </div>
   </div>
 </template>
 
@@ -156,29 +142,36 @@
 import { VueperSlides, VueperSlide } from 'vueperslides';
 import 'vueperslides/dist/vueperslides.css';
 import StoreService from '@/services/StoreService.js';
+import { loadOptions } from '@babel/core';
 const baseUrl='https://localhost:44398/api/'
 
 export default {
-name: 'body',
+name: 'Homebody',
 components:{
     VueperSlides, VueperSlide
 },
 data() {
     return {
-      stores: [],
-      storesTemp: '',
-      listStores:[],
-      news: [],
-      promotion: [],
-      discover: [],
-      //Search data
-      item: {},
-      items: [],
-      type: [
-        {
-          
-        }
+      loading: false,
+      index: 0,
+      stores: [
+        // {
+        //   storeID: String,
+        //   storeAddress: String,
+        //   storeName: String,
+        //   storePicture: String,
+        //   openTime: String,
+        //   cLoseTime: String ,
+        //   userID: String,
+        //   provinceID:String ,
+        //   menuID: String,
+        //   businessTypeID:String,
+        //   ratePoint: String
+        // }
       ],
+      //Search data
+      rates: [],
+      type: [],
       toShow: 2,
       totalShow:0,
       loadMoreList: [],
@@ -220,50 +213,39 @@ data() {
       active:false
     }
   },
-    mounted(){
-      //get province id from loacl storage
-      // var id= localStorage.getItem('provinceId')
-      // //get all store in the province
-      // this.$http.get( baseUrl+'Store/GetByIDProvince?id=' + id).then(response => {
-      //       this.stores=response.data;
-      //       this.stores= this.stores.slice(0,15);
-      //       this.stores.sort(function(a, b){ var x = a.ratePoint; var y = b.ratePoint;
-      //       if(x<y) return -1;
-      //       if(x>y) return 1;
-      //       return 0  });
-      // }),
-      //getall business type
-      this.getStoreByProvince()
-      // this.$http.get(baseUrl + 'BusinessType/GetAll').then(response => {
-      //       this.type = response.data;
-      // }),
-      this.getAllBussinessType()
+  mounted(){
+      this.onInit();
       this.$http.get(baseUrl + 'Dish/GetAll').then(response => {
             this.dishes = response.data;
-            this.dishes = this.dishes.slice(30,39)
+            let x = Math.random(0,this.dishes.length-10)
+            this.dishes = this.dishes.slice(x,x+10);
       })
+      this.scroll();
   },
   methods:{
-    async getStoreByProvince(){
+    async onInit(){
       try{
-        var id= localStorage.getItem('provinceId')
-        this.stores = await StoreService.getByProvince(id)
-        // this.stores.sort(function(a, b){ var x = a.ratePoint; var y = b.ratePoint;
-        //     if(x<y) return -1;
-        //     if(x>y) return 1;
-        //     return 0  });
-      }catch{}
-    },
-    async getAllBussinessType(){
-      try{
-      this.type= await StoreService.getAllBussinessType();
+        var id= localStorage.getItem('provinceId');
+        this.stores = await StoreService.getByProvince(id);
+        this.type = await StoreService.getAllBussinessType(); 
+        this.rates = this.stores.sort(function compare( a, b ) {
+              if ( a.RatePoint < b.RatePoint ){
+                return -1;
+              }
+              if (  a.RatePoint > b.RatePoint){
+                return 1;
+              }
+              return 0;
+        });
       }catch{}
     },
      storeClicked (item) {
       this.$router.push('/storeDetail/' + item)
     },
      dishClicked (item) {
-       this.$router.push({path: `DishType`, query:{key: item}})
+      localStorage.setItem("keyword", item);
+      console.log(localStorage.getItem("keyword"));
+      this.$router.push('/search?key='+ item)
     },
     changeProvince(index){
       this.$http.get(baseUrl+ 'GetByIDProvince?id=' + index).then(response => {
@@ -271,37 +253,52 @@ data() {
       });
     },
     onChildClick(value){
-      this.provinceID= value
+      this.provinceID = value
     },
     getType(index){
       var temp='Unknown'
       this.type.forEach(element => {
          	if(element.businessTypeID == index)
-             temp = element.businessTypeName
+             temp = element.businessTypeName;
       });
-      return temp
-    }
+      return temp;
+    },
+    subString(index){
+      return index.toString().substring(0,20);
+    },
+    scroll() {
+    window.onscroll = () => {
+      let bottomOfWindow = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight;
+      if(bottomOfWindow) {
+        this.loading = true;
+        if(this.index < this.type.length){
+          var temp = this.type[this.index];
+          if(this.index < this.type.length){
+            var store = this.stores.filter(function(store) {
+                  return store.businessTypeID ==  temp.businessTypeID });}
+          while(store.length==0){
+            this.index = this.index + 1;
+            if( this.index < this.type.length){
+            temp = this.type[this.index].businessTypeID;
+            store = this.stores.filter(function(store) {
+                  return store.businessTypeID ==  temp });
+            }
+          }
+          setTimeout(() =>{ 
+            this.loadMoreList.push(store);
+            this.index = this.index + 1;
+            this.loading = false;
+          }, 1500);
+        }
+        else{
+          this.loading = false;
+          return;
+        } 
+      }
+    };
+  },
   },
   updated(){
-      this.totalShow=this.type.length;
-      var i=0;
-      this.type.forEach(element => {
-        //  this.$http.get(baseUrl + 'Store/GetByIDBusinessType?id=' +element.businessTypeID ).then(response => {
-        //     this.loadMoreList[i]=(response.data)
-        //     this.loadMoreList[i]=this.loadMoreList[i].slice(0,10)
-        //     i++;
-        //   });
-        // try{
-        //    this.loadMoreList[i]= StoreService.getByBussinessType(element.businessTypeID)
-        //    this.loadMoreList[i]=this.loadMoreList[i].slice(0,10)
-        //    i++;
-        // }
-        // catch{}
-        this.loadMoreList[i]=this.stores.filter(function(store) {
-        return store.businessTypeID == element.businessTypeID;});
-        console.log(this.loadMoreList[i]);
-        i++;
-      }); 
   }
 }
 </script>

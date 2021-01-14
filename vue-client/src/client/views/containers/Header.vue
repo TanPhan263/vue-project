@@ -1,7 +1,7 @@
 <template>
- <div class="container-topbar">
-	
-	</div>
+  <div class="container-topbar">
+   
+  </div>
 </template>
   
 <script>
@@ -17,7 +17,6 @@ export default {
 };
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 @import url('../../../assets/css/style-0.css');
-@import url('../../../assets/css/reset.css');
 </style>

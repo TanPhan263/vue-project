@@ -18,7 +18,7 @@ export default [
       {
         _name: 'CSidebarNavItem',
         name: 'Cập nhật thông tin',
-        to: '/update',
+        to: '/manage/update',
         icon: 'cil-puzzle'
       },
       {
@@ -38,11 +38,11 @@ export default [
         items: [
           {
             name: 'Quản lý menu',
-            to: '/manageMenu'
+            to: '/manage/manageMenu'
           },
           {
-            name: 'Thông tin quán',
-            to: '/manageStore'
+            name: 'Quán của bạn',
+            to: '/manage/manageStores'
           }
         ]
       },

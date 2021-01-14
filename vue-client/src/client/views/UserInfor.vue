@@ -7,27 +7,23 @@
               <div class="row no-gutters row-bordered row-border-light">
                 <div class="col-md-3 pt-0">
                   <div class="list-group list-group-flush account-settings-links">
-                    <a class="list-group-item list-group-item-action active" v-on:click="changeTabs('generals')"    data-toggle="list">General</a>
-                    <a class="list-group-item list-group-item-action"   v-on:click="changeTabs('changePass')"  data-toggle="list" >Change password</a>
-                    <a class="list-group-item list-group-item-action"   v-on:click="changeTabs('info')"        data-toggle="list">Info</a>
-                    <a class="list-group-item list-group-item-action"   v-on:click="changeTabs('social')"      data-toggle="list" >Social links</a>
-                    <a class="list-group-item list-group-item-action"   v-on:click="changeTabs('conection')"   data-toggle="list" >Connections</a>
-                    <a class="list-group-item list-group-item-action"   v-on:click="changeTabs('notify')"      data-toggle="list">Notifications</a>
+                    <a v-bind:class="'list-group-item list-group-item-action ' + active1"  v-on:click="changeTabs('generals')"    data-toggle="list">General</a>
+                    <a  v-bind:class="'list-group-item list-group-item-action ' + active2"  v-on:click="changeTabs('info')"        data-toggle="list">Info</a>
+                    <a class="list-group-item list-group-item-action"   href="/forgetpass"       data-toggle="list">Đổi mật khẩu</a>
                   </div>
                 </div>
                 <div class="col-md-9">
                   <div class="tab-content">
                     <div class="tab-pane fade active show" id="account-general" v-if="tabSelected ==='generals'">
                       <div class="card-body media align-items-center">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="d-block ui-w-80">
+                        <img :src="picture" alt="" class="d-block ui-w-80" >
                         <div class="media-body ml-4">
                           <label class="btn btn-outline-primary">
                             Upload new photo
-                            <input type="file" class="account-settings-fileinput">
+                            <input  type="file"
+                             v-on:change="previewImage" class="account-settings-fileinput">
                           </label> &nbsp;
-                          <button type="button" class="btn btn-default md-btn-flat">Reset</button>
-        
-                          <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
+                          <button type="button" v-on:click="onInit" class="btn btn-default md-btn-flat">Reset</button>
                         </div>
                       </div>
                       <hr class="border-light m-0">
@@ -35,65 +31,33 @@
                       <div class="card-body">
                         <div class="form-group">
                           <label class="form-label">Username</label>
-                          <input type="text" class="form-control mb-1" value="nmaxwell">
+                          <input type="text" class="form-control mb-1" v-model="userName">
                         </div>
                         <div class="form-group">
-                          <label class="form-label">Name</label>
-                          <input type="text" class="form-control" value="Nelle Maxwell">
+                          <label class="form-label">Address</label>
+                          <input type="text" class="form-control" v-model="address">
                         </div>
                         <div class="form-group">
                           <label class="form-label">E-mail</label>
-                          <input type="text" class="form-control mb-1" value="nmaxwell@mail.com">
-                          <div class="alert alert-warning mt-3">
-                            Your email is not confirmed. Please check your inbox.<br>
-                            <a href="javascript:void(0)">Resend confirmation</a>
-                          </div>
+                          <input type="text" class="form-control mb-1" v-model="email">
                         </div>
                         <div class="form-group">
                           <label class="form-label">Company</label>
-                          <input type="text" class="form-control" value="Company Ltd.">
+                          <input type="text" class="form-control" value="">
                         </div>
                       </div>
 
                     </div>
-                    <div class="tab-pane fade active show" id="account-change-password" v-else-if="tabSelected ==='changePass'">
-                      <div class="card-body pb-2">
-        
-                        <div class="form-group">
-                          <label class="form-label">Current password</label>
-                          <input type="password" class="form-control">
-                        </div>
-        
-                        <div class="form-group">
-                          <label class="form-label">New password</label>
-                          <input type="password" class="form-control">
-                        </div>
-        
-                        <div class="form-group">
-                          <label class="form-label">Repeat new password</label>
-                          <input type="password" class="form-control">
-                        </div>
-        
-                      </div>
-                    </div>
                     <div class="tab-pane fade active show" id="account-info" v-else-if="tabSelected ==='info'">
                       <div class="card-body pb-2">
                         <div class="form-group">
-                          <label class="form-label">Bio</label>
-                          <textarea class="form-control" rows="5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nunc arcu, dignissim sit amet sollicitudin iaculis, vehicula id urna. Sed luctus urna nunc. Donec fermentum, magna sit amet rutrum pretium, turpis dolor molestie diam, ut lacinia diam risus eleifend sapien. Curabitur ac nibh nulla. Maecenas nec augue placerat, viverra tellus non, pulvinar risus.</textarea>
-                        </div>
-                        <div class="form-group">
                           <label class="form-label">Birthday</label>
-                          <input type="text" class="form-control" value="May 3, 1995">
+                          <input type="text" class="form-control" v-model="birthday">
                         </div>
                         <div class="form-group">
                           <label class="form-label">Country</label>
                           <select class="custom-select">
-                            <option>USA</option>
-                            <option selected="">Canada</option>
-                            <option>UK</option>
-                            <option>Germany</option>
-                            <option>France</option>
+                            <option selected >Việt Nam</option>
                           </select>
                         </div>
                       </div>
@@ -103,166 +67,116 @@
                         <h6 class="mb-4">Contacts</h6>
                         <div class="form-group">
                           <label class="form-label">Phone</label>
-                          <input type="text" class="form-control" value="+0 (123) 456 7891">
+                          <input type="text" class="form-control" v-model="phone">
                         </div>
                         <div class="form-group">
-                          <label class="form-label">Website</label>
-                          <input type="text" class="form-control" value="">
+                          <label class="form-label">Email</label>
+                          <input type="text" class="form-control" v-model="email">
                         </div>
         
                       </div>
               
-                    </div>
-                    <div class="tab-pane fade active show" id="account-social-links" v-else-if="tabSelected ==='social'">
-                      <div class="card-body pb-2">
-        
-                        <div class="form-group">
-                          <label class="form-label">Twitter</label>
-                          <input type="text" class="form-control" value="https://twitter.com/user">
-                        </div>
-                        <div class="form-group">
-                          <label class="form-label">Facebook</label>
-                          <input type="text" class="form-control" value="https://www.facebook.com/user">
-                        </div>
-                        <div class="form-group">
-                          <label class="form-label">Google+</label>
-                          <input type="text" class="form-control" value="">
-                        </div>
-                        <div class="form-group">
-                          <label class="form-label">LinkedIn</label>
-                          <input type="text" class="form-control" value="">
-                        </div>
-                        <div class="form-group">
-                          <label class="form-label">Instagram</label>
-                          <input type="text" class="form-control" value="https://www.instagram.com/user">
-                        </div>
-        
-                      </div>
-                    </div>
-                    <div class="tab-pane fade active show" id="account-connections" v-else-if="tabSelected ==='conection'" >
-                      <div class="card-body">
-                        <button type="button" class="btn btn-twitter">Connect to <strong>Twitter</strong></button>
-                      </div>
-                      <hr class="border-light m-0">
-                      <div class="card-body">
-                        <h5 class="mb-2">
-                          <a href="javascript:void(0)" class="float-right text-muted text-tiny"><i class="ion ion-md-close"></i> Remove</a>
-                          <i class="ion ion-logo-google text-google"></i>
-                          You are connected to Google:
-                        </h5>
-                        nmaxwell@mail.com
-                      </div>
-                      <hr class="border-light m-0">
-                      <div class="card-body">
-                        <button type="button" class="btn btn-facebook">Connect to <strong>Facebook</strong></button>
-                      </div>
-                      <hr class="border-light m-0">
-                      <div class="card-body">
-                        <button type="button" class="btn btn-instagram">Connect to <strong>Instagram</strong></button>
-                      </div>
-                    </div>
-                    <div class="tab-pane fade" id="account-notifications" v-else-if="tabSelected==='notify'">
-                      <div class="card-body pb-2">
-        
-                        <h6 class="mb-4">Activity</h6>
-        
-                        <div class="form-group">
-                          <label class="switcher">
-                            <input type="checkbox" class="switcher-input" checked="">
-                            <span class="switcher-indicator">
-                              <span class="switcher-yes"></span>
-                              <span class="switcher-no"></span>
-                            </span>
-                            <span class="switcher-label">Email me when someone comments on my article</span>
-                          </label>
-                        </div>
-                        <div class="form-group">
-                          <label class="switcher">
-                            <input type="checkbox" class="switcher-input" checked="">
-                            <span class="switcher-indicator">
-                              <span class="switcher-yes"></span>
-                              <span class="switcher-no"></span>
-                            </span>
-                            <span class="switcher-label">Email me when someone answers on my forum thread</span>
-                          </label>
-                        </div>
-                        <div class="form-group">
-                          <label class="switcher">
-                            <input type="checkbox" class="switcher-input">
-                            <span class="switcher-indicator">
-                              <span class="switcher-yes"></span>
-                              <span class="switcher-no"></span>
-                            </span>
-                            <span class="switcher-label">Email me when someone follows me</span>
-                          </label>
-                        </div>
-                      </div>
-                      <hr class="border-light m-0">
-                      <div class="card-body pb-2">
-        
-                        <h6 class="mb-4">Application</h6>
-        
-                        <div class="form-group">
-                          <label class="switcher">
-                            <input type="checkbox" class="switcher-input" checked="">
-                            <span class="switcher-indicator">
-                              <span class="switcher-yes"></span>
-                              <span class="switcher-no"></span>
-                            </span>
-                            <span class="switcher-label">News and announcements</span>
-                          </label>
-                        </div>
-                        <div class="form-group">
-                          <label class="switcher">
-                            <input type="checkbox" class="switcher-input">
-                            <span class="switcher-indicator">
-                              <span class="switcher-yes"></span>
-                              <span class="switcher-no"></span>
-                            </span>
-                            <span class="switcher-label">Weekly product updates</span>
-                          </label>
-                        </div>
-                        <div class="form-group">
-                          <label class="switcher">
-                            <input type="checkbox" class="switcher-input" checked="">
-                            <span class="switcher-indicator">
-                              <span class="switcher-yes"></span>
-                              <span class="switcher-no"></span>
-                            </span>
-                            <span class="switcher-label">Weekly blog digest</span>
-                          </label>
-                        </div>
-        
-                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="text-right mt-3">
-              <button type="button" class="btn btn-primary">Save changes</button>&nbsp;
-              <button type="button" class="btn btn-default">Cancel</button>
+              <button type="button" v-on:click="onUpload" class="btn btn-primary">Save changes</button>&nbsp;
             </div>
         
           </div>
 </template>
 
 <script>
+import firebase from 'firebase'
+import axios from 'axios';
+import UserService from '@/services/UserService.js';
 export default {
-data(){
-    return{
-         tabSelected: 'generals'
-    }
-},
-  methods:{
-    changeTabs(tab){
-          this.tabSelected=tab;
+  name:'UserInfor',
+    data(){
+        return{
+            active1: 'active',
+            active2: false,
+            tabSelected: 'generals',
+            imageData: null,
+            id: '',
+              userName: '',
+              phone: '',
+              address: '',
+              password: '',
+              email: '',
+              picture:null,
+              sex: '',
+              birthday: '',
+              userTypeID: ''
         }
     },
     mounted(){
-
+      this.onInit();
+    },
+    methods: {
+          onInit(){
+            this.user=localStorage.getItem('userInfor');
+            this.user=JSON.parse(this.user);
+            this.userName = this.user.userName;
+            this.phone = this.user.phone;
+            this.email = this.user.email;
+            this.address = this.user.address;
+            this.picture = this.user.picture;
+            this.sex = this.user.sex;
+            this.birthday = this.user.birthday;
+            this.userTypeID = this.user.userTypeID;
+          },
+          changeTabs(tab){
+            this.tabSelected=tab;
+            switch(tab){
+              case 'generals' : 
+                this.active1 = 'active';
+                this.active2 = '';
+                break;
+              case 'info' : 
+                this.active1 = '';
+                this.active2 = 'active';
+                break;
+            }
+          },
+          previewImage(event){
+              this.picture=null;
+              this.imageData= event.target.files[0];
+          },
+          onUpload(){
+            this.picture=null;
+            const storageRef = firebase.storage().ref(`image/${this.imageData.name}`).put(this.imageData);
+            storageRef.on(`state_change`, snapshot => {
+            },error =>{console.log(error.message)},
+            ()=> {
+              storageRef.snapshot.ref.getDownloadURL().then((url) => {
+                this.picture=url;
+                this.update();
+                })
+              }
+            )
+          },
+          update(){
+            console.log(this.picture);
+            const credentials = {
+            userID: this.id,
+            userName: this.userName,
+            phone: this.phone,
+            address: this.address,
+            password: null,
+            email: this.email,
+            picture: this.picture,
+            sex: this.sex,
+            birthday: this.birthday,
+            userTypeID: this.userTypeID
+            };
+            axios.post("https://localhost:44398/api/User/EditByID" , credentials ,{ headers: {"Authorization" : `Bearer ${localStorage.getItem('isAuthen')}`}}).then(respone =>{ 
+              alert(respone.data)})
+          }
+      }
     }
-}
 </script>
 
 <style>
@@ -275,8 +189,8 @@ body{
     text-align: center;
 }
 .ui-w-80 {
-    width: 80px !important;
-    height: auto;
+    width: 100px !important;
+    height: 120px;
 }
 
 .btn-default {

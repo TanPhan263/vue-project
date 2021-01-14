@@ -6,6 +6,9 @@
     "
   >
     <CContainer>
+  <div v-if="show" class="alert-red">
+  <span class="closebtn" @click="show=false">&times;</span> {{ mgs_err }}
+  </div>
       <CRow class="justify-content-center">
         <CCol md="8">
           <CCardGroup>
@@ -19,8 +22,8 @@
                   />
                   <p class="text-muted">Sign In to your account</p>
                   <CInput
-                    placeholder="Username or email"
-                    autocomplete="username email"
+                    placeholder="Email"
+                    autocomplete="email"
                     v-model="username"
                   >
                     <template #prepend-content
@@ -47,8 +50,8 @@
                       >
                     </CCol>
                     <CCol col="6" class="text-right">
-                      <CButton color="link" class="px-0"
-                        >Forgot password?</CButton
+                      <CButton color="link" class="px-0" href="/forgetpass"
+                      >Forgot password?</CButton
                       >
                       <CButton color="link" class="d-lg-none"
                         >Register now!</CButton
@@ -79,7 +82,7 @@
                   Tạo tài khoản mới để cập nhật những quán ăn mới nhất cũng như
                   những trải nghiệm tốt nhất!!!
                 </p>
-                <CButton color="light" variant="outline" size="lg">
+                <CButton href="/register" color="light" variant="outline" size="lg">
                   Register Now!
                 </CButton>
               </CCardBody>
@@ -100,48 +103,58 @@ export default {
   name: "Login",
   data() {
     return { 
+      show: false,
         username: "",
         password: "",
-        mgs:'',
+        mgs_err:'',
         role: []
     }
   },
   methods: {
     async login() {
-      debugger;
-      try {
-        const credentials = {
-          email: this.username,
-          password: this.password
-        };
-        const response = await AuthService.login(credentials);
-        const token=response;
-        const response2 = await UserService.getInfo(token.token);
-        localStorage.setItem('isAuthen',token.token);
-        localStorage.setItem('userInfor',JSON.stringify(response2[0]));
-        console.log(localStorage.getItem('userInfor'))
-        const role = await AuthService.getRole(token.token)
-        if(role.userTyleID == '-MO5VBnzdGsuypsTzHaV' )
-        {
-          this.$router.push('/');
-        }else if(role.userTyleID == '-MO5VYNnWIjXtvJO4AXi' ){
-          this.$router.push('/Homepage');
+      if(this.check()){
+        try {
+          const credentials = {
+            email: this.username,
+            password: this.password
+          };
+          const response = await AuthService.login(credentials);
+          const token=response;
+          console.log(token.token)
+          const response2 = await UserService.getInfo(token.token);
+          localStorage.setItem('isAuthen',token.token);
+          localStorage.setItem('userInfor',JSON.stringify(response2[0]));
+          const role = await AuthService.getRole(token.token);
+          if(role.userTyleID == '-MO5VBnzdGsuypsTzHaV' || role.userTyleID == '-MO5VWchsca2XwktyNAw'   )
+          {
+            this.$router.push('/');
+          }else if(role.userTyleID == '-MO5VYNnWIjXtvJO4AXi' ){
+            this.$router.push('/Homepage');
+          }
+          else this.$router.push('/login');
+        } catch (error) {
+          this.show=true;
+          this.mgs_err = 'Sai tên đăng nhập hoặc password';
         }
-        else this.$router.push('/login');
-      } catch (error) {
-        this.$router.push('/pages/404');
+      }
+      else{
+        this.show=true;
+        this.mgs_err='Bạn chưa nhập password hoặc email';
+        return;
       }
     },
+    check(){
+      if(this.username == '' || this.password == '')
+        return false;
+      return true;
+    },
+    reset(){
+      this.username= "";
+      this.password= "";
+    }
   }
 };
 </script>
 <style>
-.btnBrand {
-  width: 110px;
-  margin-right: 20px;
-}
-.imglogo {
-  margin: 0 auto;
-  width: 30%;
-}
+@import url('../../assets/css/alert.css');
 </style>

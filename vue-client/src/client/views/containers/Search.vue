@@ -32,6 +32,5 @@ export default {
 
 </script>
 <style>
-@import url('../../../assets/css/style-0.css');
 @import url('../../../assets/css/reset.css');
 </style>

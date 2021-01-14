@@ -496,7 +496,6 @@
 	overflow:hidden;
     display:block; 
 	text-align:center;
-	border-radius:10px; 
 	border-bottom:1px solid #818181; 
 	margin-bottom: 15px;
 }
@@ -577,13 +576,16 @@
 	text-align:left; 
 	border-radius: 10px;
 	height: 16em;
+	cursor: pointer;
 }
 .main .ship .sub-menu-ship ul li a{
 	text-decoration:none; 
 	display:block; 
 	white-space:nowrap;  
 	color:#000;
-  	border-radius: 10px;
+	border-radius: 10px;
+	cursor: pointer;
+	background-color:#fff;
 
 }
 .main .ship .sub-menu-ship ul li router-link{
@@ -591,17 +593,19 @@
 	display:block; 
 	white-space:nowrap;  
 	color:#000;
+	
 }
 .main .ship .sub-menu-ship ul li a div.name-food{
 	font-size:14px;
 	font-weight:bold;
 	display:block;
-	padding:3px;   
+	padding:3px;
+	cursor: pointer;
 }
 .main .ship .sub-menu-ship ul li a div.address-store{
 	font-size:12px;
 	padding:3px; 
-    color:#9a9a9a;
+	color:#9a9a9a;
 }
 .main .ship .sub-menu-ship ul li a div.intro{
     font-size:12px;
@@ -727,7 +731,7 @@
 	margin-top:20px; 
 	position:relative; 
 	height:auto;
-	background-color:#eee; 
+	background-color:#f6f6f6; 
 }
 .discover .section{
     float:left;
@@ -735,12 +739,11 @@
     text-align:left;  
     overflow:hidden; 
     margin-right:20px;  
-    background-color:#fff;   
+    background-color:#ffffff;   
 }
 .discover .section ul{
 	padding:0;
 	margin:0;
-    border:1px solid #ccc;
 	list-style-type:none; 
 }
 .discover .section ul li{
@@ -813,13 +816,14 @@
 .discover .artical .slider ul{
 	margin:0;
 	padding:0;
-	list-style-type:none; 
+	list-style-type:none;
+	height: 16em;
+	background-color:#fff; 
 }
 .discover .artical .slider ul li{
 	float:left;
 	margin-top:10px;
 	margin-left:17px;
-	border:1px solid #ccc;
 	background-color:#fff; 
 }
 .discover .artical .slider ul li a{
@@ -832,13 +836,14 @@
 	font-size:15px;
 	overflow:hidden;
 	padding:3px; 
+	background-color: #fff;
 }
 .discover .artical .slider ul li a div.address-store{
 	font-size:13px;
 	color:#9a9a9a;
 	display:block;  
-	border-bottom:1px solid #e6e6e6;
 	padding:3px; 
+	background-color: #fff;
 }
 .member-top{
 	width:100%;

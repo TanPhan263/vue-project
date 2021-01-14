@@ -1,11 +1,13 @@
 <template>
   <CRow>
     <CCol >
-      <CCard class="center_div">
+      <CCard class="center_div" style="padding: 20px;">
         <CCardHeader>
-          <div class="row">
+           <div class="row" style="float:left;">
             <h2>Menus</h2>
-            <CButton style="margin-left: 820px;" color="primary" @click="active=true">Thêm Món</CButton>
+          </div>
+          <div class="row" style="float:right;">
+            <CButton color="primary" @click="active=true">Thêm Món</CButton>
           </div>
             <transition v-if="active">
               <div class="modal-mask">
@@ -97,6 +99,9 @@
 import firebase from 'firebase'
 import StoreService from '@/services/StoreService.js';
 export default {
+  props:{
+    menuID: String,
+  },
   data(){
     return{
       user:'',
@@ -128,7 +133,7 @@ export default {
         },
         async getMenus(id){
             this.storeOpened= await StoreService.getByUser(id,localStorage.getItem('isAuthen'))
-            this.$http.get('https://localhost:44398/api/Dish/GetByIDMenu?id=' +this.storeOpened[0].menuID).then(response => {
+            this.$http.get('https://localhost:44398/api/Dish/GetByIDMenu?id=' + this.menuID).then(response => {
               this.menus = response.data
           });
         },

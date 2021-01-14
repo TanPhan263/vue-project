@@ -37,12 +37,16 @@ const DishTypeSearch= () => import('@/client/views/DishTypeSearch')
 //StoreOwner
 const Dish = () => import('@/store_owner/manageMenu/Dish') 
 const ManageMenu = () => import('@/store_owner/manageMenu/MangeMenu') 
-const ManageStoreInfor = () => import('@/store_owner/MangeStoreInfor') 
+const ManageStoreInfor = () => import('@/store_owner/manageStores/MangeStoreInfor') 
+const OwnerStores = () => import('@/store_owner/manageStores/stores') 
 Vue.use(Router)
 
 const isAuthen = (to, from, next) => {  
   var isAuthen = localStorage.getItem('isAuthen');
-  if (isAuthen != null){
+  var user = localStorage.getItem('userInfor');
+  user =JSON.parse(user);
+  const role = user.userTypeID;
+  if (isAuthen != null && role != '-MO5VYNnWIjXtvJO4AXi'){
     next();
     return;
   }
@@ -59,7 +63,7 @@ export default new Router({
 function configRoutes () {
   return [
     {
-      path: '/',     
+      path: '/manage',     
       redirect: '/dashboard',
       name: 'Home',
       component: TheContainer,
@@ -162,9 +166,9 @@ function configRoutes () {
           ]
         },
         {
-          path: 'manageMenu',
+          path: 'manageStores',
           meta: {
-            label: 'Menus'
+            label: 'Stores'
           },
           component: {
             render(c) {
@@ -174,20 +178,38 @@ function configRoutes () {
           children: [
             {
               path: ':id',
-              name: 'dish',
-              component: Dish
+              name: 'store',
+              component: ManageStoreInfor
             },
             {
               path: '',
-              name: 'manageMenu',
-              component: ManageMenu
-            }
+              name: 'stores',
+              component: OwnerStores
+            },
+            {
+              path: 'manageMenu',
+              meta: {
+                label: 'Menus'
+              },
+              component: {
+                render(c) {
+                  return c('router-view')
+                }
+              },
+              children: [
+                {
+                  path: ':id',
+                  name: 'dish',
+                  component: Dish
+                },
+                {
+                  path: '',
+                  name: 'manageMenu',
+                  component: ManageMenu
+                }
+              ]
+            },
           ]
-        },
-        {
-          path: 'manageStore',
-          name: 'manageStore',
-          component: ManageStoreInfor
         }
       ]
     },
@@ -232,9 +254,9 @@ function configRoutes () {
       component: Register     
     },
     {
-      path: '/Homepage',      
-      name: 'Homepage',
-      redirect: '/Homepage/body',
+      path: '/',      
+      name: 'Trangchu',
+      redirect: '/Homepage',
       component: Homepage,
       children:[
         {
@@ -243,8 +265,8 @@ function configRoutes () {
           component: Search
         },
         {
-          path: 'body',      
-          name: 'body',
+          path: 'Homepage',      
+          name: 'Homepage',
           component: Homebody
         },
         {
@@ -274,11 +296,6 @@ function configRoutes () {
       name: 'UserInfor',
       component: UserInfor
     }
-    // {
-    //   path: '/search',      
-    //   name: 'search',
-    //   component: Search
-    // }
   ]
 }
 

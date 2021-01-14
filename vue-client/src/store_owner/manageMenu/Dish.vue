@@ -45,12 +45,16 @@
                 />
                 </div>
             </CForm>
+            <input type="file"  @change="previewImage" style="margin-top: 20px;">
           </CCardBody>
           <CCardFooter>
-             <input type="file"  @change="previewImage">
-            <CButton @click="deleteDish"  class="btn_left" type="submit" size="sm" color="danger"><CIcon name="cil-check-circle"/> Delete</CButton>
-            <CButton  @click="onUpload"   class="btn_right" type="reset" size="sm" color="warning"><CIcon name="cil-ban"/> Change Image</CButton>
-            <CButton  @click="updateDish"  class="btn_right" type="reset" size="sm" color="warning"><CIcon name="cil-ban"/> Update</CButton>
+      
+            <CRow form class="form-group" style="float:right;">
+              <CButton @click="deleteDish"  class="btn_left" type="submit" size="sm" color="danger"><CIcon name="cil-check-circle"/> Delete</CButton>
+            </CRow>
+            <CRow form class="form-group" style="float:left;">
+            <CButton  @click="onUpload"  class="btn_right" type="reset" size="sm" color="warning"><CIcon name="cil-ban"/> Update</CButton>
+            </CRow>
           </CCardFooter>
         </CCard>
       </CCol>
@@ -118,10 +122,11 @@ export default {
           storageRef.on(`state_change`, snapshot => {
           },error =>{console.log(error.message)},
           ()=> {
-            storageRef.snapshot.ref.getDownloadURL().then((url) => {this.dishPicture=url;})
+            storageRef.snapshot.ref.getDownloadURL().then((url) => {this.dishPicture=url;
+              this.updateDish();})
             }
           )
-          this.updateDish();
+        
         },
       getType(index){
           this.$http.get('https://localhost:44398/api/DishType/GetAll').then(response => {this.dishTypes=response.data});

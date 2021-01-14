@@ -5,6 +5,12 @@
       background-image: url('https://wallpaperaccess.com/full/1631410.jpg'); "
   >
   <CRow class="center_div col-md-4">
+    <div v-if="show == 1" class="alert-blue" style="margin-bottom: 20px;margin-top: 20px;">
+        <span class="closebtn" @click="show=0">&times;</span> {{ msg }}
+      </div>
+       <div v-if="show == 2" class="alert-red" style="margin-bottom: 20px;margin-top: 20px;">
+        <span class="closebtn" @click="show=0">&times;</span> {{ msg }}
+      </div>
   <CCard>
     <CCardHeader> <strong>Quên mật khẩu</strong></CCardHeader>
     <CForm novalidate>
@@ -50,7 +56,7 @@
         <CButton @click="isValid" type="submit" class="btn_left" size="sm" color="primary"
           ><CIcon name="cil-check-circle" /> Change</CButton
         >
-        <CButton class="btn_right" type="reset" size="sm" color="danger"
+        <CButton href="/Homepage" class="btn_right" type="reset" size="sm" color="danger"
           ><CIcon name="cil-ban" />Cancle</CButton
         >
       </CCardFooter>
@@ -65,10 +71,12 @@ import axios from 'axios';
 export default {
     data(){
         return{
-            email:'',
-            code: '',
-            pass: '',
-            code2: '',
+          msg: '',
+          show: 0,
+          email:'',
+          code: '',
+          pass: '',
+          code2: '',
         }
     },
  methods: {
@@ -84,21 +92,28 @@ export default {
             console.log(this.code)});
     },
     isValid(){
-        if(this.code== this.code2)
-          { try{ axios.post("https://localhost:44398/api/User/ResetPass?Email=" + this.email +"&Password="+ this.pass)
-        alert('Doi pass thanh cmn cong');}
+        if(this.code== this.code2 && this.validator(this.pass))
+          { try{ 
+          axios.post("https://localhost:44398/api/User/ResetPass?Email=" + this.email +"&Password="+ this.pass);
+          this.show=1;
+          this.msg='Đổi mật khẩu thành công, mời bạn đăng nhập lại'
+          setTimeout(this.$router.push('/login'), 2000);
+          }
         catch(e)
         {
-          alert("loi roi");
+          this.show=2;
+          this.msg='Lỗi rồi'
         }}
           else 
-            alert('Sai roi');
-    }
+          this.show=2;
+          this.msg='Mật khẩu không phù hợp'
+    },
   }
 }
 </script>
 
 <style>
+@import url('../../assets/css/alert.css');
 .center_div{
     margin: 0 auto;
     width:100%;

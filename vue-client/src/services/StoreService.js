@@ -10,11 +10,11 @@ export default{
     getAllStore(id){
       
     },
-    getByID(){
-
+    getByID(id){
+        return axios.get('https://localhost:44398/api/Store/GetByID?id='+ id).then(response => response.data);
     },
     getByProvince(id){
-       return axios.get( url+'/GetByIDProvince?id=' + id).then(response => response.data);
+       return axios.get( url+'/GetAllGanToiProvince?id=' + id).then(response => response.data);
     },
     getByDish(){
 
